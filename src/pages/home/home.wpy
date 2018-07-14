@@ -135,14 +135,12 @@
     async onLoad (option) {
       console.log('加载首页参数', option.scene); // 这里应该一直是空
       WxUtils.checkSDK(); // 微信版本检查
-      this.limit = await shop.limit();
-      // 写入缓存
-      wepy.setStorageSync('limit', this.limit);
+      this.limit = await shop.limit(); // 获取商铺类型 1:推广普及版 2:会员普及版 3:会员年费版 4:电商普及版 5:电商年费版 6:全能普及版 7:全能年费版
+      wepy.setStorageSync('limit', this.limit); // 写入缓存
       this.shop = await shop.info();
-      // 写入缓存
-      wepy.setStorageSync('shop_image', this.shop.avatar);
-      this.show = true;
-      await this.reload();
+      wepy.setStorageSync('shop_image', this.shop.avatar); // 写入缓存
+      this.show = true; // 显示主页
+      await this.reload(); // 加载数据
       Event.listen(Event.USER_LOGOUT, this.clear.bind(this), this);
     };
     async onShow () {
@@ -150,14 +148,11 @@
       this.show = true;
       this.interval = setInterval(async() => {
         await this.reload();
-      }, 60 * 1000);
-      // 切换店铺刷新信息
-      if (!this.init) {
-        this.shop = await shop.info();
-      }
-      // 立即刷新(第一次进入页面时加载数据)
-      await this.reload();
+      }, 24 * 60 * 1000);
+      if (!this.init) this.shop = await shop.info(); // 切换店铺刷新信息
+      await this.reload(); // 立即刷新(第一次进入页面时加载数据)
     }
+    // 清空登录信息(店铺信息)
     clear () {
       this.init = false;
     }
@@ -178,12 +173,8 @@
       this.month = month;
       this.order = order;
       this.loaded();
-      // 差异比对
-      if (this.show) {
-        this.compareOrderStatus(order);
-      }
-      // 写入缓存
-      wepy.setStorageSync('order_count', order);
+      if (this.show) this.compareOrderStatus(order); // 差异比对
+      wepy.setStorageSync('order_count', order); // 写入缓存
     }
     // 比较订单状态
     compareOrderStatus (curStatus) {
@@ -197,9 +188,9 @@
       // 订单数量比较
       if (hasNewOrder) {
         // 新订单通知(语音)
-        // wepy.playBackgroundAudio({
-        //   dataUrl: 'http://img.leshare.shop/leshare/new_order.mp3'
-        // });
+        wepy.playBackgroundAudio({
+          dataUrl: 'http://img.leshare.shop/leshare/new_order.mp3'
+        });
         Tips.modal('您有新的订单，请及时处理');
       }
     }
@@ -208,9 +199,8 @@
       wepy.stopPullDownRefresh();
     }
     onShareAppMessage () {
-      const title = '乐享商家助手';
-      const url = '/pages/home/index';
-      return Tips.share(title, url, title);
+      let title = '乐享商家助手';
+      return Tips.share(title, '/pages/home/index', title);
     }
     methods = {
       // 客服
@@ -221,28 +211,25 @@
         this.$preload('status', status);
         Event.emit(Event.ORDER_TAB_UPDATE, status);
       },
+      // 扫码
       async scan () {
         try {
-          const data = await wepy.scanCode();
+          let data = await wepy.scanCode();
           Tips.loading('扫描中');
-          console.info(data);
-          const {
-            errMsg,
-            path,
-            result
-          } = data;
+          console.info('扫码结果:', data);
+          let {errMsg, path, result} = data;
           if (errMsg !== 'scanCode:ok') {
             Tips.alert('扫描失败请重试');
             return;
           }
           // 会员卡的情况
-          const memberUrlPrefix = 'pages/vip/vip_scan';
-          const isMember = path && path.indexOf(memberUrlPrefix) >= 0;
+          let memberUrlPrefix = 'pages/vip/vip_scan';
+          let isMember = path && path.indexOf(memberUrlPrefix) >= 0;
           if (isMember) {
             this.$navigate('/' + path);
             return;
           }
-          const isCoupon = path === null && result !== null && result.indexOf('#') >= 0;
+          let isCoupon = path === null && result !== null && result.indexOf('#') >= 0;
           if (isCoupon) {
             this.$navigate(`/pages/coupon/scan?scan=${result}`);
             return;
