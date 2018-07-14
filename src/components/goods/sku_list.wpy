@@ -1,13 +1,14 @@
 <template>
-  <!--SKU区域// 组件化-->
-  <repeat for="{{skuList}}" key="sku" index="index" item="item">
-    <Sku :info.sync="item" :index.sync="index" :skuEditable.sync="skuEditable" @remove.user="remove" @change.user="change" />
-  </repeat>
-
-  <!--添加商品型号-->
-  <view class="sku-add-btn row-end" @tap="add">
-    <image class="icon" src="/images/icons/plus.png"></image><text class="ml10">添加商品型号</text>
-  </view>
+  <block>
+    <!--SKU区域// 组件化-->
+    <repeat for="{{skuList}}" key="sku" index="index" item="item">
+      <Sku :info.sync="item" :index.sync="index" :skuEditable.sync="skuEditable" @remove.user="remove" @change.user="change" />
+    </repeat>
+    <!--添加商品型号-->
+    <view class="sku-add-btn row-end" @tap="add">
+      <image class="icon" src="/images/icons/plus.png"></image><text class="ml10">添加商品型号</text>
+    </view>
+  </block>
 </template>
 
 <script>
@@ -54,8 +55,7 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-  .sku-add-btn{
+  .sku-add-btn {
     padding: 10px 20px;
   }
-
 </style>

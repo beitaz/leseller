@@ -1,25 +1,23 @@
 <template>
-  <Tips />
-  <view wx:if="{{init}}">
-
-    <view wx:if="{{success}}">
-      <!--卡券信息-->
-      <CouponItem :coupon.sync="coupon" disable="true"/>
-
-      <!--提示信息-->
-      <view class="tips-box">
-        <text class="muted">注意：请确认卡券信息，点击立即核销即可使用该卡券</text>
+  <block>
+    <Tips />
+    <view wx:if="{{init}}">
+      <view wx:if="{{success}}">
+        <!--卡券信息-->
+        <CouponItem :coupon.sync="coupon" disable="true" />
+        <!--提示信息-->
+        <view class="tips-box">
+          <text class="muted">注意：请确认卡券信息，点击立即核销即可使用该卡券</text>
+        </view>
+        <!--操作栏-->
+        <ActionBar @tap.user="submit" okText="立即核销" />
       </view>
-
-      <!--操作栏-->
-      <ActionBar @tap.user="submit" okText="立即核销" />
+      <view wx:else class="error-tips column-center">
+        <text style="font-size: 30px">核销失败</text>
+        <text class="muted mt20">{{message}}</text>
+      </view>
     </view>
-    <view wx:else class="error-tips column-center">
-      <text style="font-size: 30px">核销失败</text>
-      <text class="muted mt20">{{message}}</text>
-    </view>
-  </view>
-
+  </block>
 </template>
 
 <script>
@@ -31,7 +29,6 @@
   import ActionBar from '../../components/common/action_bar';
   import Tips from '../../utils/Tips';
   import FormTips from '../../components/weui/tips';
-
   export default class CouponScan extends wepy.page {
     def = {
       init: false,
@@ -40,8 +37,11 @@
       message: '',
       id: null
     }
-    data = {...this.def};
-    async onLoad ({scan}) {
+    data = { ...this.def
+    };
+    async onLoad({
+      scan
+    }) {
       if (scan == null && scan == '') {
         this.message = '扫描失败，没有检测到二维码';
         this.loaded();
@@ -80,7 +80,7 @@
       this.loaded();
     };
     methods = {
-      async submit () {
+      async submit() {
         try {
           await coupon.use(this.id);
           this.coupon.status = 'USED';
@@ -106,10 +106,10 @@
 </script>
 
 <style lang="scss">
-  .tips-box{
+  .tips-box {
     padding: 20rpx;
   }
-  .error-tips{
+  .error-tips {
     position: absolute;
     top: 150px;
     width: 100%;

@@ -1,33 +1,32 @@
 <template>
-  <Tips/>
-  <view class="container">
-    <view class="h-gap"></view>
-    <form @submit="submit">
-      <view class="weui-cells weui-cells-form">
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__hd">
-            <view class="weui-label">姓名</view>
+  <block>
+    <Tips/>
+    <view class="container">
+      <view class="h-gap"></view>
+      <form @submit="submit">
+        <view class="weui-cells weui-cells-form">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">姓名</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" name="name" value="{{deliver.name}}" placeholder="请输入配送员姓名" />
+            </view>
           </view>
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="name" value="{{deliver.name}}" placeholder="请输入配送员姓名"/>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">电话</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" name="phone" type="number" maxlength="11" value="{{deliver.phone}}" placeholder="请输入配送员电话" />
+            </view>
           </view>
         </view>
-
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__hd">
-            <view class="weui-label">电话</view>
-          </view>
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="phone" type="number" maxlength="11" value="{{deliver.phone}}"
-                   placeholder="请输入配送员电话"/>
-          </view>
-        </view>
-      </view>
-
-      <!--操作栏-->
-      <ActionPanel :mode.sync="type"/>
-    </form>
-  </view>
+        <!--操作栏-->
+        <ActionPanel :mode.sync="type" />
+      </form>
+    </view>
+  </block>
 </template>
 
 <style lang="scss">
@@ -43,7 +42,6 @@
   import FormTips from '../../components/weui/tips';
   import Tips from '../../utils/Tips';
   import Event from '../../utils/Event';
-
   export default class CouponEdit extends wepy.page {
     def = {
       mode: 'create',
@@ -51,18 +49,22 @@
       init: false,
       deliver: {}
     };
-    data = {...this.def};
-
-    async onLoad ({deliver, mode}) {
+    data = { ...this.def
+    };
+    async onLoad({
+      deliver,
+      mode
+    }) {
       this.mode = mode;
       if (mode == 'edit') {
         this.deliver = JSON.parse(deliver);
       }
       this.loaded();
     };
-
     methods = {
-      async submit ({detail}) {
+      async submit({
+        detail
+      }) {
         // 覆盖对象
         Object.assign(this.deliver, detail.value);
         if (!this.validate()) {
@@ -79,27 +81,25 @@
         wepy.navigateBack();
       }
     };
-
-    validate () {
-      const rules = [
-        {
-          value: this.deliver.name,
-          method: 'required',
-          message: '配送员姓名不能为空'
-        },
-        {
-          value: this.deliver.phone,
-          method: 'required',
-          message: '配送员电话不能为空'
-        },
-        {
-          value: this.deliver.phone,
-          method: 'tel',
-          message: '配送员电话格式错误'
-        }];
+    validate() {
+      const rules = [{
+        value: this.deliver.name,
+        method: 'required',
+        message: '配送员姓名不能为空'
+      },
+      {
+        value: this.deliver.phone,
+        method: 'required',
+        message: '配送员电话不能为空'
+      },
+      {
+        value: this.deliver.phone,
+        method: 'tel',
+        message: '配送员电话格式错误'
+      }
+      ];
       return this.check(rules);
     }
-
     components = {
       ActionPanel: ActionPanel,
       Tips: FormTips

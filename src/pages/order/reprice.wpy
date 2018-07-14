@@ -1,63 +1,63 @@
 <template>
-  <Tips />
-  <view class="container" wx:if="{{init}}">
-    <view class="title">
-      <text class="muted lg">订单原价（含运费）：￥{{order.finalPrice}}</text>
+  <block>
+    <Tips />
+    <view class="container" wx:if="{{init}}">
+      <view class="title">
+        <text class="muted lg">订单原价（含运费）：￥{{order.finalPrice}}</text>
+      </view>
+      <view class="weui-cells weui-cells_after-title form">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">现价</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" id="modifyPrice" type="digit" @input="input" value="{{input.modifyPrice}}" placeholder="请输入需要修改订单价格" />
+          </view>
+          <view class="weui-cell__ft">
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">现运费</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" id="modifyPost" type="digit" @input="input" value="{{input.modifyPost}}" placeholder="请输入需要修改的运费" />
+          </view>
+          <view class="weui-cell__ft">
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">优惠减免</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input muted" id="modifyCoupon" disabled value="{{input.modifyCoupon + ' (无法修改)'}}" />
+          </view>
+          <view class="weui-cell__ft">
+          </view>
+        </view>
+      </view>
+      <view class="weui-cells mt20">
+        <view class="weui-cell ">
+          <view class="weui-cell__hd">
+            <view class="weui-label">现总价</view>
+          </view>
+          <view class="weui-cell__bd">
+            <text class="major xl" wx:if="{{isValid}}">￥</text><text class="major xl">{{modifyFinal}}</text>
+          </view>
+          <view class="weui-cell__ft">
+          </view>
+        </view>
+      </view>
+      <!--操作栏-->
+      <ActionBar @tap.user="submit" />
     </view>
-    <view class="weui-cells weui-cells_after-title form">
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd" >
-          <view class="weui-label">现价</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" id="modifyPrice"  type="digit" @input="input" value="{{input.modifyPrice}}" placeholder="请输入需要修改订单价格"/>
-        </view>
-        <view class="weui-cell__ft">
-        </view>
-      </view>
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd" >
-          <view class="weui-label">现运费</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" id="modifyPost"  type="digit" @input="input" value="{{input.modifyPost}}" placeholder="请输入需要修改的运费"/>
-        </view>
-        <view class="weui-cell__ft">
-        </view>
-      </view>
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd" >
-          <view class="weui-label">优惠减免</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input muted" id="modifyCoupon" disabled value="{{input.modifyCoupon + ' (无法修改)'}}" />
-        </view>
-        <view class="weui-cell__ft">
-        </view>
-      </view>
-    </view>
-
-    <view class="weui-cells mt20">
-      <view class="weui-cell ">
-        <view class="weui-cell__hd" >
-          <view class="weui-label">现总价</view>
-        </view>
-        <view class="weui-cell__bd">
-          <text class="major xl" wx:if="{{isValid}}">￥</text><text class="major xl">{{modifyFinal}}</text>
-        </view>
-        <view class="weui-cell__ft">
-        </view>
-      </view>
-    </view>
-
-    <!--操作栏-->
-    <ActionBar @tap.user="submit" />
-  </view>
+  </block>
 </template>
 
 <style lang="scss">
   @import "../../styles/variable";
-  .title{
+  .title {
     padding: 20rpx;
   }
 </style>
@@ -71,14 +71,14 @@
   import Lang from '../../utils/Lang';
   import FormTips from '../../components/weui/tips';
   import ActionBar from '../../components/common/action_bar';
-
   export default class OrderReprice extends wepy.page {
     def = {
       order: {},
       init: false
     };
-    data = {...this.def};
-    async onLoad (options) {
+    data = { ...this.def
+    };
+    async onLoad(options) {
       const orderId = options.orderId;
       const data = await order.detail(orderId);
       this.order = data;

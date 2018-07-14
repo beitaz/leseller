@@ -1,146 +1,132 @@
 <template>
-  <Tips/>
-  <view class="container box-bg" wx:if="{{init}}">
-    <VipCard :member.sync="member" :vipCard.sync="card" :userInfo.sync="customer"
-             @detail.user="detail"/>
-
-    <view wx:if="{{result == null}}">
-      <ZanTab :tab.sync="tab" fixed="0"/>
-    </view>
-
-
-    <!--累计消费-->
-    <view  wx:if="{{tab.selectedId == 'COST'}}">
-      <!--消费前-->
-      <view class="weui-cells weui-cells-form" wx:if="{{result == null}}">
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__hd">
-            <view class="weui-label">消费金额</view>
-          </view>
-          <view class="weui-cell__bd">
-            <input class="weui-input" id="price" @input="input" value="{{input.price}}"
-                   type="number" maxlength="6" placeholder="请输入消费金额"/>
-          </view>
-        </view>
-        <view class="weui-cell" wx:if="{{card.supplyBonus == 1}}">
-          <view class="weui-cell__hd">
-            <view class="weui-label">累计积分</view>
-          </view>
-          <text>{{bonus ? bonus : 0}}</text>
-        </view>
-        <repeat for="{{presentRules}}" key="index" index="index" item="item">
-          <view class="weui-cell">
-            <view class="weui-cell__hd">
-              <view class="weui-label">{{item.ruleName}}</view>
-            </view>
-            <Stepper :item.sync="item" :index.sync="index" @minus.user="minus" @plus.user="plus"/>
-            <view class="weui-cell__ft">
-              <view class="ml20">{{item.unit}}</view>
-            </view>
-          </view>
-        </repeat>
+  <block>
+    <Tips/>
+    <view class="container box-bg" wx:if="{{init}}">
+      <VipCard :member.sync="member" :vipCard.sync="card" :userInfo.sync="customer" @detail.user="detail" />
+      <view wx:if="{{result == null}}">
+        <ZanTab :tab.sync="tab" fixed="0" />
       </view>
-
-      <!--消费后-->
-      <view class="weui-cells weui-cells-form"  wx:else>
-        <view class="weui-cell weui-cell_input" wx:if="{{input.price > 0}}">
-          <view class="weui-cell__hd">
-            <view class="weui-label">消费完成</view>
-          </view>
-          <view class="weui-cell__bd">
-            <input class="weui-input"  value="{{result}}" disabled/>
-          </view>
-        </view>
-
-        <repeat for="{{presentRules}}" key="index" index="index" item="item">
-          <view class="weui-cell" wx:if="{{item.stepper > 0}}">
+      <!--累计消费-->
+      <view wx:if="{{tab.selectedId == 'COST'}}">
+        <!--消费前-->
+        <view class="weui-cells weui-cells-form" wx:if="{{result == null}}">
+          <view class="weui-cell weui-cell_input">
             <view class="weui-cell__hd">
-              <view class="weui-label">{{item.ruleName}}</view>
+              <view class="weui-label">消费金额</view>
             </view>
             <view class="weui-cell__bd">
-              <input class="weui-input"  value="累计{{item.stepper}} {{item.unit}}" disabled/>
+              <input class="weui-input" id="price" @input="input" value="{{input.price}}" type="number" maxlength="6" placeholder="请输入消费金额" />
             </view>
           </view>
-        </repeat>
+          <view class="weui-cell" wx:if="{{card.supplyBonus == 1}}">
+            <view class="weui-cell__hd">
+              <view class="weui-label">累计积分</view>
+            </view>
+            <text>{{bonus ? bonus : 0}}</text>
+          </view>
+          <repeat for="{{presentRules}}" key="index" index="index" item="item">
+            <view class="weui-cell">
+              <view class="weui-cell__hd">
+                <view class="weui-label">{{item.ruleName}}</view>
+              </view>
+              <Stepper :item.sync="item" :index.sync="index" @minus.user="minus" @plus.user="plus" />
+              <view class="weui-cell__ft">
+                <view class="ml20">{{item.unit}}</view>
+              </view>
+            </view>
+          </repeat>
+        </view>
+        <!--消费后-->
+        <view class="weui-cells weui-cells-form" wx:else>
+          <view class="weui-cell weui-cell_input" wx:if="{{input.price > 0}}">
+            <view class="weui-cell__hd">
+              <view class="weui-label">消费完成</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" value="{{result}}" disabled/>
+            </view>
+          </view>
+          <repeat for="{{presentRules}}" key="index" index="index" item="item">
+            <view class="weui-cell" wx:if="{{item.stepper > 0}}">
+              <view class="weui-cell__hd">
+                <view class="weui-label">{{item.ruleName}}</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input class="weui-input" value="累计{{item.stepper}} {{item.unit}}" disabled/>
+              </view>
+            </view>
+          </repeat>
+        </view>
+        <!--权益提示-->
+        <view class="tips-box column" wx:if="{{discountRuleText.length > 0 || bonusRuleText.length > 0}}">
+          <block wx:if="{{discountRuleText.length > 0}}">
+            <text>• 会员折扣</text>
+            <text wx:for="{{discountRuleText}}" class="ml20">- {{item}}</text>
+          </block>
+          <block wx:if="{{bonusRuleText.length > 0}}">
+            <text>• 会员积分</text>
+            <text wx:for="{{bonusRuleText}}" class="ml20">- {{item}}</text>
+          </block>
+        </view>
       </view>
-
-      <!--权益提示-->
-      <view class="tips-box column" wx:if="{{discountRuleText.length > 0 || bonusRuleText.length > 0}}">
-        <block wx:if="{{discountRuleText.length > 0}}">
-          <text>• 会员折扣</text>
-          <text wx:for="{{discountRuleText}}" class="ml20">- {{item}}</text>
+      <!--修改积分-->
+      <view wx:if="{{tab.selectedId == 'BONUS'}}">
+        <!--开启积分-->
+        <block wx:if="{{card.supplyBonus == 1}}">
+          <!--操作前-->
+          <view class="weui-cells weui-cells-form" wx:if="{{result == null}}">
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">积分变动</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input class="weui-input" id="bonus" @input="input" value="{{input.bonus}}" type="number" maxlength="6" placeholder="请输入变动积分" />
+              </view>
+            </view>
+          </view>
+          <!--操作后-->
+          <view class="weui-cells weui-cells-form" wx:else>
+            <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                <view class="weui-label">保存成功</view>
+              </view>
+              <view class="weui-cell__bd">
+                <input class="weui-input" value="{{result}}" disabled/>
+              </view>
+            </view>
+          </view>
         </block>
-        <block wx:if="{{bonusRuleText.length > 0}}">
-          <text>• 会员积分</text>
-          <text wx:for="{{bonusRuleText}}" class="ml20">- {{item}}</text>
-        </block>
+        <view class="row-center" style="min-height: 100px" wx:else>
+          <text class="ml20 muted">尚未开启积分功能</text>
+        </view>
       </view>
-    </view>
-
-    <!--修改积分-->
-    <view wx:if="{{tab.selectedId == 'BONUS'}}">
-
-      <!--开启积分-->
-      <block wx:if="{{card.supplyBonus == 1}}">
+      <!--修改折扣率-->
+      <view wx:if="{{tab.selectedId == 'MEMBER'}}">
         <!--操作前-->
-        <view class="weui-cells weui-cells-form"   wx:if="{{result == null}}">
+        <view class="weui-cells weui-cells-form">
           <view class="weui-cell weui-cell_input">
             <view class="weui-cell__hd">
-              <view class="weui-label">积分变动</view>
+              <view class="weui-label">会员折扣</view>
             </view>
-            <view class="weui-cell__bd">
-              <input class="weui-input" id="bonus" @input="input" value="{{input.bonus}}"
-                     type="number" maxlength="6" placeholder="请输入变动积分"/>
+            <view class="weui-cell__bd" wx:if="{{result == null}}">
+              <input class="weui-input" id="customDiscount" @input="input" value="{{member.customDiscount}}" type="number" maxlength="6" placeholder="输入90表示9折" />
             </view>
-          </view>
-        </view>
-        <!--操作后-->
-        <view class="weui-cells weui-cells-form"  wx:else>
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__hd">
-              <view class="weui-label">保存成功</view>
-            </view>
-            <view class="weui-cell__bd">
-              <input class="weui-input"  value="{{result}}" disabled/>
+            <view class="weui-cell__bd" wx:else>
+              <input class="weui-input" value="已设置为{{member.customDiscount / 10}}折" disabled/>
             </view>
           </view>
         </view>
-      </block>
-      <view class="row-center" style="min-height: 100px" wx:else>
-        <text class="ml20 muted" >尚未开启积分功能</text>
-      </view>
-
-    </view>
-
-    <!--修改折扣率-->
-    <view wx:if="{{tab.selectedId == 'MEMBER'}}">
-      <!--操作前-->
-      <view class="weui-cells weui-cells-form" >
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__hd">
-            <view class="weui-label">会员折扣</view>
-          </view>
-          <view class="weui-cell__bd" wx:if="{{result == null}}">
-            <input class="weui-input" id="customDiscount" @input="input" value="{{member.customDiscount}}"
-                   type="number" maxlength="6" placeholder="输入90表示9折"/>
-          </view>
-          <view class="weui-cell__bd" wx:else>
-            <input class="weui-input"  value="已设置为{{member.customDiscount / 10}}折" disabled/>
-          </view>
+        <view class="tips-box">
+          <text>提示：输入90表示9则，输入85表示8.5折</text>
         </view>
       </view>
-      <view class="tips-box">
-        <text>提示：输入90表示9则，输入85表示8.5折</text>
+      <view class="message-box row-center" wx:if="{{message}}">
+        {{message}}
       </view>
+      <!--操作栏-->
+      <ActionBar @tap.user="add" :okText.sync="okText" cancelText="返回" />
     </view>
-
-    <view class="message-box row-center" wx:if="{{message}}">
-      {{message}}
-    </view>
-
-    <!--操作栏-->
-    <ActionBar @tap.user="add" :okText.sync="okText" cancelText="返回"/>
-  </view>
+  </block>
 </template>
 
 <script>
@@ -167,19 +153,29 @@
       message: null,
       result: null,
       tab: {
-        list: [
-          {id: 'COST', title: '消费'},
-          {id: 'BONUS', title: '积分'},
-          {id: 'MEMBER', title: '会员'}
+        list: [{
+          id: 'COST',
+          title: '消费'
+        },
+        {
+          id: 'BONUS',
+          title: '积分'
+        },
+        {
+          id: 'MEMBER',
+          title: '会员'
+        }
         ],
         selectedId: 'COST'
       },
       presentRules: [],
       details: []
     };
-    data = {...this.def};
-
-    async onLoad (options, {preload}) {
+    data = { ...this.def
+    };
+    async onLoad(options, {
+      preload
+    }) {
       if (!auth.isLogin()) {
         this.$redirect('/pages/home/index');
         return;
@@ -198,12 +194,16 @@
         if (options.scene) {
           this.scene = decodeURIComponent(options.scene);
           this.member = await member.Info(options.scene);
-          const {customer} = await userInfo.detailInfo(this.member.customerId);
+          const {
+            customer
+          } = await userInfo.detailInfo(this.member.customerId);
           this.customer = customer;
         }
         // 用户信息进入
         if (preload) {
-          const {customer} = preload.data.customer;
+          const {
+            customer
+          } = preload.data.customer;
           this.customer = customer;
           this.member = preload.data.member;
           this.scene = this.member.memberNumber;
@@ -217,7 +217,7 @@
       }
     };
     methods = {
-      async add () {
+      async add() {
         if (this.result) {
           await this.scan();
           return;
@@ -268,14 +268,14 @@
         Event.emit(Event.SHOP_CUSTOMER_UPDATE);
         this.loaded();
       },
-      detail () {
+      detail() {
         this.$navigate(`/pages/customer/info?customerId=${this.customer.id}`);
       },
-      minus (info) {
+      minus(info) {
         this.details[info.index].ruleId = info.id;
         this.details[info.index].currentCount = info.stepper;
       },
-      plus (info) {
+      plus(info) {
         this.details[info.index].ruleId = info.id;
         this.details[info.index].currentCount = info.stepper;
       }
@@ -285,7 +285,10 @@
         const data = await wepy.scanCode();
         Tips.loading('扫描中');
         console.info(data);
-        const {errMsg, path} = data;
+        const {
+          errMsg,
+          path
+        } = data;
         if (errMsg != 'scanCode:ok') {
           Tips.alert('扫描失败请重试');
           return;
@@ -312,50 +315,50 @@
     config = {
       navigationBarTitleText: '会员卡核销'
     };
-    costValidate () {
+    costValidate() {
       const isPrice = this.input.price != 0 && this.input.price != null;
       const isPresent = this.details.some(detail => detail && detail.currentCount > 0);
       if (!isPresent && !isPrice) {
         this.tips('请输入消费信息');
         return false;
       }
-      const rules = [
-        {
-          value: this.input.price,
-          method: 'number',
-          param: 0.01,
-          message: '消费金额必须为数字'
-        },
-        {
-          value: this.input.price,
-          method: 'min',
-          param: 0.01,
-          message: '消费金额不能为0或负数'
-        }
+      const rules = [{
+        value: this.input.price,
+        method: 'number',
+        param: 0.01,
+        message: '消费金额必须为数字'
+      },
+      {
+        value: this.input.price,
+        method: 'min',
+        param: 0.01,
+        message: '消费金额不能为0或负数'
+      }
       ];
       return this.check(rules);
     }
-    bonusValidate () {
-      const rules = [
-        {
-          value: this.input.bonus,
-          method: 'required',
-          param: 0,
-          message: '变动积分不能为空'
-        }
-      ];
+    bonusValidate() {
+      const rules = [{
+        value: this.input.bonus,
+        method: 'required',
+        param: 0,
+        message: '变动积分不能为空'
+      }];
       return this.check(rules);
     }
     computed = {
-      bonus () {
+      bonus() {
         if (this.card == null) return;
-        const {bonusRule, supplyBonus} = this.card;
+        const {
+          bonusRule,
+          supplyBonus
+        } = this.card;
         if (bonusRule == null || supplyBonus == 0) {
           return 0;
         }
         return Math.floor(this.input.price / bonusRule.costMoneyUnit) * bonusRule.increaseBonus;
       },
-      okText () {
+      okText() {
         return this.result ? '继续扫描' : '确定';
       },
       bonusRuleText() {
@@ -382,7 +385,11 @@
         const describes = [];
         // 有折扣的情况
         for (let rule of rules) {
-          const {upgradeFee, discount, levelName} = rule;
+          const {
+            upgradeFee,
+            discount,
+            levelName
+          } = rule;
           if (discount == 100) continue;
           const upgradeText = upgradeFee == 0 ? '完成注册' : `消费满${upgradeFee}元`;
           const discountText = (discount / 10).toFixed(1);
@@ -397,23 +404,24 @@
 </script>
 
 <style lang="scss">
-    @import "../../styles/variable";
-  .box-bg{
+  @import "../../styles/variable";
+  .box-bg {
     background-color: #FFF;
   }
-  .message-box{
+  .message-box {
     font-size: $text-xxl;
     color: $color-muted;
     height: 300px;
   }
-  .tips-box, .result-box{
+  .tips-box,
+  .result-box {
     margin-top: 20rpx;
     padding: 20rpx;
-    text{
+    text {
       color: $color-muted;
     }
   }
-  .result-box{
+  .result-box {
     border-top: $border;
   }
 </style>

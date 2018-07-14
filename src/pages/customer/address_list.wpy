@@ -11,25 +11,20 @@
   import base from '../../mixins/base';
   import customerInfo from '../../api/customer_info';
   import AddressItem from '../../components/common/address';
-
   export default class AddressList extends wepy.page {
     def = {
       init: false,
       addressList: []
     };
-    data = {...this.def};
-
+    data = { ...this.def
+    };
     async onLoad(options) {
       console.log(options);
       this.addressList = await customerInfo.addressList(options.customerId);
-
       this.loaded();
     };
-
     mixins = [base];
-
     methods = {};
-
     events = {};
     components = {
       AddressItem: AddressItem

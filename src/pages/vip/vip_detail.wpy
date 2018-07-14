@@ -1,8 +1,7 @@
 <template>
   <view class="container" wx:if="{{init}}">
-
     <view class="list-panel">
-      <VipCard :member.sync="member" :customerInfo.sync="customer" :memberCardInfo="card" :type.sync="detail"/>
+      <VipCard :member.sync="member" :customerInfo.sync="customer" :memberCardInfo="card" :type.sync="detail" />
       <text class="titel-box">会员特权</text>
       <view class="weui-cell mt20">
         <view class="weui-label muted">会员等级</view>
@@ -33,7 +32,6 @@
         <text class="info-container">{{card.notice}}</text>
       </view>
     </view>
-
     <view class="list-panel">
       <view class="titel-box">会员级别</view>
       <repeat for="{{card.discountRules}}" key="index" index="index" item="item">
@@ -48,11 +46,11 @@
     </view>
   </view>
 </template>
+
 <script>
   import wepy from 'wepy';
   import base from '../../mixins/base';
   import VipCard from '../../components/vip/vip_card';
-
   export default class VipDetail extends wepy.page {
     def = {
       init: false,
@@ -61,16 +59,15 @@
       card: {},
       detail: 'detail'
     };
-    data = {...this.def};
-
-    async onLoad (options) {
+    data = { ...this.def
+    };
+    async onLoad(options) {
       const params = JSON.parse(options.params);
       this.member = params.member;
       this.customer = params.customer;
       this.card = params.memberCardInfo;
       this.loaded();
     }
-
     computed = {
       vipDescribe() {
         if (this.card == null || this.member == null || this.card.bonusRule == null) {
@@ -78,11 +75,11 @@
         }
         const rule = this.card.bonusRule;
         return `注册绑定手机开卡即送 ${rule.initIncreaseBonus} 积分
-        本会员卡享受 ${(this.member.discountRule.discount / 10).toFixed(1)} 折优惠
-        每消费 ${rule.costBonusUnit} 元可获得 ${rule.increaseBonus} 积分
-        每使用 ${rule.costMoneyUnit} 积分，抵扣 ${rule.reduceMoney} 元现金，每笔订单最多使用 ${rule.maxReduceBonus} 积分，订单需满 ${rule.limitMoney} 元`;
+          本会员卡享受 ${(this.member.discountRule.discount / 10).toFixed(1)} 折优惠
+          每消费 ${rule.costBonusUnit} 元可获得 ${rule.increaseBonus} 积分
+          每使用 ${rule.costMoneyUnit} 积分，抵扣 ${rule.reduceMoney} 元现金，每笔订单最多使用 ${rule.maxReduceBonus} 积分，订单需满 ${rule.limitMoney} 元`;
       },
-      discountLevel () {
+      discountLevel() {
         // 校验是否初始化完毕
         if (this.member == null || this.card.discountRules == null || this.member.levelName == null) {
           return;
@@ -111,9 +108,10 @@
     };
   }
 </script>
+
 <style lang="scss">
   @import "../../styles/variable";
-  .titel-box{
+  .titel-box {
     padding: 20rpx 30rpx;
     font-size: $text-xl;
   }
@@ -123,7 +121,7 @@
   .zan-btn--mini {
     background-color: $color-bg-body;
   }
-  .list-panel{
+  .list-panel {
     background-color: white;
     margin-bottom: 20rpx;
     border-bottom: $border;

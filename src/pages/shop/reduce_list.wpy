@@ -4,14 +4,13 @@
     <repeat for="{{list}}" key="index" index="index" item="item">
       <ReduceItem :reduce.sync="item" />
     </repeat>
-
     <!--操作栏-->
     <ActionBar @tap.user="add" okText="新增优惠" cancelText="返回" />
-
     <!--占位符-->
-    <Placeholder :show.sync="empty" message="尚未配置优惠"/>
+    <Placeholder :show.sync="empty" message="尚未配置优惠" />
   </view>
 </template>
+
 <script>
   import wepy from 'wepy';
   import base from '../../mixins/base';
@@ -20,16 +19,15 @@
   import ActionBar from '../../components/common/action_bar';
   import Event from '../../utils/Event';
   import ReduceItem from '../../components/shop/reduce_item';
-
   export default class DeliverList extends wepy.page {
     def = {
       init: false,
-      list: [
-      ],
+      list: [],
       empty: null
     }
-    data = {...this.def};
-    async onLoad () {
+    data = { ...this.def
+    };
+    async onLoad() {
       await this.doLoad();
       Event.listen(Event.REDUCE_LIST_UPDATE, this.doLoad.bind(this), this);
     };
@@ -38,7 +36,7 @@
       this.empty = this.list.length < 1;
       this.loaded();
     }
-    async onPullDownRefresh () {
+    async onPullDownRefresh() {
       await this.doLoad();
       wepy.stopPullDownRefresh();
     }

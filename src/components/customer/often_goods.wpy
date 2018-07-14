@@ -1,7 +1,7 @@
 <template>
   <view class="item-box">
     <view class="goods-box row">
-      <image class="goods-image" src="{{goods.imageUrl}}"/>
+      <image class="goods-image" src="{{goods.imageUrl}}" />
       <view class="info-box column">
         <view class="title-box">
           <text class="title">{{goods.name}}</text>
@@ -16,7 +16,6 @@
 
 <script>
   import wepy from 'wepy';
-
   export default class GoodsItem extends wepy.component {
     props = {
       goods: {}
@@ -24,31 +23,24 @@
     data = {};
     methods = {};
     events = {};
-
-    onLoad() {
-    }
+    onLoad() {}
   }
 </script>
 
 <style lang="scss">
   @import "../../styles/variable";
-
   .item-box {
     background-color: #FFF;
     margin-top: rpx(10);
     position: relative;
-
     .item-action {
       border-top: $border;
       height: rpx(90);
       padding-right: rpx(10);
     }
-
     .goods-box {
       padding: rpx(30) rpx(20);
-
       $image-size: rpx(130);
-
       .goods-image {
         height: $image-size;
         width: $image-size;
@@ -62,19 +54,16 @@
         right: rpx(10);
         top: 0;
       }
-
       .desc-box {
         text {
           font-size: $text-sm;
         }
       }
-
       .info-box {
         justify-content: space-between;
         min-height: $image-size;
         flex: 1;
         margin-left: rpx(20);
-
         .title {
           line-height: rpx(30);
         }

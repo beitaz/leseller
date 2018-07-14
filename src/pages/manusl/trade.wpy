@@ -1,119 +1,107 @@
 <template>
-  <Tips/>
-
-  <view class="container" wx:if="{{init}}">
-    <!-- 地址 -->
-    <AddressSelector :address.sync="selectedAddress" :massege.sync="message" @select.user="toAddress"/>
-
-    <view class="mt10"/>
-
-    <!--订单项目-->
-    <OrderItem :order.sync="trade" :shop.sync="shop" action="0"/>
-
-    <!--订单详情-->
-    <view class="weui-cells weui-cells_after-title weui-cells-merge-top">
-
-      <!--堂食才有预约时间-->
-      <view class="weui-cell weui-cell_access">
-        <view class="weui-cell__bd">订单日期</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access">
-          <picker mode="date" id="placeDate" @change="input" value="{{input.placeDate}}">
+  <block>
+    <Tips/>
+    <view class="container" wx:if="{{init}}">
+      <!-- 地址 -->
+      <AddressSelector :address.sync="selectedAddress" :massege.sync="message" @select.user="toAddress" />
+      <view class="mt10" />
+      <!--订单项目-->
+      <OrderItem :order.sync="trade" :shop.sync="shop" action="0" />
+      <!--订单详情-->
+      <view class="weui-cells weui-cells_after-title weui-cells-merge-top">
+        <!--堂食才有预约时间-->
+        <view class="weui-cell weui-cell_access">
+          <view class="weui-cell__bd">订单日期</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access">
+            <picker mode="date" id="placeDate" @change="input" value="{{input.placeDate}}">
               {{input.placeDate ? input.placeDate : '请选择订单日期'}}
-          </picker>
+            </picker>
+          </view>
         </view>
-      </view>
-      <view class="weui-cell weui-cell_access">
-        <view class="weui-cell__bd">订单时间</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access">
-          <picker mode="time" id="placeTime" @change="input" value="{{input.placeTime}}">
+        <view class="weui-cell weui-cell_access">
+          <view class="weui-cell__bd">订单时间</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access">
+            <picker mode="time" id="placeTime" @change="input" value="{{input.placeTime}}">
               {{input.placeTime ? input.placeTime : '请选择订单时间'}}
-          </picker>
+            </picker>
+          </view>
+        </view>
+        <!--订单状态：待付款、已付款、配送中、已完成-->
+        <view class="weui-cell weui-cell_access" @tap="orderStutas">
+          <view class="weui-cell__bd">订单状态</view>
+          <text class="weui-cell__ft weui-cell__ft_in-access">{{trade.orderStutas}} </text>
+        </view>
+        <!--外卖才能在线支付-->
+        <view class="weui-cell weui-cell_access" @tap="paymentType">
+          <view class="weui-cell__bd">支付方式</view>
+          <view class="weui-cell__ft weui-cell__ft_in-access">{{trade.paymentText}}</view>
+        </view>
+        <!--外卖才有配送方式-->
+        <view class="weui-cell weui-cell_access" @tap="delivery">
+          <view class="weui-cell__bd">配送方式</view>
+          <text class="weui-cell__ft weui-cell__ft_in-access">{{trade.deliveryText}}</text>
         </view>
       </view>
-      <!--订单状态：待付款、已付款、配送中、已完成-->
-      <view class="weui-cell weui-cell_access" @tap="orderStutas">
-        <view class="weui-cell__bd">订单状态</view>
-        <text class="weui-cell__ft weui-cell__ft_in-access">{{trade.orderStutas}} </text>
+      <view class="mt10" />
+      <!--信息汇总-->
+      <view class="weui-cells weui-cells_after-title weui-cells-merge-top">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">商品金额</view>
+          </view>
+          <view class="weui-cell__bd row">
+            <text class="major-color  ml20 mr10">￥</text>
+            <input class="weui-input major-color" id="dealPrice" type="number" maxlength="6" @input="input" value="{{input.dealPrice}}" placeholder="请输入商品金额" />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">优惠金额</view>
+          </view>
+          <view class="weui-cell__bd row">
+            <text class="major-color mr10">- ￥</text>
+            <input class="weui-input major-color" id="couponPrice" type="number" maxlength="6" @input="input" value="{{input.couponPrice}}" placeholder="请输入优惠金额" />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">配送费</view>
+          </view>
+          <view class="weui-cell__bd row">
+            <text class="major-color mr10">+￥</text>
+            <input class="weui-input major-color" id="postFee" type="number" maxlength="6" @input="input" value="{{input.postFee}}" placeholder="请输入配送金额" />
+          </view>
+        </view>
       </view>
-      <!--外卖才能在线支付-->
-      <view class="weui-cell weui-cell_access" @tap="paymentType">
-        <view class="weui-cell__bd">支付方式</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access">{{trade.paymentText}}</view>
+      <view class="mt10" />
+      <!--备注信息-->
+      <view class="remark-box weui-cells weui-cells_after-title weui-cells-merge-top">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">订单备注</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" id="message" @input="input" value="{{trade.message}}" placeholder="请输入订单备注" />
+          </view>
+          <view class="weui-cell__ft">
+          </view>
+        </view>
       </view>
-
-      <!--外卖才有配送方式-->
-      <view class="weui-cell weui-cell_access" @tap="delivery">
-        <view class="weui-cell__bd">配送方式</view>
-        <text class="weui-cell__ft weui-cell__ft_in-access">{{trade.deliveryText}}</text>
+      <!--操作底栏-->
+      <view class="tarde-action-bar row-end">
+        <view wx:if="{{confirmStatus}}">
+          <text>订单金额 </text>
+          <text class="major mr20">￥{{trade.finalPrice}}</text>
+        </view>
+        <text class="xxl mr20 muted" wx:if="{{!confirmStatus}}">{{confirmText}}</text>
+        <form class="trade-confirm-button {{confirmStatus ? '' : 'trade-confirm-disable' }} row-center" report-submit @submit="confirm">
+          <button plain form-type="submit">立即下单</button>
+        </form>
       </view>
-
+      <view class="tarde-action-bar-placeholder">
+      </view>
     </view>
-    <view class="mt10"/>
-    <!--信息汇总-->
-    <view class="weui-cells weui-cells_after-title weui-cells-merge-top">
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">商品金额</view>
-        </view>
-        <view class="weui-cell__bd row">
-          <text class="major-color  ml20 mr10">￥</text>
-          <input class="weui-input major-color" id="dealPrice" type="number" maxlength="6"
-                 @input="input" value="{{input.dealPrice}}" placeholder="请输入商品金额"/>
-        </view>
-      </view>
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">优惠金额</view>
-        </view>
-        <view class="weui-cell__bd row">
-          <text class="major-color mr10">- ￥</text>
-          <input class="weui-input major-color" id="couponPrice" type="number" maxlength="6"
-                 @input="input" value="{{input.couponPrice}}" placeholder="请输入优惠金额"/>
-        </view>
-      </view>
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">配送费</view>
-        </view>
-        <view class="weui-cell__bd row">
-          <text class="major-color mr10">+￥</text>
-          <input class="weui-input major-color" id="postFee" type="number" maxlength="6"
-                 @input="input" value="{{input.postFee}}" placeholder="请输入配送金额"/>
-        </view>
-      </view>
-    </view>
-
-    <view class="mt10"/>
-    <!--备注信息-->
-    <view class="remark-box weui-cells weui-cells_after-title weui-cells-merge-top">
-      <view class="weui-cell weui-cell_input">
-        <view class="weui-cell__hd">
-          <view class="weui-label">订单备注</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" id="message" @input="input" value="{{trade.message}}" placeholder="请输入订单备注"/>
-        </view>
-        <view class="weui-cell__ft">
-        </view>
-      </view>
-    </view>
-
-    <!--操作底栏-->
-    <view class="tarde-action-bar row-end">
-      <view wx:if="{{confirmStatus}}">
-        <text>订单金额 </text>
-        <text class="major mr20">￥{{trade.finalPrice}}</text>
-      </view>
-      <text class="xxl mr20 muted" wx:if="{{!confirmStatus}}">{{confirmText}}</text>
-      <form class="trade-confirm-button {{confirmStatus ? '' : 'trade-confirm-disable' }} row-center" report-submit
-            @submit="confirm">
-        <button plain form-type="submit">立即下单</button>
-      </form>
-    </view>
-    <view class="tarde-action-bar-placeholder">
-    </view>
-
-  </view>
+  </block>
 </template>
 
 <script>
@@ -131,7 +119,6 @@
   import WxUtils from '../../utils/WxUtils';
   import Cache from '../../utils/Cache';
   import Lang from '../../utils/Lang';
-
   export default class OrderTrade extends wepy.page {
     def = {
       init: false,
@@ -148,9 +135,11 @@
       selectedAddress: null,
       address: {}
     };
-    data = {...this.def};
-
-    async onLoad (params, {preload}) {
+    data = { ...this.def
+    };
+    async onLoad(params, {
+      preload
+    }) {
       // 默认值
       this.trade = preload.trade;
       this.input = this.trade;
@@ -167,7 +156,9 @@
       // 用户信息
       this.customer = JSON.parse(params.customer);
       this.customer.type = 'trade';
-      if (!this.customer || !isOpen) { return; }
+      if (!this.customer || !isOpen) {
+        return;
+      }
       // 订单数据
       this.trade.memberId = this.customer.memberId;
       this.goodsList = this.trade.orderGoodsInfos;
@@ -182,7 +173,7 @@
       Event.listen(Event.ADDRESS_LIST_UPDATE, this.addressUpdate.bind(this), this);
       this.loaded();
     };
-    addressUpdate (address) {
+    addressUpdate(address) {
       this.selectedAddress = address;
       this.loaded();
     };
@@ -191,7 +182,9 @@
        * 选择订单状态待付款1、已付款2、配送中3、已完成6
        */
       async orderStutas() {
-        const {text} = await Tips.action('待付款', '已付款', '配送中', '已完成');
+        const {
+          text
+        } = await Tips.action('待付款', '已付款', '配送中', '已完成');
         this.trade.orderStutas = text;
         if (this.trade.orderStutas == '待付款') {
           this.trade.status = 1;
@@ -207,7 +200,7 @@
       /**
        * 选择付款方式
        */
-      async paymentType () {
+      async paymentType() {
         const trade = this.trade;
         Tips.actionWithFunc(['在线支付', '线下支付'],
           () => {
@@ -228,7 +221,9 @@
         this.delivery.forEach(item => {
           this.deliveries = item;
         });
-        const {text} = await Tips.action(this.deliveries.name);
+        const {
+          text
+        } = await Tips.action(this.deliveries.name);
         this.trade.deliveryText = text;
         this.delivery.find(item => {
           if (item.name == this.trade.deliveryText) {
@@ -237,7 +232,7 @@
         });
         this.$apply();
       },
-      async toAddress () {
+      async toAddress() {
         if (this.address) {
           this.$root.$navigate('/pages/manusl/select_address?memberId=' + this.customer.customerId);
         } else {
@@ -247,13 +242,17 @@
       /**
        * 确定下单
        */
-      async confirm({detail}) {
+      async confirm({
+        detail
+      }) {
         if (!this.validate()) {
           return;
         }
         // 检查店铺状态
         const isOpen = await this.checkShopStatus();
-        if (!isOpen) { return; }
+        if (!isOpen) {
+          return;
+        }
         // 表单ID
         this.trade.formId = detail.formId;
         // 创建订单
@@ -290,7 +289,7 @@
       return status;
     }
     computed = {
-      message () {
+      message() {
         if (this.address) {
           return 0;
         } else {
@@ -302,7 +301,7 @@
      * 更新订单价格
      */
     watch = {
-      trade () {
+      trade() {
         if (this.trade) {
           const trade = this.trade;
           trade.finalPrice = 0;
@@ -323,26 +322,25 @@
         }
       }
     };
-    validate () {
-      const rules = [
-        {
-          value: this.trade.postFee,
-          method: 'min',
-          param: 0.00,
-          message: '配送费用不能小于0'
-        },
-        {
-          value: this.trade.dealPrice,
-          method: 'min',
-          param: 0.00,
-          message: '商品金额不能小于0'
-        },
-        {
-          value: this.trade.couponPrice,
-          method: 'min',
-          param: 0.00,
-          message: '优惠金额不能小于0'
-        }
+    validate() {
+      const rules = [{
+        value: this.trade.postFee,
+        method: 'min',
+        param: 0.00,
+        message: '配送费用不能小于0'
+      },
+      {
+        value: this.trade.dealPrice,
+        method: 'min',
+        param: 0.00,
+        message: '商品金额不能小于0'
+      },
+      {
+        value: this.trade.couponPrice,
+        method: 'min',
+        param: 0.00,
+        message: '优惠金额不能小于0'
+      }
       ];
       return this.check(rules);
     }
@@ -363,16 +361,15 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-  .remark-box{
+  .remark-box {
     border-top: $border;
     margin-bottom: 10rpx;
   }
-
-  .major-color{
+  .major-color {
     color: $color-major;
   }
   /*购买栏*/
-  .tarde-action-bar{
+  .tarde-action-bar {
     position: fixed;
     z-index: 10000;
     bottom: 0;
@@ -380,31 +377,27 @@
     width: 100%;
     background-color: #FFF;
     border-top: $border;
-
-    text{
+    text {
       font-size: $text-xxl;
     }
-
     /*操作底栏*/
-    .trade-confirm-button{
+    .trade-confirm-button {
       height: 100%;
       width: 280rpx;
       line-height: 100rpx;
       text-align: center;
       background-color: $color-primary;
       color: #FFF;
-      button{
+      button {
         color: #FFF;
       }
     }
-
-    .trade-confirm-disable{
+    .trade-confirm-disable {
       background-color: #B0B0B0;
     }
   }
-  .tarde-action-bar-placeholder{
+  .tarde-action-bar-placeholder {
     width: 100%;
     height: 100rpx;
   }
-
 </style>

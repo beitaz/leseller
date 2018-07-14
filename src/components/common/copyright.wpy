@@ -10,7 +10,7 @@
 <script>
   import wepy from 'wepy'
   export default class Copyright extends wepy.component {
-    props ={
+    props = {
       buttom: {
         default: 'false'
       }
@@ -18,7 +18,7 @@
     data = {
       version: null
     };
-    onLoad () {
+    onLoad() {
       this.version = wepy.$instance.globalData.version;
     }
   }

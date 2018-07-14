@@ -1,18 +1,15 @@
 <template>
   <block wx:if="{{show}}">
-
     <!--空占位符-->
-    <view class="empty-placeholder row-center" wx:if="{{type == 'empty'}}" @tap="tap" >
-      <image class="icon-xl" src="/images/icons/empty.png"/>
+    <view class="empty-placeholder row-center" wx:if="{{type == 'empty'}}" @tap="tap">
+      <image class="icon-xl" src="/images/icons/empty.png" />
       <text class="ml20">{{message}}</text>
     </view>
-
     <!--新增占位符-->
     <view class="empty-placeholder column-center" wx:if="{{type == 'add'}}" @tap="tap">
-      <image class="icon-xl" src="/images/icons/plus.png"/>
+      <image class="icon-xl" src="/images/icons/plus.png" />
       <text class="mt20">{{message}}</text>
     </view>
-
   </block>
 </template>
 
@@ -28,7 +25,9 @@
         type: String,
         default: 'empty'
       },
-      message: {default: '没有相关信息'}
+      message: {
+        default: '没有相关信息'
+      }
     };
     methods = {
       tap() {
@@ -40,14 +39,13 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-  .empty-placeholder{
+  .empty-placeholder {
     position: fixed;
     top: 300rpx;
     width: 100%;
     height: 300rpx;
     align-items: center;
-
-    text{
+    text {
       color: $color-weak;
       font-size: 40rpx;
     }

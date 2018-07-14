@@ -44,13 +44,12 @@
 <script>
   import wepy from 'wepy';
   import base from '../../mixins/base';
-
   export default class DraftList extends wepy.page {
     data = {
       init: false,
       limit: {}
     };
-    async onLoad (options) {
+    async onLoad(options) {
       this.limit = JSON.parse(options.param);
       this.loaded();
     };

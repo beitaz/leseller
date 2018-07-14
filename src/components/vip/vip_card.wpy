@@ -1,12 +1,10 @@
 <template>
   <!-- 会员卡区域 -->
   <view class="vip-box column-between flex-start" @tap="vipDetail({{member}},{{userInfo}},{{vipCard}})" wx:if="{{member != null}}">
-
     <view class="row-between" style="width: 100%">
       <view class="row">
         <!--头像-->
-        <image class="avatar" src="{{userInfo.avatarUrl ? userInfo.avatarUrl : '/images/icons/customer_white.png'}}"/>
-
+        <image class="avatar" src="{{userInfo.avatarUrl ? userInfo.avatarUrl : '/images/icons/customer_white.png'}}" />
         <!--用户信息-->
         <view class="info-box column">
           <text class="user-name">{{userInfo.nickName ? userInfo.nickName : '微信用户'}}</text>
@@ -17,26 +15,24 @@
           </view>
         </view>
       </view>
-      <image class="icon-qrcode" src="/images/icons/qrcode.png"
-             @tap.stop="canvas({{member}},{{userInfo}},{{vipCard}})"/>
+      <image class="icon-qrcode" src="/images/icons/qrcode.png" @tap.stop="canvas({{member}},{{userInfo}},{{vipCard}})" />
     </view>
     <view class="row-between" style="width: 100%">
       <text class="xxl">{{numberText}}</text>
       <text class="sm">{{parsentText}}</text>
       <!--<view class="row-between">-->
-        <!---->
+      <!---->
       <!--</view>-->
       <!--<view class="card-title">-->
-        <!--<text>{{vipCard.title}}</text>-->
+      <!--<text>{{vipCard.title}}</text>-->
       <!--</view>-->
     </view>
-
   </view>
 </template>
+
 <script>
   import wepy from 'wepy';
   import base from '../../mixins/base'
-
   export default class VipCard extends wepy.component {
     props = {
       member: {},
@@ -45,7 +41,7 @@
       type: {}
     };
     methods = {
-      regist () {
+      regist() {
         this.$root.$navigate('/pages/customer/registe_member');
       },
       vipDetail(member, userInfo, vipCard) {
@@ -62,7 +58,7 @@
       }
     };
     computed = {
-      levelName () {
+      levelName() {
         if (this.member && this.vipCard && this.vipCard.supplyDiscount == 1 && this.member.discountRule) {
           return this.member.discountRule.levelName;
         } else {
@@ -81,13 +77,17 @@
         }
         return text;
       },
-      parsentText () {
+      parsentText() {
         // 对合法性进行检查
         const isRule = this.vipCard && this.vipCard.memberPresentRules && this.vipCard.memberPresentRules.length > 0;
         const isMember = this.member && this.member.memberPresentDetails && this.member.memberPresentDetails.length > 0;
         if (!isRule || !isMember) return '';
-        const {currentCount} = this.member.memberPresentDetails[0];
-        const {unit} = this.vipCard.memberPresentRules[0];
+        const {
+          currentCount
+        } = this.member.memberPresentDetails[0];
+        const {
+          unit
+        } = this.vipCard.memberPresentRules[0];
         return `当前已累计${currentCount}${unit}`;
       }
     };
@@ -105,7 +105,7 @@
     border-radius: 10px;
     padding: 5px 15px;
   }
-  .avatar{
+  .avatar {
     width: 120rpx;
     height: 120rpx;
     border-radius: 50%;
@@ -113,7 +113,7 @@
     border: 2px solid #FFF;
     box-shadow: 0 0 5px gray;
   }
-  .icon-qrcode{
+  .icon-qrcode {
     width: 80rpx;
     height: 80rpx;
   }
@@ -130,19 +130,18 @@
     }
     .info-box {
       margin-left: 30rpx;
-
-      .user-name{
+      .user-name {
         font-size: 36rpx;
       }
     }
-    .cost-box{
+    .cost-box {
       margin-top: 10rpx;
-      align-items:center;
+      align-items: center;
     }
-    .card-title{
+    .card-title {
       border-bottom: 1px solid white;
       padding: 0 5px;
-      text{
+      text {
         font-size: $text-xxl;
         font-weight: bold;
       }

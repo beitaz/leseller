@@ -1,19 +1,16 @@
 <template>
-	<view class="container" wx:if="{{init}}">
-		<!--列表区域-->
-		<view>
-			<repeat for="{{page.list}}" key="index" index="index" item="item">
-				<CouponItem :coupon.sync="item" :couponText="couponText"></CouponItem>
-			</repeat>
-
-			<!-- 加载提示 -->
-			<Loadmore :page.sync="page" emptyText="暂无记录"/>
-
-			<!--占位符-->
-			<Placeholder :show.sync="isPageEmpty" message="您还没有可领取的卡卷"/>
-
-		</view>
-	</view>
+  <view class="container" wx:if="{{init}}">
+    <!--列表区域-->
+    <view>
+      <repeat for="{{page.list}}" key="index" index="index" item="item">
+        <CouponItem :coupon.sync="item" :couponText="couponText"></CouponItem>
+      </repeat>
+      <!-- 加载提示 -->
+      <Loadmore :page.sync="page" emptyText="暂无记录" />
+      <!--占位符-->
+      <Placeholder :show.sync="isPageEmpty" message="您还没有可领取的卡卷" />
+    </view>
+  </view>
 </template>
 
 <script>
@@ -25,7 +22,6 @@
   import Placeholder from '../../components/common/placeholder';
   import ActionBar from '../../components/common/action_bar';
   import Event from '../../utils/Event';
-
   export default class PresentCoupon extends wepy.page {
     data = {
       init: false,
@@ -33,20 +29,20 @@
       couponText: '确认',
       index: null
     };
-
-    async onLoad(options, {preload}) {
+    async onLoad(options, {
+      preload
+    }) {
       this.index = preload.data.index;
       this.customerId = options.customerId;
       this.page = coupon.page();
       this.next();
     };
-
     methods = {};
-
     params() {
-      return {status: 'USED'};
+      return {
+        status: 'USED'
+      };
     }
-
     events = {
       async select(coupon) {
         const list = {
@@ -76,6 +72,5 @@
 </script>
 
 <style lang="scss">
-	@import "../../styles/variable";
-
+  @import "../../styles/variable";
 </style>

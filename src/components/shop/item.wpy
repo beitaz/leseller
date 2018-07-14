@@ -1,6 +1,6 @@
 <template>
   <view class="item-box row">
-    <image class="shop-icon icon-xl" src="{{shop.avatar}}"/>
+    <image class="shop-icon icon-xl" src="{{shop.avatar}}" />
     <text class="shop-title xxl">{{shop.shopName}}</text>
   </view>
 </template>
@@ -19,20 +19,16 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-
   .item-box {
-    padding:20rpx 30rpx;
+    padding: 20rpx 30rpx;
     border-top: $border;
-
-    .shop-icon{
+    .shop-icon {
       background-color: white;
       border-radius: 5px;
       border: $border;
     }
-
-    .shop-title{
+    .shop-title {
       margin-left: 35rpx;
     }
   }
-
 </style>

@@ -1,6 +1,6 @@
 import wepy from 'wepy'
 import Tips from './Tips';
-const app = getApp();
+// const app = getApp();
 
 // HTTP工具类
 export default class http {

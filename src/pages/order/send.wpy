@@ -1,64 +1,59 @@
 <template>
-  <Tips />
-
-  <ExpressCompany :display.sync="selectDisplay"  @back.user="back" @selected.user="selected" />
-
-  <view class="container" wx:if="{{panelDisplay}}">
-    <!--地址展现-->
-    <Address :address.sync="address" />
-
-    <!--发货表单-->
-    <view class="weui-cells weui-cells_after-title form">
-      <view class="weui-cell weui-cell_switch">
-        <view class="weui-cell__bd">{{input.isMail ? '物流发货' : '同城配送'}}</view>
-        <view class="weui-cell__ft">
-          <switch checked="{{input.isMail}}" id="isMail" @change="input" />
+  <block>
+    <Tips />
+    <ExpressCompany :display.sync="selectDisplay" @back.user="back" @selected.user="selected" />
+    <view class="container" wx:if="{{panelDisplay}}">
+      <!--地址展现-->
+      <Address :address.sync="address" />
+      <!--发货表单-->
+      <view class="weui-cells weui-cells_after-title form">
+        <view class="weui-cell weui-cell_switch">
+          <view class="weui-cell__bd">{{input.isMail ? '物流发货' : '同城配送'}}</view>
+          <view class="weui-cell__ft">
+            <switch checked="{{input.isMail}}" id="isMail" @change="input" />
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input" wx:if="{{input.isMail}}" @tap="select">
+          <view class="weui-cell__hd">
+            <view class="weui-label">快递公司</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请选择快递公司" disabled value="{{company.name}}" />
+          </view>
+          <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </view>
+        <view class="weui-cell weui-cell_input" wx:if="{{input.isMail}}">
+          <view class="weui-cell__hd">
+            <view class="weui-label">快递单号</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" id="mailNo" @input="input" placeholder="请输入快递单号" value="{{input.mailNo}}" />
+          </view>
+          <view class="weui-cell__ft">
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input row-center express-tips" wx:if="{{!input.isMail && delivers.length < 1}}">
+          <text class="muted">尚未配置配送员</text>
+        </view>
+        <view class="weui-cell weui-cell_select" wx:if="{{!input.isMail && delivers.length > 0}}">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">配送员</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker @change="input" id="deliverIndex" range-key="showText" value="{{input.deliverIndex}}" range="{{delivers}}">
+              <view class="weui-select weui-select_in-select-after">{{seletedDeliver}}</view>
+            </picker>
+          </view>
         </view>
       </view>
-      <view class="weui-cell weui-cell_input" wx:if="{{input.isMail}}" @tap="select">
-        <view class="weui-cell__hd">
-          <view class="weui-label">快递公司</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="请选择快递公司" disabled value="{{company.name}}"/>
-        </view>
-        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      <!--订单信息-->
+      <view class="mt10">
+        <OrderItem :order.sync="order" action="0"></OrderItem>
       </view>
-      <view class="weui-cell weui-cell_input" wx:if="{{input.isMail}}">
-        <view class="weui-cell__hd" >
-          <view class="weui-label">快递单号</view>
-        </view>
-        <view class="weui-cell__bd">
-          <input class="weui-input" id="mailNo" @input="input" placeholder="请输入快递单号" value="{{input.mailNo}}"/>
-        </view>
-        <view class="weui-cell__ft">
-        </view>
-      </view>
-
-      <view class="weui-cell weui-cell_input row-center express-tips" wx:if="{{!input.isMail && delivers.length < 1}}">
-        <text class="muted">尚未配置配送员</text>
-      </view>
-
-      <view class="weui-cell weui-cell_select" wx:if="{{!input.isMail && delivers.length > 0}}">
-        <view class="weui-cell__hd weui-cell__hd_in-select-after">
-          <view class="weui-label">配送员</view>
-        </view>
-        <view class="weui-cell__bd">
-          <picker @change="input" id="deliverIndex" range-key="showText" value="{{input.deliverIndex}}" range="{{delivers}}">
-            <view class="weui-select weui-select_in-select-after">{{seletedDeliver}}</view>
-          </picker>
-        </view>
-      </view>
+      <!--操作栏-->
+      <ActionBar @tap.user="submit" />
     </view>
-
-    <!--订单信息-->
-    <view class="mt10">
-      <OrderItem :order.sync="order" action="0"></OrderItem>
-    </view>
-
-    <!--操作栏-->
-    <ActionBar @tap.user="submit" />
-  </view>
+  </block>
 </template>
 
 <script>
@@ -73,7 +68,6 @@
   import OrderItem from '../../components/order/item';
   import ExpressCompany from '../../components/express/company';
   import FormTips from '../../components/weui/tips';
-
   export default class OrderSend extends wepy.page {
     def = {
       order: {
@@ -89,8 +83,9 @@
       company: {},
       delivers: []
     };
-    data = {...this.def};
-    async onLoad (options) {
+    data = { ...this.def
+    };
+    async onLoad(options) {
       const orderId = options.orderId;
       this.order = await order.detail(orderId);
       this.address = this.order.receiveAddress;
@@ -135,7 +130,12 @@
           }
         }
         await Tips.confirm('是否确认发货？');
-        const param = {expressType, telPhone, expressNo, note};
+        const param = {
+          expressType,
+          telPhone,
+          expressNo,
+          note
+        };
         await order.send(orderId, param);
         Event.emit(Event.ORDER_LIST_UPDATE);
         await Tips.success('发货成功！');
@@ -194,8 +194,7 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-
-  .express-tips{
+  .express-tips {
     height: 177rpx;
   }
 </style>

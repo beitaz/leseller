@@ -4,8 +4,8 @@
     <SearchBar :inputVal="input" back="true" @back.user="back" />
     <!--搜索结果-->
     <view class="weui-cells searchbar-result">
-      <view url="" class="weui-cell" hover-class="weui-cell_active" @tap="selected({{item}})"  wx:item="item" wx:for="{{companies}}" wx:key="type" wx:if="{{item.display}}">
-        <view class="weui-cell__bd" >
+      <view url="" class="weui-cell" hover-class="weui-cell_active" @tap="selected({{item}})" wx:item="item" wx:for="{{companies}}" wx:key="type" wx:if="{{item.display}}">
+        <view class="weui-cell__bd">
           <view>{{item.name}}</view>
         </view>
       </view>
@@ -18,7 +18,6 @@
   import express from '../../api/express';
   import Tips from '../../utils/Tips';
   import SearchBar from '../weui/search_bar';
-
   export default class ExpressCompany extends wepy.component {
     props = {
       display: {
@@ -30,8 +29,7 @@
       companies: [],
       input: ''
     };
-    async onLoad () {
-    };
+    async onLoad() {};
     watch = {
       input(value) {
         this.companies.forEach(company => {
@@ -68,20 +66,19 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-  .container{
+  .container {
     z-index: 10000;
   }
-  .express-company-box{
-    .weui-cell{
+  .express-company-box {
+    .weui-cell {
       padding: 12px 15px 12px 35px;
     }
-    .searchbar-result{
+    .searchbar-result {
       margin-top: 48px;
       font-size: 14px;
     }
-    .searchbar-result:before{
+    .searchbar-result:before {
       display: none;
     }
   }
-
 </style>

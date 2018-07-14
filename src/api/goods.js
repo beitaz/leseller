@@ -243,5 +243,4 @@ export default class goods extends base {
       detail.priceText = `￥${minPrice}`;
     }
   }
-
 }

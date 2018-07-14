@@ -1,19 +1,20 @@
 <template>
-  <Tips/>
-  <view class="container" wx:if="{{init}}">
-    <!--操作表单-->
-    <view class="weui-cells-form">
-      <Switch title="请输入分类名称：" fieldName="show" :input.sync="input" switchFlag="0"/>
-      <view class="weui-cell">
-        <view class="weui-cell__bd">
-          <input class="weui-textarea" id="name" @blur="input" value="{{input.name}}" maxlength="10"/>
+  <block>
+    <Tips/>
+    <view class="container" wx:if="{{init}}">
+      <!--操作表单-->
+      <view class="weui-cells-form">
+        <Switch title="请输入分类名称：" fieldName="show" :input.sync="input" switchFlag="0" />
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <input class="weui-textarea" id="name" @blur="input" value="{{input.name}}" maxlength="10" />
+          </view>
         </view>
       </view>
+      <!--操作栏-->
+      <ActionBar @tap.user="submit" />
     </view>
-
-    <!--操作栏-->
-    <ActionBar @tap.user="submit"/>
-  </view>
+  </block>
 </template>
 
 <style lang="scss">
@@ -30,19 +31,22 @@
   import ActionBar from '../../components/common/action_bar';
   import Tips from '../../utils/Tips';
   import Event from '../../utils/Event';
-
   export default class CategoryEdit extends wepy.page {
     def = {
       init: false,
       mode: 'create'
     };
-    data = {...this.def};
+    data = { ...this.def
+    };
     async onReady() {
       wepy.setNavigationBarTitle({
         title: this.title
       })
     };
-    async onLoad ({mode, categoryId}) {
+    async onLoad({
+      mode,
+      categoryId
+    }) {
       this.mode = mode;
       if (mode == 'create') {
         this.title = '新增分类';
@@ -71,12 +75,11 @@
       }
     };
     validate() {
-      const rules = [
-        {
-          value: this.input.name,
-          method: 'required',
-          message: '分类名称不能为空'
-        }];
+      const rules = [{
+        value: this.input.name,
+        method: 'required',
+        message: '分类名称不能为空'
+      }];
       return this.check(rules);
     }
     mixins = [base, input];

@@ -2,15 +2,13 @@
   <view @tap="tap">
     ##{{order.orderId}}##
   </view>
-
 </template>
 
 <script>
   import wepy from 'wepy'
   export default class OrderAction extends wepy.component {
     props = {
-      order: {
-      }
+      order: {}
     };
     methods = {
       tap() {
@@ -18,8 +16,7 @@
       }
     };
     events = {};
-    onLoad() {
-    }
+    onLoad() {}
   }
 </script>
 

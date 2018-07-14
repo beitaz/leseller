@@ -2,20 +2,16 @@
   <view class="conatiner" wx:if="{{init}}">
     <!--TAB 页-->
     <ZanTab :tab.sync="tab" @change.user="switchTab" />
-
     <!--列表展现-->
     <repeat for="{{page.list}}" key="index" index="index" item="item">
       <CouponItem :coupon.sync="item"></CouponItem>
     </repeat>
-
     <!-- 加载提示 -->
-    <Loadmore :page.sync="page"/>
-
+    <Loadmore :page.sync="page" />
     <!--操作栏-->
     <ActionBar @tap.user="add" okText="新增优惠券" cancelText="返回" />
-
     <!--占位符-->
-    <Placeholder :show.sync="isPageEmpty" message="您还没有相关卡券信息"/>
+    <Placeholder :show.sync="isPageEmpty" message="您还没有相关卡券信息" />
   </view>
 </template>
 
@@ -30,31 +26,40 @@
   import CouponItem from '../../components/coupon/item';
   import Event from '../../utils/Event';
   import Loadmore from '../../components/weui/loadmore';
-
   export default class CouponIndex extends wepy.page {
     def = {
       init: false,
       page: {
-        list: [
-        ]
+        list: []
       },
       tab: {
-        list: [
-          {id: 'USED', title: '进行中'},
-          {id: 'NEVER_USED', title: '未开始'},
-          {id: 'EXPIRED', title: '已失效'}
+        list: [{
+          id: 'USED',
+          title: '进行中'
+        },
+        {
+          id: 'NEVER_USED',
+          title: '未开始'
+        },
+        {
+          id: 'EXPIRED',
+          title: '已失效'
+        }
         ],
         selectedId: 'USED'
       }
     };
-    data = {...this.def};
-    async onLoad () {
+    data = { ...this.def
+    };
+    async onLoad() {
       this.page = coupon.page();
       await this.next();
       Event.listen(Event.COUPON_LIST_UPDATE, this.update.bind(this), this);
     };
     params() {
-      return {status: this.tab.selectedId};
+      return {
+        status: this.tab.selectedId
+      };
     }
     methods = {
       switchTab() {

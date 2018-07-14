@@ -1,26 +1,27 @@
 <template>
-  <Tips />
-  <view class="container" wx:if="{{init}}">
-    <view class="weui-cells form">
-      <view class="weui-cell weui-cell_select">
-        <view class="weui-cell__hd weui-cell__hd_in-select-after">
-          <view class="weui-label">关闭原因</view>
-        </view>
-        <view class="weui-cell__bd">
-          <picker @change="input" id="reasonIndex" value="{{input.reasonIndex}}" range="{{reasons}}">
-            <view class="weui-select weui-select_in-select-after">{{seletedReason}}</view>
-          </picker>
+  <block>
+    <Tips />
+    <view class="container" wx:if="{{init}}">
+      <view class="weui-cells form">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">关闭原因</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker @change="input" id="reasonIndex" value="{{input.reasonIndex}}" range="{{reasons}}">
+              <view class="weui-select weui-select_in-select-after">{{seletedReason}}</view>
+            </picker>
+          </view>
         </view>
       </view>
+      <!--订单信息-->
+      <view class="order-box">
+        <OrderItem :order.sync="order" action="0"></OrderItem>
+      </view>
+      <!--操作栏-->
+      <ActionBar okText="确定关闭" okType="primary" @tap.user="submit" />
     </view>
-    <!--订单信息-->
-    <view class="order-box">
-      <OrderItem :order.sync="order" action="0"></OrderItem>
-    </view>
-
-    <!--操作栏-->
-    <ActionBar okText="确定关闭" okType="primary" @tap.user="submit" />
-  </view>
+  </block>
 </template>
 
 <script>
@@ -32,7 +33,6 @@
   import ActionBar from '../../components/common/action_bar';
   import FormTips from '../../components/weui/tips';
   import OrderItem from '../../components/order/item';
-
   export default class OrderClose extends wepy.page {
     data = {
       order: {
@@ -44,7 +44,7 @@
       reasons: order.closeReacon,
       init: false
     };
-    async onLoad (options) {
+    async onLoad(options) {
       const orderId = options.orderId;
       this.order = await order.detail(orderId);
       this.input.reasonIndex = 0;
@@ -92,7 +92,7 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-  .order-box{
+  .order-box {
     margin-top: 33rpx;
   }
 </style>

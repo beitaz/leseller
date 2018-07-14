@@ -1,7 +1,6 @@
 <template>
   <checkbox-group class="weui-cell" @tap="checkboxChange">
-    <checkbox class="weui-check" value="{{category.value}}" checked="{{category.checked}}"/>
-
+    <checkbox class="weui-check" value="{{category.value}}" checked="{{category.checked}}" />
     <view class="weui-check__hd_in-checkbox">
       <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!category.checked}}"></icon>
       <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{category.checked}}"></icon>
@@ -9,9 +8,9 @@
     <view class="weui-cell__bd">{{category.name}}</view>
   </checkbox-group>
 </template>
+
 <script>
   import wepy from 'wepy';
-
   export default class CategoryItem extends wepy.component {
     props = {
       category: {}
@@ -21,14 +20,16 @@
         checked: false
       }
     };
-    data = {...this.def};
+    data = { ...this.def
+    };
     methods = {
-      checkboxChange () {
+      checkboxChange() {
         this.category.checked = !this.category.checked;
       }
     };
   }
 </script>
+
 <style lang="scss">
-    @import "../../styles/variable";
+  @import "../../styles/variable";
 </style>

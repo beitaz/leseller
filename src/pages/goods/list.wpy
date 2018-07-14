@@ -1,8 +1,7 @@
 <template>
   <view class="container" wx:if="{{init}}">
     <!--TAB 页-->
-    <ZanTab :tab="tab" fixed="0" @change.user="change"/>
-
+    <ZanTab :tab="tab" fixed="0" @change.user="change" />
     <!--主内容区域-->
     <view class="main-box row">
       <!--分类侧边栏-->
@@ -16,10 +15,10 @@
         <!--商品列表-->
         <view class="goods-list">
           <repeat for="{{page.list}}" key="index" index="index" item="item">
-            <GoodsItem :goods.sync="item"/>
+            <GoodsItem :goods.sync="item" />
           </repeat>
         </view>
-        <Loadmore :page.sync="page" emptyText="暂无商品"/>
+        <Loadmore :page.sync="page" emptyText="暂无商品" />
       </scroll-view>
     </view>
     <!--操作栏-->
@@ -47,18 +46,27 @@
         list: []
       },
       tab: {
-        list: [
-          {id: 'onSale', title: '出售中'},
-          {id: 'sellOut', title: '售罄的'},
-          {id: 'offSale', title: '仓库中'}
+        list: [{
+          id: 'onSale',
+          title: '出售中'
+        },
+        {
+          id: 'sellOut',
+          title: '售罄的'
+        },
+        {
+          id: 'offSale',
+          title: '仓库中'
+        }
         ],
         selectedId: 'onSale',
         scroll: false
       },
       categories: []
     };
-    data = {...this.def};
-    async onLoad () {
+    data = { ...this.def
+    };
+    async onLoad() {
       this.page = goods.list(this);
       this.goods = this.page.list;
       await this.updateCategories();
@@ -124,22 +132,21 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-  .main-box{
+  .main-box {
     width: 100%;
     position: absolute;
     top: 43px;
     bottom: 55px;
-
-    .goods-box{
+    .goods-box {
       flex: 1;
       height: 100%;
-      .goods-title{
+      .goods-title {
         height: 30px;
         padding-left: 20rpx;
         align-items: center;
         border-bottom: $border;
       }
-      .goods-list{
+      .goods-list {
         background-color: #FFF;
       }
     }

@@ -2,7 +2,6 @@ import Tips from './Tips';
 import wepy from 'wepy';
 
 export default class WxUtils {
-
   /**
    * 如果能够后退（多层），则navigaetBack，否则调用redirectTo
    */

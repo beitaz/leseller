@@ -1,14 +1,13 @@
 <template>
-	<view class="container" wx:if="{{init}}">
-		<repeat for="{{category}}" key="item" item="item">
-			<CategoryItem :category.sync="item"/>
-		</repeat>
-
-		<Placeholder :show.sync="isEmpty" message="尚未配置商品分类"/>
-
-		<ActionBar @tap.user="submit" okText="确定" cancelText="返回"/>
-	</view>
+  <view class="container" wx:if="{{init}}">
+    <repeat for="{{category}}" key="item" item="item">
+      <CategoryItem :category.sync="item" />
+    </repeat>
+    <Placeholder :show.sync="isEmpty" message="尚未配置商品分类" />
+    <ActionBar @tap.user="submit" okText="确定" cancelText="返回" />
+  </view>
 </template>
+
 <script>
   import wepy from 'wepy';
   import category from '../../api/goods';
@@ -18,7 +17,6 @@
   import Placeholder from '../../components/common/placeholder'
   import Tips from '../../utils/Tips';
   import Event from '../../utils/Event';
-
   export default class Category extends wepy.page {
     data = {
       init: false,
@@ -27,9 +25,11 @@
       isEmpty: false
     };
     methods = {
-      async submit () {
+      async submit() {
         const result = this.category.filter(item => item.checked).map(item => {
-          return {categoryId: item.id};
+          return {
+            categoryId: item.id
+          };
         });
         await Tips.success('保存成功');
         Event.emit(Event.VIP_CATEGORY_UPDATA, {
@@ -39,8 +39,9 @@
         wepy.navigateBack();
       }
     };
-
-    async onLoad (options, {preload}) {
+    async onLoad(options, {
+      preload
+    }) {
       this.category = await category.getInnerCategories();
       this.index = preload.data.index;
       if (this.category != null && this.category.length > 0) {
@@ -54,7 +55,6 @@
       }
       this.loaded();
     };
-
     mixins = [base];
     components = {
       CategoryItem: CategoryItem,
@@ -68,9 +68,9 @@
 </script>
 
 <style lang="scss">
-	@import "../../styles/variable";
-	.container{
-		background-color: white;
-		border-bottom: $border;
-	}
+  @import "../../styles/variable";
+  .container {
+    background-color: white;
+    border-bottom: $border;
+  }
 </style>

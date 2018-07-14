@@ -4,7 +4,7 @@
       <view class="weui-label">{{title}}</view>
     </view>
     <view class="weui-cell__bd">
-      <picker mode="time" value="{{input[fieldName]}}"  @change="input">
+      <picker mode="time" value="{{input[fieldName]}}" @change="input">
         <view class="weui-input">{{input[fieldName]}}</view>
       </picker>
     </view>

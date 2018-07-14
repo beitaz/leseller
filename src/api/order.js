@@ -273,7 +273,6 @@ export default class order extends base {
     detail.paymentText = utils.paymentType(detail.paymentType);
   }
 
-
   /**
    * 处理状态描述文本
    */

@@ -36,11 +36,10 @@
     height: 50rpx;
     position: relative;
     background-color: #FFFFFF;
-    padding:8px 13px;
+    padding: 8px 13px;
     border-top: $border;
   }
-  .nav-box-last{
+  .nav-box-last {
     border-bottom: $border;
   }
-
 </style>

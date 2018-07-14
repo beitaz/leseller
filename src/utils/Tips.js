@@ -27,7 +27,7 @@ export default class Tips {
   /**
    * 弹出确认窗口
    */
-  static modal (text, title = '提示') {
+  static modal(text, title = '提示') {
     return new Promise((resolve, reject) => {
       wx.showModal({
         title: title,
@@ -46,7 +46,7 @@ export default class Tips {
   /**
    * 弹出确认窗口
    */
-  static confirm (text, payload = {}, title = '提示') {
+  static confirm(text, payload = {}, title = '提示') {
     return new Promise((resolve, reject) => {
       wx.showModal({
         title: title,
@@ -66,7 +66,7 @@ export default class Tips {
     })
   }
 
-  static toast (title, onHide, icon = 'success') {
+  static toast(title, onHide, icon = 'success') {
     wx.showToast({
       title: title,
       icon: icon,
@@ -84,7 +84,7 @@ export default class Tips {
   /**
    * 警告框
    */
-  static alert (title) {
+  static alert(title) {
     wx.showToast({
       title: title,
       image: '/images/icons/alert.png',
@@ -101,7 +101,7 @@ export default class Tips {
    * 错误框
    */
 
-  static error (title, onHide) {
+  static error(title, onHide) {
     wx.showToast({
       title: title,
       image: '/images/icons/error.png',
@@ -119,7 +119,7 @@ export default class Tips {
   /**
    * 弹出加载提示
    */
-  static loading (title = '加载中', force = false) {
+  static loading(title = '加载中', force = false) {
     if (this.isLoading && !force) {
       return;
     }
@@ -137,7 +137,7 @@ export default class Tips {
   /**
    * 加载完毕
    */
-  static loaded () {
+  static loaded() {
     if (this.isLoading) {
       this.isLoading = false;
       if (wx.hideLoading) {
@@ -151,7 +151,7 @@ export default class Tips {
   /**
    * 弹出下拉动作栏
    */
-  static action (...items) {
+  static action(...items) {
     return new Promise((resolve, reject) => {
       wx.showActionSheet({
         itemList: items,
@@ -169,7 +169,7 @@ export default class Tips {
     })
   }
 
-  static actionWithFunc (items, ...functions) {
+  static actionWithFunc(items, ...functions) {
     wx.showActionSheet({
       itemList: items,
       success: function (res) {
@@ -181,7 +181,7 @@ export default class Tips {
     })
   }
 
-  static share (title, url, desc) {
+  static share(title, url, desc) {
     return {
       title: title,
       path: url,
@@ -192,7 +192,7 @@ export default class Tips {
     }
   }
 
-  static setLoading () {
+  static setLoading() {
     this.isLoading = true;
   }
 }

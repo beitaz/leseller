@@ -75,15 +75,15 @@ export default class Cache {
   static async discount(reload = false, memberNumber) {
     const KEY = 'VIP_DISCOUNT';
     if (reload || this.isExpired(KEY)) {
-      const {member, card} = await this.vip(false, memberNumber);
+      const { member, card } = await this.vip(false, memberNumber);
       if (member == null || card == null) {
         return null;
       }
       if (card.supplyDiscount != 1) {
         return null;
       }
-      const {level} = member;
-      const {levelName, discount} = member.discountRule;
+      const { level } = member;
+      const { levelName, discount } = member.discountRule;
       const rule = card.discountRules.find(item => item.level == level);
       const categories = rule.discountCategoryLists.map(item => item.categoryId);
       this.set(KEY, {

@@ -1,113 +1,96 @@
 <template>
-  <Tips/>
-  <view wx:if="{{init}}">
-    <!--照片上传区域-->
-    <ImageUploader :pictures.sync="pictures" otherClass="shop-swiper" top="260" maxSize="6" @toggle.user="toggle"/>
-
-    <view class="hr"></view>
-    <form @submit="save">
-
-      <!--店铺名称-->
-      <view class="name-box row-center">
-        <image class="icon-xl" src="{{shop.avatar}}" @tap="avatar"/>
-        <input class="shop-name" name="name" placeholder="请输入店铺名称" value="{{shop.name}}"/>
-      </view>
-
+  <block>
+    <Tips/>
+    <view wx:if="{{init}}">
+      <!--照片上传区域-->
+      <ImageUploader :pictures.sync="pictures" otherClass="shop-swiper" top="260" maxSize="6" @toggle.user="toggle" />
       <view class="hr"></view>
-
-
-      <view class="weui-cells weui-cells-form">
-
-        <view class="weui-cell">
-          <view class="weui-cell__bd">店铺分类</view>
-          <view class="weui-cell__ft" @tap="show">{{shop.categoryName}}</view>
+      <form @submit="save">
+        <!--店铺名称-->
+        <view class="name-box row-center">
+          <image class="icon-xl" src="{{shop.avatar}}" @tap="avatar" />
+          <input class="shop-name" name="name" placeholder="请输入店铺名称" value="{{shop.name}}" />
         </view>
-        <view class="weui-cell weui-cell_switch" wx:if="{{versions != 'extension' && versions != 'vip'}}">
-          <view class="weui-cell__bd">自动接单</view>
-          <view class="weui-cell__ft">
-            <switch checked="{{shop.autoOrder}}" name="autoOrder"/>
+        <view class="hr"></view>
+        <view class="weui-cells weui-cells-form">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">店铺分类</view>
+            <view class="weui-cell__ft" @tap="show">{{shop.categoryName}}</view>
           </view>
-        </view>
-
-        <view class="weui-cell weui-cell_switch" wx:if="{{versions != 'extension' && versions != 'vip'}}">
-          <view class="weui-cell__bd">线下支付</view>
-          <view class="weui-cell__ft">
-            <switch checked="{{shop.offPay}}" name="offPay"/>
+          <view class="weui-cell weui-cell_switch" wx:if="{{versions != 'extension' && versions != 'vip'}}">
+            <view class="weui-cell__bd">自动接单</view>
+            <view class="weui-cell__ft">
+              <switch checked="{{shop.autoOrder}}" name="autoOrder" />
+            </view>
           </view>
-        </view>
-        <view class="weui-cell weui-cell_switch" wx:if="{{versions != 'extension' && versions != 'vip'}}">
-          <view class="weui-cell__bd">堂食点餐</view>
-          <view class="weui-cell__ft">
-            <switch checked="{{shop.inShop}}" name="inShop"/>
+          <view class="weui-cell weui-cell_switch" wx:if="{{versions != 'extension' && versions != 'vip'}}">
+            <view class="weui-cell__bd">线下支付</view>
+            <view class="weui-cell__ft">
+              <switch checked="{{shop.offPay}}" name="offPay" />
+            </view>
           </view>
-        </view>
-        <view class="weui-cell weui-cell_switch" wx:if="{{versions != 'extension' && versions != 'online'}}">
-          <view class="weui-cell__bd">会员卡</view>
-          <view class="weui-cell__ft">
-            <switch checked="{{shop.supportMember}}" name="supportMember"/>
+          <view class="weui-cell weui-cell_switch" wx:if="{{versions != 'extension' && versions != 'vip'}}">
+            <view class="weui-cell__bd">堂食点餐</view>
+            <view class="weui-cell__ft">
+              <switch checked="{{shop.inShop}}" name="inShop" />
+            </view>
           </view>
-        </view>
-        <view class="weui-cell">
-          <view class="weui-cell__bd" style="min-width: 150rpx;">店铺位置</view>
-          <view @tap.stop="chooseLocation" style="min-width: 500rpx;">
-            <view class="weui-cell__ft">{{shop.latitude ? '已选择(点击更换)' : '点击选择'}}</view>
+          <view class="weui-cell weui-cell_switch" wx:if="{{versions != 'extension' && versions != 'online'}}">
+            <view class="weui-cell__bd">会员卡</view>
+            <view class="weui-cell__ft">
+              <switch checked="{{shop.supportMember}}" name="supportMember" />
+            </view>
           </view>
-        </view>
-      </view>
-      <view class="mt10"></view>
-      <view class="weui-cells weui-cells-form">
-
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__hd">
-            <view class="weui-label">店铺地址</view>
-          </view>
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="address" value="{{shop.address}}"
-                   placeholder="请输入店铺地址"/>
-          </view>
-          <view class="weui-cell__ft">
+          <view class="weui-cell">
+            <view class="weui-cell__bd" style="min-width: 150rpx;">店铺位置</view>
+            <view @tap.stop="chooseLocation" style="min-width: 500rpx;">
+              <view class="weui-cell__ft">{{shop.latitude ? '已选择(点击更换)' : '点击选择'}}</view>
+            </view>
           </view>
         </view>
-
-        <view class="weui-cell weui-cell_input">
-          <view class="weui-cell__hd">
-            <view class="weui-label">联系电话</view>
+        <view class="mt10"></view>
+        <view class="weui-cells weui-cells-form">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">店铺地址</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" name="address" value="{{shop.address}}" placeholder="请输入店铺地址" />
+            </view>
+            <view class="weui-cell__ft">
+            </view>
           </view>
-          <view class="weui-cell__bd">
-            <input class="weui-input" name="phone" value="{{shop.phone}}" placeholder="请输入电话号码"/>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <view class="weui-label">联系电话</view>
+            </view>
+            <view class="weui-cell__bd">
+              <input class="weui-input" name="phone" value="{{shop.phone}}" placeholder="请输入电话号码" />
+            </view>
+            <view class="weui-cell__ft">
+            </view>
           </view>
-          <view class="weui-cell__ft">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">店铺描述</view>
+            <view class="weui-cell__ft"></view>
+          </view>
+          <view class="weui-cell" wx:if="{{!uploader}}">
+            <view class="weui-cell__bd">
+              <textarea class="weui-textarea" name="describe" value="{{shop.describe}}" placeholder="请输入店铺描述" style="height: 4.0em" maxlength="50" />
+              <view class="weui-textarea-counter">{{shop.describe ? shop.describe.length : 0}}/50</view>
+            </view>
           </view>
         </view>
-
-        <view class="weui-cell">
-          <view class="weui-cell__bd">店铺描述</view>
-          <view class="weui-cell__ft"></view>
-        </view>
-
-        <view class="weui-cell" wx:if="{{!uploader}}">
-          <view class="weui-cell__bd">
-                  <textarea class="weui-textarea" name="describe" value="{{shop.describe}}" placeholder="请输入店铺描述"
-                            style="height: 4.0em" maxlength="50"/>
-            <view class="weui-textarea-counter">{{shop.describe ? shop.describe.length : 0}}/50</view>
+        <view class="zan-panel">
+          <view class="zan-btns">
+            <button class="zan-btn zan-btn--fill" form-type="submit">保存</button>
           </view>
         </view>
-      </view>
-
-      <view class="zan-panel">
-        <view class="zan-btns">
-          <button class="zan-btn zan-btn--fill" form-type="submit">保存</button>
-        </view>
-      </view>
-    </form>
-
-    <!--下拉选择器-->
-    <SliderSelector :display.sync="display"
-                    :list.sync="categories"
-                    :title="categoriesTitle"
-                    displatyDefault="{{false}}"
-                    @change.user="change"/>
-  </view>
+      </form>
+      <!--下拉选择器-->
+      <SliderSelector :display.sync="display" :list.sync="categories" :title="categoriesTitle" displatyDefault="{{false}}" @change.user="change" />
+    </view>
+  </block>
 </template>
 
 <script>
@@ -121,7 +104,6 @@
   import Tips from '../../utils/Tips';
   import SliderSelector from '../../components/common/slider_selector';
   import WxUtils from '../../utils/WxUtils';
-
   export default class ShopEdit extends wepy.page {
     data = {
       init: false,
@@ -134,8 +116,7 @@
       versions: '',
       card: null
     };
-
-    async onLoad () {
+    async onLoad() {
       const [shops, categories, card] = await Promise.all([shop.info(), shop.getShopCategories(), vip.info()]);
       this.card = card;
       this.shop = shops;
@@ -148,9 +129,8 @@
       this.limit = wepy.getStorageSync('limit');
       this.loaded();
     };
-
     methods = {
-      chooseLocation () {
+      chooseLocation() {
         wepy.chooseLocation({
           type: 'wgs84'
         }).then(res => {
@@ -164,7 +144,9 @@
           this.$apply();
         });
       },
-      async save ({detail}) {
+      async save({
+        detail
+      }) {
         // 覆盖对象
         Object.assign(this.shop, detail.value);
         if (this.shop.address === '请选择店铺地址') {
@@ -197,16 +179,19 @@
         await Tips.success('更新成功！');
         wepy.navigateBack();
       },
-      show () {
+      show() {
         this.display = 'true';
       },
-      change ({selectedId, selectedName}) {
+      change({
+        selectedId,
+        selectedName
+      }) {
         this.shop.categoryName = selectedName;
       },
-      toggle (value) {
+      toggle(value) {
         this.uploader = value == 'true';
       },
-      async avatar () {
+      async avatar() {
         try {
           const param = {
             count: 1,
@@ -226,10 +211,9 @@
         }
       }
     };
-
     events = {};
     computed = {
-      version () {
+      version() {
         if (this.limit == null || this.limit.chargeVersion == null) {
           return;
         }
@@ -256,27 +240,24 @@
 </script>
 
 <style lang="scss">
-    @import "../../styles/variable";
-
-    .shop-swiper {
-        height: rpx(375);
-        width: rpx(750);
-        image {
-            width: 100%;
-            height: rpx(375);
-        }
+  @import "../../styles/variable";
+  .shop-swiper {
+    height: rpx(375);
+    width: rpx(750);
+    image {
+      width: 100%;
+      height: rpx(375);
     }
-
-    .name-box {
-        background-color: #FFF;
-        padding: rpx(20);
-        height: rpx(60);
-
-        .shop-name {
-            margin-left: rpx(20);
-            font-size: $text-xxl;
-            letter-spacing: 2px;
-            flex-grow: 1;
-        }
+  }
+  .name-box {
+    background-color: #FFF;
+    padding: rpx(20);
+    height: rpx(60);
+    .shop-name {
+      margin-left: rpx(20);
+      font-size: $text-xxl;
+      letter-spacing: 2px;
+      flex-grow: 1;
     }
+  }
 </style>

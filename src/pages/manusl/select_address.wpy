@@ -1,18 +1,16 @@
 <template>
   <view class="container" wx:if="{{init}}">
-
     <!--列表展现-->
     <repeat for="{{page.list}}" key="index" index="index" item="item">
-      <AddressItem :address.sync="item" @select.user="select"/>
+      <AddressItem :address.sync="item" @select.user="select" />
     </repeat>
-
     <!-- 加载提示 -->
-    <Loadmore :page.sync="page"/>
-
+    <Loadmore :page.sync="page" />
     <!--占位符-->
-    <Placeholder :show.sync="isPageEmpty" message="您还没有收货地址"  @tap.user="add"/>
+    <Placeholder :show.sync="isPageEmpty" message="您还没有收货地址" @tap.user="add" />
   </view>
 </template>
+
 <script>
   import wepy from 'wepy';
   import base from '../../mixins/base';
@@ -29,13 +27,14 @@
         list: []
       }
     };
-    data = {...this.def};
+    data = { ...this.def
+    };
     async onLoad(option) {
       this.page = mausl.addresses(option.memberId);
       this.next();
     };
     methods = {
-      select (address) {
+      select(address) {
         Event.emit(Event.ADDRESS_LIST_UPDATE, address);
         wepy.navigateBack();
       }
@@ -51,6 +50,7 @@
     };
   }
 </script>
+
 <style lang="scss">
   @import "../../styles/variable";
 </style>

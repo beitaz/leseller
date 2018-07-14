@@ -43,10 +43,10 @@
       }
     };
     methods = {
-      showInput: function () {
+      showInput: function() {
         this.inputShowed = true;
       },
-      hideInput: function () {
+      hideInput: function() {
         if (this.isBack) {
           this.$emit('back');
         } else {
@@ -55,11 +55,11 @@
           this.$emit('search-update', null);
         }
       },
-      clearInput: function () {
+      clearInput: function() {
         this.inputVal = '';
         this.$emit('search-update', null);
       },
-      inputTyping: function (e) {
+      inputTyping: function(e) {
         const input = e.detail.value;
         this.inputVal = input;
         this.$emit('search-update', input);
@@ -71,12 +71,10 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-  .weui-search-bar{
+  .weui-search-bar {
     position: fixed;
     width: 100%;
     z-index: 100;
     top: 0;
   }
-
-
 </style>

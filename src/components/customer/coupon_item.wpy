@@ -25,7 +25,6 @@
         </view>
         <text class="muted xs">{{coupon.beginTime}}-{{coupon.dueTime}}</text>
       </view>
-
       <view class="btn-box row-end">
         <block wx:if="{{selectAction != '0'}}">
           <view class="zan-btn zan-btn--small  zan-btn--primary" @tap="sendCoupon">{{couponText}}</view>
@@ -42,7 +41,6 @@
 <script>
   import wepy from 'wepy';
   import Tips from '../../utils/Tips';
-
   export default class CouponItem extends wepy.component {
     props = {
       coupon: {},
@@ -60,14 +58,11 @@
     methods = {
       async sendCoupon() {
         await Tips.confirm('确认选择该优惠券吗？');
-
         // 发射事件
         this.$emit('select', this.coupon);
       }
     };
-
     onLoad() {
-
     }
   }
 </script>
@@ -83,17 +78,14 @@
     border: $border;
     border-radius: 5px;
     overflow: hidden;
-
     .main-box {
       align-items: center;
       width: rpx(255);
       height: 100%;
       background: linear-gradient(to right, #2F80ED, #1296db);
-
       text {
         color: white
       }
-
       text.price {
         font-size: rpx(75);
       }
@@ -101,23 +93,19 @@
         font-size: 55rpx;
       }
     }
-
     .info-box {
       flex: 1;
       justify-content: space-between;
       padding: rpx(10) rpx(20) 0 rpx(20);
       height: rpx(200);
-
       .img-select {
         position: relative;
         top: rpx(-15);
         left: rpx(350);
-
         image {
           @include icon-image(rpx(50));
         }
       }
-
       .btn-box {
         padding: 5px 0;
         margin-top: rpx(5);

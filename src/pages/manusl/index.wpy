@@ -2,16 +2,15 @@
   <view class="container" wx:if="{{init}}">
     <view class="weui-cells weui-cells_after-title" wx:if="{{customerId == null}}">
       <view class="weui-select user-box" @tap="chooseUser">
-        <image class="icon mr20" src="/images/icons/plus.png"/>请选择用户
+        <image class="icon mr20" src="/images/icons/plus.png" />请选择用户
       </view>
     </view>
     <view wx:if="{{customerId != null}}">
       <!-- 用户信息 -->
-      <UserInfo :userInfo.sync="customer" @toUserInfo.user="chooseUser"/>
+      <UserInfo :userInfo.sync="customer" @toUserInfo.user="chooseUser" />
       <!--功能区域-->
-      <ShopNav :badegText.sync="badegText" :title.sync="title"  navText="用户订单" :navUrl.sync="navUrl"/>
+      <ShopNav :badegText.sync="badegText" :title.sync="title" navText="用户订单" :navUrl.sync="navUrl" />
     </view>
-
     <!--主内容区域-->
     <view class="{{customerId == null ? 'main-box' : 'main-box-null'}} row">
       <!--分类侧边栏-->
@@ -25,20 +24,19 @@
         <!--商品列表-->
         <view class="goods-list">
           <repeat for="{{page.list}}" key="index" index="index" item="item">
-            <GoodsItem :goods.sync="item" @plus.user="plus" @minus.user="minus"/>
+            <GoodsItem :goods.sync="item" @plus.user="plus" @minus.user="minus" />
           </repeat>
         </view>
-        <Loadmore :page.sync="page" emptyText="暂无商品"/>
+        <Loadmore :page.sync="page" emptyText="暂无商品" />
       </scroll-view>
     </view>
     <!-- 购物车 -->
-    <ShopCart :carts.sync="carts" :status.sync="status" @plus.user="plus" @minus.user="minus" @clear.user="clear" @buy.user="buy"/>
-
+    <ShopCart :carts.sync="carts" :status.sync="status" @plus.user="plus" @minus.user="minus" @clear.user="clear" @buy.user="buy" />
     <!--SKU选择器-->
     <SkuSelector :display.sync="skuDisplay" :goods.sync="skuGoods" :carts.sync="carts" @select.user="selectSku" />
-
   </view>
 </template>
+
 <script>
   import wepy from 'wepy';
   import base from '../../mixins/base';
@@ -73,8 +71,11 @@
       skuGoods: {},
       discount: null
     };
-    data = {...this.def};
-    async onLoad (option, {preload}) {
+    data = { ...this.def
+    };
+    async onLoad(option, {
+      preload
+    }) {
       if (option.customerId) {
         await this.updateUserInfo(option.customerId);
       }
@@ -112,7 +113,7 @@
       this.page = mausl.page(this.discount);
       this.next();
     };
-    async onShow () {
+    async onShow() {
       if (this.init) {
         // 重新判断店铺状态
         Tips.setLoading();
@@ -121,7 +122,7 @@
       }
     }
     // 页面风险
-    onShareAppMessage () {
+    onShareAppMessage() {
       return {};
     }
     // 设置页面标题
@@ -143,7 +144,9 @@
     };
     // 分页参数
     params() {
-      return {category_id: this.categories.selectedId};
+      return {
+        category_id: this.categories.selectedId
+      };
     };
     // 设置商品列表的数量
     setGoodsNum() {
@@ -210,7 +213,11 @@
       /**
        * 增加商品
        */
-      async plus({goodsId, goodsSku, count = 1}) {
+      async plus({
+        goodsId,
+        goodsSku,
+        count = 1
+      }) {
         // 商品里列表
         const goods = this.findGoods(goodsId);
         if (goods) {
@@ -269,7 +276,10 @@
       /**
        * 减少商品
        */
-      async minus({goodsId, goodsSku}) {
+      async minus({
+        goodsId,
+        goodsSku
+      }) {
         // 商品对象
         const goods = this.findGoods(goodsId);
         // 特殊情况，商品已经不足1个
@@ -310,7 +320,7 @@
       /**
        * 确认购买
        */
-      async buy (param) {
+      async buy(param) {
         if (this.customerId == null) {
           Tips.error('请选择用户');
           return;
@@ -411,22 +421,22 @@
     };
   }
 </script>
+
 <style lang="scss">
   @import "../../styles/variable";
-  .user-box{
+  .user-box {
     padding: 10rpx 0rpx 10rpx 30rpx;
   }
   .customer-main-box {
     flex: 1;
     padding-left: rpx(25);
-    .address-text{
+    .address-text {
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
   }
-
   .customer-info-box {
     padding: rpx(30);
     background-color: white;
@@ -435,7 +445,6 @@
       width: 100rpx;
       border-radius: 50%;
     }
-
     .address-box {
       max-width: rpx(430);
       text {
@@ -445,28 +454,27 @@
       }
     }
   }
-  .main-box{
+  .main-box {
     width: 100%;
     position: absolute;
     top: rpx(89);
     bottom: 55px;
-
-    .goods-box{
+    .goods-box {
       flex: 1;
       height: 100%;
-      .goods-title{
+      .goods-title {
         height: 30px;
         padding-left: 20rpx;
         align-items: center;
         border-bottom: $border;
       }
-      .goods-list{
+      .goods-list {
         background-color: #FFF;
         padding-left: 10px;
       }
     }
   }
-  .main-box-null{
+  .main-box-null {
     @extend .main-box;
     top: 246rpx;
   }

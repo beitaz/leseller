@@ -1,45 +1,42 @@
 <template>
-  <!-- 照片区域 -->
-  <view class="photo-box column-center" @tap="photo" wx:if="{{pictures.length < 1}}">
-    <image class="photo-btn " src="/images/icons/camera.png"></image>
-    <text class="mt10">{{title}}</text>
-  </view>
-
-  <!-- 照片轮播区域-->
-  <view class="swiper-box" wx:if="{{pictures.length > 0}}" @tap="manage">
-    <swiper class="{{otherClass}}" indicator-dots="true" indicator-active-color="#EEE" >
-      <swiper-item wx:for="{{pictures}}" wx:key="index" wx:index="index">
-        <image mode="aspectFill" src="{{item.url}}"></image>
-      </swiper-item>
-    </swiper>
-    <image class="photo-btn icon-xl" style="top: {{top}}rpx;"  @tap.stop="photo" src="/images/icons/camera.png"></image>
-  </view>
-
-  <!--上传管理器-->
-  <SliderPanel :display.sync="isPanelDisplay" >
-    <view slot="title">编辑图片</view>
-    <view slot="content" class="manage-box column">
-
-      <view class="item-box row-between" wx:for="{{pictures}}" wx:key="index" wx:index="index">
-        <!--展现区域-->
-        <view class="item-header-box">
-          <text class="lg mr20">{{index + 1}}</text>
-          <image class="icon-xl" src="{{item.url}}"></image>
-          <text class="ml20" wx:if="{{index == 0}}">(封面)</text>
-          <text class="muted ml20" wx:else>(细节)</text>
-        </view>
-
-        <!-- 操作区域 -->
-        <view class="item-footer-box">
-          <image class="icon-lg" wx:if="{{index != 0}}" src="/images/icons/up-arrow.png" @tap="up({{index}})"></image>
-          <image class="icon-lg" wx:if="{{index != pictures.length - 1}}" src="/images/icons/down-arrow.png" @tap="down({{index}})"></image>
-          <image class="icon-lg" src="/images/icons/minus.png" @tap="remove({{index}})"></image>
-        </view>
-      </view>
-      <text class="muted sm mt10 ml20">提示：请点击按钮改变图片顺序，第一张图片为封面</text>
+  <block>
+    <!-- 照片区域 -->
+    <view class="photo-box column-center" @tap="photo" wx:if="{{pictures.length < 1}}">
+      <image class="photo-btn " src="/images/icons/camera.png" />
+      <text class="mt10">{{title}}</text>
     </view>
-  </SliderPanel>
-
+    <!-- 照片轮播区域-->
+    <view class="swiper-box" wx:if="{{pictures.length > 0}}" @tap="manage">
+      <swiper class="{{otherClass}}" indicator-dots="true" indicator-active-color="#EEE">
+        <swiper-item wx:for="{{pictures}}" wx:key="index" wx:index="index">
+          <image mode="aspectFill" src="{{item.url}}" />
+        </swiper-item>
+      </swiper>
+      <image class="photo-btn icon-xl" style="top: {{top}}rpx;" @tap.stop="photo" src="/images/icons/camera.png" />
+    </view>
+    <!--上传管理器-->
+    <SliderPanel :display.sync="isPanelDisplay">
+      <view slot="title">编辑图片</view>
+      <view slot="content" class="manage-box column">
+        <view class="item-box row-between" wx:for="{{pictures}}" wx:key="index" wx:index="index">
+          <!--展现区域-->
+          <view class="item-header-box">
+            <text class="lg mr20">{{index + 1}}</text>
+            <image class="icon-xl" src="{{item.url}}" />
+            <text class="ml20" wx:if="{{index == 0}}">(封面)</text>
+            <text class="muted ml20" wx:else>(细节)</text>
+          </view>
+          <!-- 操作区域 -->
+          <view class="item-footer-box">
+            <image class="icon-lg" wx:if="{{index != 0}}" src="/images/icons/up-arrow.png" @tap="up({{index}})"></image>
+            <image class="icon-lg" wx:if="{{index != pictures.length - 1}}" src="/images/icons/down-arrow.png" @tap="down({{index}})"></image>
+            <image class="icon-lg" src="/images/icons/minus.png" @tap="remove({{index}})"></image>
+          </view>
+        </view>
+        <text class="muted sm mt10 ml20">提示：请点击按钮改变图片顺序，第一张图片为封面</text>
+      </view>
+    </SliderPanel>
+  </block>
 </template>
 
 <script>
@@ -135,26 +132,23 @@
       pictures[targetIndex] = src;
       pictures[srcIndex] = target;
     }
-    onLoad() {
-    }
+    onLoad() {}
   }
 </script>
 
 <style lang="scss">
   @import "../../styles/variable";
-
-  .photo-box{
+  .photo-box {
     height: 150px;
     background-color: $color-bg-item;
     border-bottom: $border;
-
-    .photo-btn{
+    .photo-btn {
       height: 75px;
       width: 75px;
     }
   }
-  .swiper-box{
-    .photo-btn{
+  .swiper-box {
+    .photo-btn {
       position: absolute;
       right: 30rpx;
       top: 455rpx;
@@ -162,28 +156,25 @@
       border-radius: 28px;
       z-index: 100;
     }
-
-    .picture-swiper{
+    .picture-swiper {
       height: 580rpx;
-      image{
+      image {
         height: 100%;
         width: 100%;
       }
     }
   }
-
-  .manage-box{
+  .manage-box {
     padding-top: 10rpx;
-    .item-box{
+    .item-box {
       padding: 10rpx 20rpx;
       background-color: white;
       margin-bottom: 5rpx;
       margin-top: 5rpx;
       border-top: $border;
       border-bottom: $border;
-
-      .item-footer-box{
-        image{
+      .item-footer-box {
+        image {
           margin-left: 20rpx;
         }
       }

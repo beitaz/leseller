@@ -18,11 +18,11 @@
   import base from '../../mixins/base';
   import Copyright from '../../components/common/copyright';
   import Tips from '../../utils/Tips';
-
   export default class ContactIndex extends wepy.page {
     def = {}
-    data = {...this.def};
-    onShareAppMessage () {
+    data = { ...this.def
+    };
+    onShareAppMessage() {
       const title = '乐享商家助手';
       const url = '/pages/home/index';
       return Tips.share(title, url, title);
@@ -50,22 +50,22 @@
   @import "../../styles/variable";
   .header {
     background-color: #11ca6f;
-    .title{
+    .title {
       font-size: $text-xxl;
       font-weight: bold;
       margin-top: 50px;
     }
-    .describe{
+    .describe {
       margin-top: 20px;
     }
-    .contact{
+    .contact {
       width: 160rpx;
       height: 60rpx;
       background-color: #FFF;
       color: #11ca6f;
       margin-top: 20px;
     }
-    .preview{
+    .preview {
       width: 700rpx;
       margin-top: 20px;
     }
@@ -73,11 +73,9 @@
       color: #FFF;
     }
   }
-
-  .content{
-    .solution{
+  .content {
+    .solution {
       width: 100%;
     }
   }
-
 </style>

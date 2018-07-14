@@ -29,7 +29,10 @@
     data = {};
     methods = {
       async edit(goodsId) {
-        this.$root.$navigate('edit', {goodsId, mode: 'edit'});
+        this.$root.$navigate('edit', {
+          goodsId,
+          mode: 'edit'
+        });
       }
     };
   }
@@ -37,46 +40,41 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-  .item-box{
+  .item-box {
     background-color: #FFF;
     position: relative;
     border-bottom: $border;
     padding: 10rpx;
-    .item-action{
+    .item-action {
       border-top: $border;
       height: 90rpx;
     }
-
-    .goods-box{
+    .goods-box {
       padding-bottom: 10rpx;
       border-bottom: 1px dashed #dfdfdf;
       $image-size: 130rpx;
-
-      .goods-image{
+      .goods-image {
         height: $image-size;
         width: $image-size;
         border: $border;
         border-radius: 8px;
       }
-      .icon-recommend{
+      .icon-recommend {
         position: absolute;
         height: 25px;
         width: 25px;
         right: 10rpx;
         top: 0;
       }
-
-      .price-box{
+      .price-box {
         align-items: flex-end;
       }
-
-      .info-box{
+      .info-box {
         justify-content: space-between;
         height: $image-size;
         flex: 1;
         margin-left: 20rpx;
-
-        .title{
+        .title {
           line-height: 30rpx;
         }
       }

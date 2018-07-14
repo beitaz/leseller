@@ -5,8 +5,8 @@
       <text class="notice-content">{{notice.content}}</text>
     </view>
     <view class="btn-box row-end">
-      <view class="zan-btn zan-btn--small"  @tap="delete({{notice.id}})" >删除</view>
-      <view class="zan-btn zan-btn--small  zan-btn--primary"  @tap="edit({{notice.id}})">编辑</view>
+      <view class="zan-btn zan-btn--small" @tap="delete({{notice.id}})">删除</view>
+      <view class="zan-btn zan-btn--small  zan-btn--primary" @tap="edit({{notice.id}})">编辑</view>
     </view>
   </view>
 </template>
@@ -40,14 +40,13 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-  .notice-box{
+  .notice-box {
     background-color: white;
     border-bottom: $border;
     border-top: $border;
     padding: 20rpx;
     margin-top: 10rpx;
-
-    .btn-box{
+    .btn-box {
       margin-top: 10rpx;
       padding-top: 20rpx;
       border-top: $border-dot;

@@ -1,30 +1,28 @@
 <template>
-  <Tips />
-  <view class="container" wx:if="{{init}}">
-    <view class="mt10"></view>
-    <!--操作表单-->
-    <view class="weui-cells-form">
-
-      <view class="weui-cell weui-cell_switch">
-        <view class="weui-cell__bd">发布公告</view>
-        <view class="weui-cell__ft" >
-          <switch checked="{{input.show}}" id="show" @change="input" />
+  <block>
+    <Tips />
+    <view class="container" wx:if="{{init}}">
+      <view class="mt10"></view>
+      <!--操作表单-->
+      <view class="weui-cells-form">
+        <view class="weui-cell weui-cell_switch">
+          <view class="weui-cell__bd">发布公告</view>
+          <view class="weui-cell__ft">
+            <switch checked="{{input.show}}" id="show" @change="input" />
+          </view>
         </view>
-      </view>
-
-      <view class="weui-cell weui-cell_switch">
-        <view class="weui-cell__bd">首页展现</view>
-        <view class="weui-cell__ft" >
-          <switch checked="{{input.isHome}}" id="isHome" @change="input" />
+        <view class="weui-cell weui-cell_switch">
+          <view class="weui-cell__bd">首页展现</view>
+          <view class="weui-cell__ft">
+            <switch checked="{{input.isHome}}" id="isHome" @change="input" />
+          </view>
         </view>
+        <Textarea fieldName="content" :input.sync="input" />
       </view>
-
-      <Textarea fieldName="content" :input.sync="input"/>
+      <!--操作栏-->
+      <ActionBar @tap.user="submit" />
     </view>
-
-    <!--操作栏-->
-    <ActionBar @tap.user="submit" />
-  </view>
+  </block>
 </template>
 
 <style lang="scss">
@@ -42,14 +40,17 @@
   import ActionBar from '../../components/common/action_bar';
   import Tips from '../../utils/Tips';
   import Event from '../../utils/Event';
-
   export default class NoticeIndex extends wepy.page {
     def = {
       init: false,
       mode: 'create'
     }
-    data = {...this.def};
-    async onLoad ({mode, noticeId}) {
+    data = { ...this.def
+    };
+    async onLoad({
+      mode,
+      noticeId
+    }) {
       this.mode = mode;
       if (mode == 'create') {
         this.input.show = true;
@@ -81,12 +82,11 @@
       }
     };
     validate() {
-      const rules = [
-        {
-          value: this.input.content,
-          method: 'required',
-          message: '公告内容不能为空'
-        }];
+      const rules = [{
+        value: this.input.content,
+        method: 'required',
+        message: '公告内容不能为空'
+      }];
       return this.check(rules);
     }
     mixins = [base, input];

@@ -2,19 +2,16 @@
   <view class="container" wx:if="{{init}}">
     <!--TAB 页-->
     <ZanTab :tab.sync="tab" @change.user="switchTab" />
-
     <!--客户列表-->
     <repeat for="{{page.list}}" key="index" index="index" item="item">
       <view @tap.stop="info({{item.id}})">
         <CustomerItem :customer.sync="item"></CustomerItem>
       </view>
     </repeat>
-
     <!-- 加载提示 -->
-    <Loadmore :page.sync="page"/>
-
+    <Loadmore :page.sync="page" />
     <!--占位符-->
-    <Placeholder :show.sync="isPageEmpty" message="您还没有相关客户信息"/>
+    <Placeholder :show.sync="isPageEmpty" message="您还没有相关客户信息" />
   </view>
 </template>
 
@@ -32,19 +29,25 @@
   import CustomerItem from '../../components/customer/item';
   import Loadmore from '../../components/weui/loadmore';
   import Event from '../../utils/Event'
-
   export default class CustomerIndex extends wepy.page {
     def = {
       init: false,
       page: {
-        list: [
-        ]
+        list: []
       },
       tab: {
-        list: [
-          {id: 'PRICE', title: '总交易额'},
-          {id: 'TIME', title: '最近购买'},
-          {id: 'COUNT', title: '购买次数'}
+        list: [{
+          id: 'PRICE',
+          title: '总交易额'
+        },
+        {
+          id: 'TIME',
+          title: '最近购买'
+        },
+        {
+          id: 'COUNT',
+          title: '购买次数'
+        }
         ],
         selectedId: 'PRICE',
         order: true,
@@ -53,14 +56,17 @@
       },
       type: null
     };
-    data = {...this.def};
-    async onLoad (options) {
+    data = { ...this.def
+    };
+    async onLoad(options) {
       this.type = options.type;
       this.page = customer.page(this.tab.selectedId);
       await this.next();
     };
     params() {
-      return { sort: this.tab.sord };
+      return {
+        sort: this.tab.sord
+      };
     }
     methods = {
       async switchTab() {
@@ -72,7 +78,9 @@
           Event.emit(Event.MANUSL_USER_UPDATE, customerId);
           wepy.navigateBack();
         } else {
-          this.$navigate('info', {customerId});
+          this.$navigate('info', {
+            customerId
+          });
         }
       }
     };

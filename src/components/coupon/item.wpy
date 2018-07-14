@@ -14,28 +14,26 @@
       <text class="mt10" wx:if="{{coupon.limitPrice == 0}}">无门槛</text>
       <text class="mt10" wx:else>满{{coupon.limitPrice}}元可用</text>
     </view>
-
     <!--右侧区域-->
     <view class="info-box column">
       <view>
         <view class="row">
-            <view class="small label primary" wx:if="{{coupon.supportType == 0}}">通用</view>
-            <view class="small label primary" wx:if="{{coupon.supportType == 1}}">线上</view>
-            <view class="small label primary" wx:if="{{coupon.supportType == 2}}">线下</view>
-            <text class="sm">{{coupon.name}}</text>
+          <view class="small label primary" wx:if="{{coupon.supportType == 0}}">通用</view>
+          <view class="small label primary" wx:if="{{coupon.supportType == 1}}">线上</view>
+          <view class="small label primary" wx:if="{{coupon.supportType == 2}}">线下</view>
+          <text class="sm">{{coupon.name}}</text>
         </view>
         <text class="muted xs">{{coupon.beginTime}}-{{coupon.dueTime}}</text>
       </view>
-
       <!--分隔符-->
       <view class="btn-box row-between" wx:if="{{action == 'true'}}" @tap.stop="pick({{coupon.id}})">
-          <view>
-            <text class="muted mr20 sm">已领取: {{coupon.couponCustomerCount.acceptCount ? coupon.couponCustomerCount.acceptCount:0}}</text>
-            <text class="muted sm">已核销: {{coupon.couponCustomerCount.usedCount?coupon.couponCustomerCount.usedCount:0}}</text>
-          </view>
-          <view>
-            <image class="icon" src="/images/icons/more-gray.png" ></image>
-          </view>
+        <view>
+          <text class="muted mr20 sm">已领取: {{coupon.couponCustomerCount.acceptCount ? coupon.couponCustomerCount.acceptCount:0}}</text>
+          <text class="muted sm">已核销: {{coupon.couponCustomerCount.usedCount?coupon.couponCustomerCount.usedCount:0}}</text>
+        </view>
+        <view>
+          <image class="icon" src="/images/icons/more-gray.png"></image>
+        </view>
       </view>
     </view>
   </view>
@@ -73,38 +71,35 @@
 <style lang="scss">
   @import "../../styles/variable";
   /*父容器*/
-  .coupon-box{
+  .coupon-box {
     position: relative;
-    margin:20rpx 20rpx 0 20rpx;
+    margin: 20rpx 20rpx 0 20rpx;
     background-color: #FFF;
     height: 220rpx;
     border: $border;
     border-radius: 5px;
     overflow: hidden;
-
-    .main-box{
+    .main-box {
       align-items: center;
       width: 255rpx;
       height: 100%;
       background: linear-gradient(to right, #2F80ED, #1296db);
-
-      text{color: white}
-
-      text.price{
+      text {
+        color: white
+      }
+      text.price {
         font-size: 75rpx;
       }
-      text.exchange{
+      text.exchange {
         font-size: 55rpx;
       }
     }
-
-    .info-box{
+    .info-box {
       flex: 1;
       justify-content: space-between;
       padding: 10rpx 20rpx 0 20rpx;
       height: 200rpx;
-
-      .btn-box{
+      .btn-box {
         padding: 5px 0;
         margin-top: 5rpx;
         border-top: $border-dot;

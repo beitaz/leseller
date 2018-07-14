@@ -1,57 +1,56 @@
 <template>
-  <Tips />
-  <!--退款详情-->
-  <view class="container" wx:if="{{init}}">
-    <view class="mt10"></view>
-    <!--操作表单-->
-    <view class="weui-cells weui-cells-form">
-      <view class="weui-cell weui-cell_switch">
-        <view class="weui-cell__bd">同意退款</view>
-        <view class="weui-cell__ft">
-          <switch checked="{{input.isOk}}" id="isOk" @change="input" />
+  <block>
+    <Tips />
+    <!--退款详情-->
+    <view class="container" wx:if="{{init}}">
+      <view class="mt10"></view>
+      <!--操作表单-->
+      <view class="weui-cells weui-cells-form">
+        <view class="weui-cell weui-cell_switch">
+          <view class="weui-cell__bd">同意退款</view>
+          <view class="weui-cell__ft">
+            <switch checked="{{input.isOk}}" id="isOk" @change="input" />
+          </view>
+        </view>
+        <view class="weui-cell" wx:if="{{!input.isOk}}">
+          <view class="weui-cell__bd">
+            <textarea class="weui-textarea" id="note" value="{{input.note}}" placeholder="请输入拒绝理由" style="height: 2.3em" maxlength="50" @input="input" />
+            <view class="weui-textarea-counter">{{input.note ? input.note.length : 0}}/50</view>
+          </view>
         </view>
       </view>
-      <view class="weui-cell" wx:if="{{!input.isOk}}">
-        <view class="weui-cell__bd">
-          <textarea class="weui-textarea" id="note" value="{{input.note}}" placeholder="请输入拒绝理由" style="height: 2.3em" maxlength="50" @input="input" />
-          <view class="weui-textarea-counter">{{input.note ? input.note.length : 0}}/50</view>
+      <!--信息展现-->
+      <view class="mt10"></view>
+      <view class="weui-cells weui-cells-form">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">订单号：</view>
+          <view class="weui-cell__ft">{{refund.orderUuid}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">退款单号：</view>
+          <view class="weui-cell__ft">{{refund.refundUuid}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">退款金额：</view>
+          <view class="weui-cell__ft">￥{{refund.refundPrice}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">退款原因：</view>
+          <view class="weui-cell__ft">{{refund.cause}}</view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd">联系方式：</view>
+          <view class="weui-cell__ft">{{refund.contactName}} {{refund.contactPhone}}</view>
         </view>
       </view>
+      <!--跟踪信息-->
+      <view class="steps-box panel">
+        <ZanStep :steps.sync="steps" />
+      </view>
+      <!--操作栏-->
+      <ActionBar @tap.user="submit" />
     </view>
-
-    <!--信息展现-->
-    <view class="mt10"></view>
-    <view class="weui-cells weui-cells-form">
-      <view class="weui-cell">
-        <view class="weui-cell__bd">订单号：</view>
-        <view class="weui-cell__ft">{{refund.orderUuid}}</view>
-      </view>
-      <view class="weui-cell">
-        <view class="weui-cell__bd">退款单号：</view>
-        <view class="weui-cell__ft">{{refund.refundUuid}}</view>
-      </view>
-      <view class="weui-cell">
-        <view class="weui-cell__bd">退款金额：</view>
-        <view class="weui-cell__ft">￥{{refund.refundPrice}}</view>
-      </view>
-      <view class="weui-cell">
-        <view class="weui-cell__bd">退款原因：</view>
-        <view class="weui-cell__ft">{{refund.cause}}</view>
-      </view>
-      <view class="weui-cell">
-        <view class="weui-cell__bd">联系方式：</view>
-        <view class="weui-cell__ft">{{refund.contactName}} {{refund.contactPhone}}</view>
-      </view>
-    </view>
-
-    <!--跟踪信息-->
-    <view class="steps-box panel">
-      <ZanStep :steps.sync="steps" />
-    </view>
-
-    <!--操作栏-->
-    <ActionBar @tap.user="submit" />
-  </view>
+  </block>
 </template>
 
 
@@ -65,15 +64,15 @@
   import FormTips from '../../components/weui/tips';
   import ActionBar from '../../components/common/action_bar';
   import ZanStep from '../../components/zanui/setp';
-
   export default class OrderIndex extends wepy.page {
     def = {
       refund: {},
       steps: [],
       init: false
     }
-    data = {...this.def};
-    async onLoad (options) {
+    data = { ...this.def
+    };
+    async onLoad(options) {
       try {
         const orderId = options.orderId;
         const data = await order.detail(orderId);
@@ -129,7 +128,7 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-  .steps-box{
+  .steps-box {
     padding-left: 20rpx;
   }
 </style>

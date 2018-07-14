@@ -1,30 +1,25 @@
 <template>
-  <scroll-view scroll-y class="address-panel" wx:if="{{display && init}}" >
-
+  <scroll-view scroll-y class="address-panel" wx:if="{{display && init}}">
     <!--列表展现-->
     <repeat for="{{available}}" key="index" index="index" item="item">
-      <Address :address.sync="item" @select.user="select"/>
+      <Address :address.sync="item" @select.user="select" />
     </repeat>
-
     <view class="disable-title-box" wx:if="{{disable.length > 0}}">
       <text class="muted">以下地址不满足配送条件：</text>
     </view>
     <repeat for="{{disable}}" key="index" index="index" item="item">
-      <DisableAddress :address.sync="item" @select.user="select" :disabled.sync="disableValue"/>
+      <DisableAddress :address.sync="item" @select.user="select" :disabled.sync="disableValue" />
     </repeat>
-
     <view class="zan-panel {{isPageEmpty ? 'zan-panel-bottom' : '' }}">
       <view class="zan-btns">
         <button class="zan-btn zan-btn--fill" @tap="add">新增地址</button>
         <button class="zan-btn" @tap="back">返回</button>
       </view>
     </view>
-
     <!-- 加载提示 -->
-    <Loadmore :page.sync="page"/>
-
+    <Loadmore :page.sync="page" />
     <!--占位符-->
-    <Placeholder :show.sync="isPageEmpty" message="您还没有收货地址"  @tap.user="add"/>
+    <Placeholder :show.sync="isPageEmpty" message="您还没有收货地址" @tap.user="add" />
   </scroll-view>
 </template>
 
@@ -36,7 +31,6 @@
   import Event from '../../utils/Event';
   import Loadmore from '../../components/weui/loadmore';
   import Address from './address_item';
-
   export default class AddressList extends wepy.component {
     props = {
       goodsList: {},
@@ -52,10 +46,10 @@
       disable: [],
       isPageEmpty: false
     };
-    async onLoad () {
+    async onLoad() {
       Event.listen(Event.ADDRESS_LIST_UPDATE, this.update.bind(this), this);
     };
-    async update (isCreate) {
+    async update(isCreate) {
       await this.load();
       const size = this.available.length;
       if (size == 1 && isCreate) {
@@ -69,13 +63,16 @@
       }
     }
     async load() {
-      const {available, disable} = await mausl.addresses(this.goodsList);
+      const {
+        available,
+        disable
+      } = await mausl.addresses(this.goodsList);
       this.available = available;
       this.disable = disable;
       this.isPageEmpty = available.length == 0 && disable.length == 0;
       this.loaded();
     }
-    async onPullDownRefresh () {
+    async onPullDownRefresh() {
       await this.load();
       wepy.stopPullDownRefresh();
     }
@@ -122,14 +119,12 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-
-  .zan-panel-bottom{
+  .zan-panel-bottom {
     width: 750rpx;
     position: fixed;
     bottom: 0;
   }
-
-  .address-panel{
+  .address-panel {
     z-index: 100000;
     position: fixed;
     top: 0;
@@ -138,8 +133,7 @@
     right: 0;
     background-color: $color-bg-body;
   }
-
-  .disable-title-box{
+  .disable-title-box {
     padding-left: 20rpx;
     padding-top: 20rpx;
     padding-bottom: 10rpx;

@@ -5,13 +5,10 @@
       <repeat for="{{page.list}}" key="index" index="index" item="item">
         <CouponItem :coupon.sync="item"></CouponItem>
       </repeat>
-
       <!-- 加载提示 -->
-      <Loadmore :page.sync="page" emptyText="暂无记录"/>
-
+      <Loadmore :page.sync="page" emptyText="暂无记录" />
       <!--占位符-->
-      <Placeholder :show.sync="isPageEmpty" message="您还没有可发放的卡卷"/>
-
+      <Placeholder :show.sync="isPageEmpty" message="您还没有可发放的卡卷" />
     </view>
   </view>
 </template>
@@ -27,7 +24,6 @@
   import ActionBar from '../../components/common/action_bar';
   import Event from '../../utils/Event';
   import Tips from '../../utils/Tips';
-
   export default class CustomerInfo extends wepy.page {
     def = {
       init: false,
@@ -35,20 +31,19 @@
       page: {},
       sendCoupon: []
     };
-    data = {...this.def};
-
+    data = { ...this.def
+    };
     async onLoad(options) {
       this.customerId = options.customerId;
       this.page = coupon.page();
       this.next();
     };
-
     methods = {};
-
     params() {
-      return {status: 'USED'};
+      return {
+        status: 'USED'
+      };
     }
-
     events = {
       async select(coupon) {
         const params = {
@@ -58,7 +53,6 @@
         const data = await customerInfo.sendCoupon(params);
         if (data.result == 'SUCCESS') {
           await Tips.success('发放成功');
-
           Event.emit(Event.CUSOMTER_COUPON_UPDATE);
         } else {
           await Tips.error('发放失败');
@@ -82,5 +76,4 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-
 </style>

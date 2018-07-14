@@ -3,11 +3,11 @@
     <view class="weui-cells weui-cells-form mb10">
       <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" @tap="screen(0, null)">
         <view class="weui-cell__bd">全部客户</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access"/>
+        <view class="weui-cell__ft weui-cell__ft_in-access" />
       </view>
       <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" @tap="screen(1, 0)">
         <view class="weui-cell__bd">会员</view>
-        <view class="weui-cell__ft weui-cell__ft_in-access"/>
+        <view class="weui-cell__ft weui-cell__ft_in-access" />
       </view>
     </view>
     <text class="muted notice-box" wx:if="{{limit.memberLimit >= 0}}">提示：您当前的会员余量为<text class="{{limit.memberLimit < 10 ? 'danger' : 'muted'}}">{{limit.memberLimit}}</text>个</text>
@@ -16,12 +16,13 @@
         <!-- 等级 -->
         <view class="weui-cell weui-cell_access" @tap="screen(1,{{item.level}})">
           <view class="weui-cell__bd">{{item.levelName}}</view>
-          <text class="weui-cell__ft weui-cell__ft_in-access"/>
+          <text class="weui-cell__ft weui-cell__ft_in-access" />
         </view>
       </repeat>
     </view>
   </view>
 </template>
+
 <script>
   import wepy from 'wepy';
   import member from '../../api/member';
@@ -29,7 +30,6 @@
   import base from '../../mixins/base';
   import Navigator from '../../components/weui/navigator';
   import Event from '../../utils/Event';
-
   export default class UserManagement extends wepy.page {
     def = {
       init: false,
@@ -38,9 +38,9 @@
       type: null,
       limit: {}
     };
-    data = {...this.def};
-
-    async onLoad (option) {
+    data = { ...this.def
+    };
+    async onLoad(option) {
       await this.loadLimit();
       this.type = option.type;
       this.card = await member.cardInfo();
@@ -54,7 +54,7 @@
       this.limit = await shop.limit();
     }
     methods = {
-      screen (showCondition, level) {
+      screen(showCondition, level) {
         const params = {
           type: this.type,
           level: level
@@ -76,9 +76,10 @@
     };
   }
 </script>
+
 <style lang="scss">
   @import "../../styles/variable";
-  .notice-box{
+  .notice-box {
     margin: 5rpx 30rpx;
   }
 </style>

@@ -5,8 +5,8 @@
       <text class="desc inline">￥{{delivery.limitPrice}}起送 | 配送费￥{{delivery.fee}} | {{delivery.location}}</text>
     </view>
     <view class="btn-box row-end">
-      <view class="zan-btn zan-btn--small"  @tap="delete({{delivery.id}})" >删除</view>
-      <view class="zan-btn zan-btn--small  zan-btn--primary"  @tap="edit({{delivery.id}})">编辑</view>
+      <view class="zan-btn zan-btn--small" @tap="delete({{delivery.id}})">删除</view>
+      <view class="zan-btn zan-btn--small  zan-btn--primary" @tap="edit({{delivery.id}})">编辑</view>
     </view>
   </view>
 </template>
@@ -38,31 +38,28 @@
       }
     };
     events = {};
-    onLoad() {
-    }
+    onLoad() {}
   }
 </script>
 
 <style lang="scss">
   @import "../../styles/variable";
-  .notice-box{
+  .notice-box {
     background-color: white;
     border-bottom: $border;
     border-top: $border;
     padding: 20rpx;
     margin-top: 10rpx;
-    .content-box{
+    .content-box {
       align-items: flex-end;
-
-      .desc{
+      .desc {
         color: $color-muted;
         font-size: $text-sm;
         margin-left: 20rpx;
         flex: 1;
       }
     }
-
-    .btn-box{
+    .btn-box {
       margin-top: 10rpx;
       padding-top: 20rpx;
       border-top: $border-dot;

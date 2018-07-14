@@ -2,22 +2,17 @@
   <view class="container" wx:if="{{init}}">
     <!--客户信息-->
     <view class="customer-box">
-
       <!--客户基本信息-->
       <view class="customer-info-box row-between">
-
         <!--左侧头像-->
-        <image class="customer-avatar"
-               src="{{customer.customer.avatarUrl ? customer.customer.avatarUrl: '/images/icons/customer.png'}}"/>
-
+        <image class="customer-avatar" src="{{customer.customer.avatarUrl ? customer.customer.avatarUrl: '/images/icons/customer.png'}}" />
         <!--右侧主区域-->
         <view class="column customer-main-box">
           <!--姓名/打电话-->
           <view class="row-between">
             <text class="xxl">{{customer.customer.nickName ? customer.customer.nickName : '微信用户'}}</text>
-            <image class="icon" src="/images/icons/call.png" @tap.stop="phone"/>
+            <image class="icon" src="/images/icons/call.png" @tap.stop="phone" />
           </view>
-
           <!--地址信息-->
           <view class="row-between" @tap.stop="addressList({{customerId}})">
             <!--地址/电话-->
@@ -26,25 +21,23 @@
               <text>地址：{{customer.address ? customer.address.fullAddress : '暂无地址'}}</text>
             </view>
             <!--更多地址-->
-            <image class="icon" src="/images/icons/more-gray.png"></image>
+            <image class="icon" src="/images/icons/more-gray.png" />
           </view>
-
         </view>
       </view>
-
       <view class="customer-hr"></view>
       <view class="row-between vip-column" @tap="moreVip" wx:if="{{member != null}}">
-        <image class="card-image" src="/images/icons/vip_card.png"/>
+        <image class="card-image" src="/images/icons/vip_card.png" />
         <view class="row-between">
           <text class="muted">会员等级 : {{member.discountRule.levelName}}</text>
-          <view class="vertical-line"/>
+          <view class="vertical-line" />
           <text class="muted">当前积分 : {{member.bonus}}</text>
-          <image class="more-image" src="/images/icons/more-gray.png"/>
+          <image class="more-image" src="/images/icons/more-gray.png" />
         </view>
         <text class="muted" wx:if="{{member == null}}">暂未注册</text>
       </view>
       <view class="row vip-column" @tap="moreVip" wx:if="{{member == null}}">
-        <image class="card-image" src="/images/icons/vip_card.png"/>
+        <image class="card-image" src="/images/icons/vip_card.png" />
         <text class="muted ml20">暂未注册</text>
       </view>
       <view class="customer-hr"></view>
@@ -68,15 +61,12 @@
         </view>
       </view>
     </view>
-
     <!--TAB-->
     <view>
-      <ZanTab :tab.sync="tab" fixed="0"/>
+      <ZanTab :tab.sync="tab" fixed="0" />
     </view>
-
     <!--列表区域-->
     <view>
-
       <view class="zan-btns" wx:if="{{tab.selectedId == 'COUPON'}}">
         <button class="zan-btn zan-btn--fill" @tap="send">发放优惠券</button>
       </view>
@@ -94,9 +84,8 @@
           <BonusItem :bonusInfo.sync="item"></BonusItem>
         </block>
       </repeat>
-
       <!-- 加载提示 -->
-      <Loadmore :page.sync="page" emptyText="暂无记录"/>
+      <Loadmore :page.sync="page" emptyText="暂无记录" />
     </view>
   </view>
 </template>
@@ -119,7 +108,6 @@
   import Placeholder from '../../components/common/placeholder';
   import Tips from '../../utils/Tips';
   import Event from '../../utils/Event';
-
   export default class CustomerInfo extends wepy.page {
     def = {
       init: false,
@@ -128,16 +116,27 @@
       customerId: '',
       member: {},
       page: {
-        list: [
-          {orderGoodsInfos: []}
-        ]
+        list: [{
+          orderGoodsInfos: []
+        }]
       },
       tab: {
-        list: [
-          {id: 'HIS_ORDER', title: '历史订单'},
-          {id: 'OFTEN_GOODS', title: '常购商品'},
-          {id: 'COUPON', title: '优惠券'},
-          {id: 'HIS_BONUS', title: '历史积分'}
+        list: [{
+          id: 'HIS_ORDER',
+          title: '历史订单'
+        },
+        {
+          id: 'OFTEN_GOODS',
+          title: '常购商品'
+        },
+        {
+          id: 'COUPON',
+          title: '优惠券'
+        },
+        {
+          id: 'HIS_BONUS',
+          title: '历史积分'
+        }
         ],
         selectedId: 'HIS_ORDER'
       },
@@ -146,9 +145,9 @@
       coupon: {},
       memberId: 0
     };
-    data = {...this.def};
-
-    async onLoad (options) {
+    data = { ...this.def
+    };
+    async onLoad(options) {
       this.customerId = options.customerId;
       this.member = await member.customerInfo(this.customerId);
       if (this.member) {
@@ -161,18 +160,17 @@
       Event.listen(Event.CUSOMTER_COUPON_UPDATE, this.updateInfo.bind(this), this);
       Event.listen(Event.SHOP_CUSTOMER_UPDATE, this.updateMemberInfo.bind(this), this);
     };
-    updateInfo () {
+    updateInfo() {
       this.update();
       this.customer.countCustomerInfo.totalCouponCount++;
       this.$apply();
     }
-    async updateMemberInfo (params) {
+    async updateMemberInfo(params) {
       this.member = await member.customerInfo(this.customerId);
       this.$apply();
     }
-
     methods = {
-      moreVip () {
+      moreVip() {
         if (this.member) {
           const params = {
             customer: this.customer,
@@ -184,26 +182,34 @@
           Tips.alert('该用户还未注册本店会员！')
         }
       },
-      send () {
+      send() {
         const customerId = this.customerId;
-        this.$navigate('./coupon_send', {customerId});
+        this.$navigate('./coupon_send', {
+          customerId
+        });
       },
-      phone () {
+      phone() {
         if (this.customer.address) {
-          wepy.makePhoneCall({phoneNumber: this.customer.address.phone});
+          wepy.makePhoneCall({
+            phoneNumber: this.customer.address.phone
+          });
         } else {
           Tips.alert('该用户没有电话');
         }
       },
-      addressList (customerId) {
+      addressList(customerId) {
         if (!this.customer.addressList) {
           Tips.alert('该用户没有地址');
           return;
         }
-        this.$navigate('./address_list', {customerId});
+        this.$navigate('./address_list', {
+          customerId
+        });
       },
-      detail (orderId) {
-        this.$navigate('../order/detail', {orderId});
+      detail(orderId) {
+        this.$navigate('../order/detail', {
+          orderId
+        });
       }
     };
     // 获取分页参数
@@ -214,7 +220,7 @@
       };
     }
     events = {
-      async change () {
+      async change() {
         this.page.clear();
         this.$apply();
         if (this.tab.selectedId == 'HIS_ORDER') {
@@ -252,25 +258,20 @@
 
 <style lang="scss">
   @import "../../styles/variable";
-
   .customer-box {
     margin-bottom: rpx(10);
     border-bottom: $border;
   }
-
   .customer-main-box {
     flex: 1;
     padding-left: rpx(25);
   }
-
   .customer-info-box {
     padding: rpx(30);
     background-color: #FFF;
-
     .customer-avatar {
       @include icon-round(rpx(180));
     }
-
     .address-box {
       max-width: rpx(430);
       text {
@@ -280,12 +281,10 @@
       }
     }
   }
-
   .customer-hr {
     width: 100%;
     border-top: $border;
   }
-
   /*统计区域*/
   .count-box {
     padding: rpx(20) 0;
@@ -293,7 +292,6 @@
       width: rpx(250);
     }
   }
-
   .vip-column {
     background-color: white;
     padding: rpx(20) rpx(30);
@@ -313,7 +311,6 @@
       background-color: $color-muted;
     }
   }
-
   .row-between {
     flex: 1;
   }

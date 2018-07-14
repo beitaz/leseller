@@ -23,14 +23,14 @@
   import Tips from '../../utils/Tips';
   import FormTips from '../../components/weui/tips';
   import ActionBar from '../../components/common/action_bar';
-
   export default class OrderRemark extends wepy.page {
     def = {
       orderId: '',
       init: false
     };
-    data = {...this.def};
-    onLoad (options) {
+    data = { ...this.def
+    };
+    onLoad(options) {
       this.orderId = options.orderId;
       const sellerNote = options.sellerNote;
       if (!this.isEmpty(sellerNote)) {

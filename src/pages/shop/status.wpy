@@ -1,23 +1,22 @@
 <template>
-  <Tips />
-  <view class="container" wx:if="{{init}}">
-    <view class="mt10"></view>
-    <view class="weui-cells-form">
-      <Switch_status title="营业状态"  :input.sync="input" uncheckText="歇业中" checkedText="营业中" switchFlag="true" />
-      <Switch_day title="全天营业"  :input.sync="input" uncheckText="时段营业" checkedText="全天营业" switchFlag="true" />
+  <block>
+    <Tips />
+    <view class="container" wx:if="{{init}}">
+      <view class="mt10"></view>
+      <view class="weui-cells-form">
+        <Switch_status title="营业状态" :input.sync="input" uncheckText="歇业中" checkedText="营业中" switchFlag="true" />
+        <Switch_day title="全天营业" :input.sync="input" uncheckText="时段营业" checkedText="全天营业" switchFlag="true" />
+      </view>
+      <view class="mt10"></view>
+      <view class="weui-cells-form" wx:if="{{!input.day}}">
+        <PickerTime_beginTime title="开业时间" :input.sync="input" />
+        <PickerTime_endTime title="打烊时间" :input.sync="input" />
+      </view>
+      <text class="muted sm ml20">提示：{{input.day ? '全天营业无需设置开业、打烊时间': '请点击设置自动开业、打烊时间'}}</text>
+      <!--操作栏-->
+      <ActionBar @tap.user="submit" />
     </view>
-
-    <view class="mt10"></view>
-    <view class="weui-cells-form" wx:if="{{!input.day}}">
-      <PickerTime_beginTime title="开业时间" :input.sync="input" />
-      <PickerTime_endTime title="打烊时间" :input.sync="input" />
-    </view>
-
-    <text class="muted sm ml20">提示：{{input.day ? '全天营业无需设置开业、打烊时间': '请点击设置自动开业、打烊时间'}}</text>
-
-    <!--操作栏-->
-    <ActionBar @tap.user="submit" />
-  </view>
+  </block>
 </template>
 
 <style lang="scss">
@@ -35,15 +34,18 @@
   import FormTips from '../../components/weui/tips';
   import ActionBar from '../../components/common/action_bar';
   import PickerTime from '../../components/weui/picker_time';
-
   export default class OrderIndex extends wepy.page {
     def = {
       init: false
     };
-    data = {...this.def};
-    async onLoad () {
+    data = { ...this.def
+    };
+    async onLoad() {
       this.input = await shop.getStatus();
-      const {beginTime, endTime} = this.input;
+      const {
+        beginTime,
+        endTime
+      } = this.input;
       if (beginTime == null || beginTime == '') {
         this.input.beginTime = '00:00';
       }
@@ -73,26 +75,25 @@
         wepy.navigateBack();
       }
     };
-    getShopPeriod() {
-    };
+    getShopPeriod() {};
     validate() {
-      const rules = [
-        {
-          value: this.input.beginTime,
-          method: 'required',
-          message: '开业时间不能为空'
-        },
-        {
-          value: this.input.endTime,
-          method: 'required',
-          message: '打烊时间不能为空'
-        },
-        {
-          value: this.input.beginTime,
-          method: 'before',
-          param: this.input.endTime,
-          message: '开业时间需要早于打烊时间'
-        }];
+      const rules = [{
+        value: this.input.beginTime,
+        method: 'required',
+        message: '开业时间不能为空'
+      },
+      {
+        value: this.input.endTime,
+        method: 'required',
+        message: '打烊时间不能为空'
+      },
+      {
+        value: this.input.beginTime,
+        method: 'before',
+        param: this.input.endTime,
+        message: '开业时间需要早于打烊时间'
+      }
+      ];
       return this.check(rules);
     }
     events = {};

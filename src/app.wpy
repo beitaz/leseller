@@ -1,15 +1,6 @@
-<style lang="scss" src="./styles/zent.scss"></style>
-<style lang="scss" src="./styles/base.scss"></style>
-
-<style lang="scss">
-  @import "./styles/weui";
-  @import "./styles/weui-extend";
-</style>
-
 <script>
   import wepy from 'wepy';
   import 'wepy-async-function';
-
   export default class extends wepy.app {
     globalData = {
       auth: {},
@@ -54,23 +45,24 @@
       }
       return header;
     }
-
     onLaunch() {
       // 同步开放平台EXT数据
       const ext = wepy.getExtConfigSync();
       console.info('[ext] init ext data', ext);
       Object.assign(wepy.$instance.globalData, ext);
-      this.syncStoreConfig({'login_code': 'login_code'}, 'login_code');
-      this.syncStoreConfig({'shop_id': 'shop_id'}, 'shop_id');
+      this.syncStoreConfig({
+        'login_code': 'login_code'
+      }, 'login_code');
+      this.syncStoreConfig({
+        'shop_id': 'shop_id'
+      }, 'shop_id');
     }
-
     syncStoreConfig(obj, key) {
       const value = wepy.getStorageSync(obj[key]);
       if (value !== '') {
         wepy.$instance.globalData.auth[key] = value;
       }
     }
-
     config = {
       pages: [
         'pages/home/index',
@@ -147,27 +139,33 @@
         selectedColor: '#1296db',
         borderStyle: 'white',
         backgroundColor: '#FAFAFA',
-        list: [
-          {
-            iconPath: 'images/tab/manage.png',
-            selectedIconPath: 'images/tab/manage-active.png',
-            pagePath: 'pages/home/home',
-            text: '工作台'
-          },
-          {
-            iconPath: 'images/tab/order.png',
-            selectedIconPath: 'images/tab/order-active.png',
-            pagePath: 'pages/order/index',
-            text: '订单'
-          },
-          {
-            iconPath: 'images/tab/user.png',
-            selectedIconPath: 'images/tab/user-active.png',
-            pagePath: 'pages/shop/index',
-            text: '店铺'
-          }
+        list: [{
+          iconPath: 'images/tab/manage.png',
+          selectedIconPath: 'images/tab/manage-active.png',
+          pagePath: 'pages/home/home',
+          text: '工作台'
+        },
+        {
+          iconPath: 'images/tab/order.png',
+          selectedIconPath: 'images/tab/order-active.png',
+          pagePath: 'pages/order/index',
+          text: '订单'
+        },
+        {
+          iconPath: 'images/tab/user.png',
+          selectedIconPath: 'images/tab/user-active.png',
+          pagePath: 'pages/shop/index',
+          text: '店铺'
+        }
         ]
       }
     };
   }
 </script>
+
+<style lang="scss">
+  @import "./styles/weui";
+  @import "./styles/weui-extend";
+  @import "./styles/base.scss";
+  @import "./styles/zent.scss";
+</style>
