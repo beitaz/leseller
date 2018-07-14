@@ -21,7 +21,7 @@ export default class auth extends base {
   /**
    * 短信验证码
    */
-  static async sms (phone) {
+  static async sms(phone) {
     const url = `${this.baseUrl}/auth/sms_code?phone=${phone}`;
     const data = await this.get(url);
     return data.message;
@@ -47,7 +47,7 @@ export default class auth extends base {
    * 读取权限值
    */
   static async setConfig(key, value) {
-    await wepy.setStorage({key: key, data: value});
+    await wepy.setStorage({ key: key, data: value });
     wepy.$instance.globalData.auth[key] = value;
   }
 
@@ -56,6 +56,6 @@ export default class auth extends base {
    */
   static async removeConfig(key) {
     wepy.$instance.globalData.auth[key] = null;
-    await wepy.removeStorage({key: key});
+    await wepy.removeStorage({ key: key });
   }
 }

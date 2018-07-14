@@ -182,6 +182,7 @@
       // 写入缓存
       wepy.setStorageSync('order_count', order);
     }
+    // 比较订单状态
     compareOrderStatus(curStatus) {
       const preStatus = wepy.getStorageSync('order_count');
       const auto = this.shop.autoOrder;
@@ -192,10 +193,10 @@
       let hasNewOrder = auto == 0 ? (preStatus.n2 < curStatus.n2) : (preStatus.n9 < curStatus.n9 || preStatus.n3 < curStatus.n3);
       // 订单数量比较
       if (hasNewOrder) {
-        // 新订单通知
-        wepy.playBackgroundAudio({
-          dataUrl: 'http://img.leshare.shop/leshare/new_order.mp3'
-        });
+        // 新订单通知(语音)
+        // wepy.playBackgroundAudio({
+        //   dataUrl: 'http://img.leshare.shop/leshare/new_order.mp3'
+        // });
         Tips.modal('您有新的订单，请及时处理');
       }
     }

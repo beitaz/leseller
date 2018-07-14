@@ -14,55 +14,58 @@
       // 注册中间件
       this.use('requestfix');
       this.use('promisify');
+      // 添加全局拦截器设置 request 请求头
       this.intercept('request', {
+        // 发出请求时的回调函数
         config(p) {
-          p.header = this.createAuthHeader();
-          return p;
+          // p.timestamp = +new Date(); // 对所有 request 请求中的 OBJECT 参数对象统一附加时间戳属性
+          p.header = this.createAuthHeader(); // 对所有 request 请求中的 OBJECT 参数对象统一附加 login_code 和 shop_id
+          return p; // 必须返回 OBJECT 参数对象，否则无法发送请求到服务端
         }
       });
+      // 添加全局拦截器设置文件上传的请求头
       this.intercept('uploadFile', {
         config(p) {
           p.header = this.createAuthHeader();
           return p;
         },
+        // 请求成功后的回调函数,可以在这里对收到的响应数据对象进行加工处理
         success(p) {
           return p.data;
         }
       });
     }
     /**
-     * 构造权限头部
+     * 构造权限头部 (用户已登录,则将登录状态 login_code 添加到请求头中,且添加 shop_id 商店编号)
      */
     createAuthHeader() {
-      const loginCode = wepy.$instance.globalData.auth.login_code;
-      const shopId = wepy.$instance.globalData.auth.shop_id;
-      const header = {};
-      if (loginCode) {
-        header['login_code'] = loginCode;
-      }
-      if (shopId) {
-        header['shop_id'] = shopId;
-      }
+      let loginCode = wepy.$instance.globalData.auth.login_code;
+      let shopId = wepy.$instance.globalData.auth.shop_id;
+      let header = {};
+      if (loginCode) header['login_code'] = loginCode;
+      if (shopId) header['shop_id'] = shopId;
       return header;
     }
     onLaunch() {
-      // 同步开放平台EXT数据
-      const ext = wepy.getExtConfigSync();
-      console.info('[ext] init ext data', ext);
-      Object.assign(wepy.$instance.globalData, ext);
-      this.syncStoreConfig({
-        'login_code': 'login_code'
-      }, 'login_code');
-      this.syncStoreConfig({
-        'shop_id': 'shop_id'
-      }, 'shop_id');
+      // 同步开放平台 EXT 数据
+      let ext = wepy.getExtConfigSync();
+      console.info('初始化扩展数据', ext);
+      Object.assign(wepy.$instance.globalData, ext); // 将扩展数据加载到全局变量
+      this.globalData.auth['login_code'] = wepy.getStorageSync('login_code');
+      this.globalData.auth['shop_id'] = wepy.getStorageSync('shop_id');
+      // this.syncStoreConfig({
+      //   'login_code': 'login_code'
+      // }, 'login_code');
+      // this.syncStoreConfig({
+      //   'shop_id': 'shop_id'
+      // }, 'shop_id');
     }
-    syncStoreConfig(obj, key) {
-      const value = wepy.getStorageSync(obj[key]);
-      if (value !== '') {
-        wepy.$instance.globalData.auth[key] = value;
-      }
-    }
+    // syncStoreConfig(obj, key) {
+    //   const value = wepy.getStorageSync(obj[key]);
+    //   if (value !== '') {
+    //     wepy.$instance.globalData.auth[key] = value;
+    //   }
+    // }
     config = {
       pages: [
         'pages/home/index',
