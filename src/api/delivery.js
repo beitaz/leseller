@@ -14,7 +14,7 @@ export default class delivery extends base {
   /**
    * 创建
    */
-  static create(delivery) {
+  static create (delivery) {
     const url = `${this.baseUrl}/delivery`;
     return this.post(url, [delivery]);
   }
@@ -22,7 +22,7 @@ export default class delivery extends base {
   /**
    * 删除
    */
-  static remove(id) {
+  static remove (id) {
     const url = `${this.baseUrl}/delivery/${id}`;
     return this.delete(url);
   }
@@ -30,7 +30,7 @@ export default class delivery extends base {
   /**
    * 更新
    */
-  static update(id, delivery) {
+  static update (id, delivery) {
     const url = `${this.baseUrl}/delivery/${id}`;
     return this.put(url, delivery);
   }
@@ -51,7 +51,7 @@ export default class delivery extends base {
   /**
    * 创建
    */
-  static createDeliver(deliver) {
+  static createDeliver (deliver) {
     const url = `${this.baseUrl}/deliver_user`;
     return this.post(url, deliver);
   }
@@ -59,7 +59,7 @@ export default class delivery extends base {
   /**
    * 删除
    */
-  static removeDeliver(id) {
+  static removeDeliver (id) {
     const url = `${this.baseUrl}/deliver_user/${id}`;
     return this.delete(url);
   }
@@ -67,7 +67,7 @@ export default class delivery extends base {
   /**
    * 更新
    */
-  static updateDeliver(deliver) {
+  static updateDeliver (deliver) {
     const url = `${this.baseUrl}/deliver_user`;
     return this.put(url, deliver);
   }

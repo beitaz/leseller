@@ -28,29 +28,29 @@
       // size: {}
     };
     methods = {
-      async remove(categoryId) {
+      async remove (categoryId) {
         await Tips.confirm('确认删除该分类？');
         await goods.removeInnerCategories(categoryId);
         await Tips.success('删除成功');
         Event.emit(Event.CATEGORY_LIST_UPDATE);
       },
-      edit(categoryId) {
+      edit (categoryId) {
         const param = {
           mode: 'edit',
           categoryId
         };
         this.$root.$navigate('category_edit', param);
       },
-      up(index) {
+      up (index) {
         this.$emit('up', index)
       },
-      down(index) {
+      down (index) {
         this.$emit('down', index)
       },
-      top(index) {
+      top (index) {
         this.$emit('top', index)
       },
-      bottom(index) {
+      bottom (index) {
         this.$emit('bottom', index)
       }
     };

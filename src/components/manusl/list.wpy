@@ -46,13 +46,13 @@
       disable: [],
       isPageEmpty: false
     };
-    async onLoad() {
+    async onLoad () {
       Event.listen(Event.ADDRESS_LIST_UPDATE, this.update.bind(this), this);
     };
-    async update(isCreate) {
+    async update (isCreate) {
       await this.load();
       const size = this.available.length;
-      if (size == 1 && isCreate) {
+      if (size === 1 && isCreate) {
         // 如果只有一个可用地址，则直接选定并返回
         Event.emit(Event.TRADE_ADDRESS_UPDATE, this.available[0]);
         this.display = false;
@@ -62,24 +62,24 @@
         Event.emit(Event.TRADE_ADDRESS_UPDATE, null);
       }
     }
-    async load() {
+    async load () {
       const {
         available,
         disable
       } = await mausl.addresses(this.goodsList);
       this.available = available;
       this.disable = disable;
-      this.isPageEmpty = available.length == 0 && disable.length == 0;
+      this.isPageEmpty = available.length === 0 && disable.length === 0;
       this.loaded();
     }
-    async onPullDownRefresh() {
+    async onPullDownRefresh () {
       await this.load();
       wepy.stopPullDownRefresh();
     }
     watch = {
-      async display(value) {
+      async display (value) {
         // 首次加载（商品列表加载完毕/页面为初始化/页面已展现）
-        if (this.init == false && value == true) {
+        if (this.init === false && value === true) {
           await this.load();
           this.init = true;
           // 一个地址也没有
@@ -91,13 +91,13 @@
       }
     };
     methods = {
-      add() {
+      add () {
         this.$root.$navigate('/pages/address/edit?mode=create');
       },
-      back() {
+      back () {
         this.display = false;
       },
-      select(address) {
+      select (address) {
         Event.emit(Event.TRADE_ADDRESS_UPDATE, address);
         this.display = false;
       }

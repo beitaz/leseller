@@ -47,25 +47,25 @@
     }
     data = { ...this.def
     };
-    async onLoad({
+    async onLoad ({
       reduce,
       mode
     }) {
       this.mode = mode;
-      if (mode == 'edit') {
+      if (mode === 'edit') {
         this.input = JSON.parse(reduce);
       }
       this.loaded();
     };
     methods = {
-      async submit() {
+      async submit () {
         if (!this.validate()) {
           return;
         }
-        if (this.mode == 'create') {
+        if (this.mode === 'create') {
           await shop.createReduce(this.input)
           await Tips.success('创建成功！');
-        } else if (this.mode == 'edit') {
+        } else if (this.mode === 'edit') {
           await shop.updateReduce(this.input);
           await Tips.success('编辑成功！');
         }
@@ -73,7 +73,7 @@
         wepy.navigateBack();
       }
     };
-    validate() {
+    validate () {
       const rules = [{
         value: this.input.limitPrice,
         method: 'required',

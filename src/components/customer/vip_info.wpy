@@ -9,7 +9,7 @@
         <image class="icon" src="/images/icons/more-gray.png" />
       </view>
     </view>
-    <view class="row vip-column" @tap="moreVip" wx:if="{{member == null}}">
+    <view class="row vip-column" @tap="moreVip" wx:if="{{member === null}}">
       <image class="card-image" src="/images/icons/vip_card.png" />
       <text class="muted ml20">暂未注册</text>
     </view>
@@ -23,7 +23,7 @@
       member: {}
     };
     methods = {
-      moreVip() {
+      moreVip () {
         this.$emit('moreVip');
       }
     };

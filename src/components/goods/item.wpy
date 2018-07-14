@@ -28,7 +28,7 @@
     };
     data = {};
     methods = {
-      async edit(goodsId) {
+      async edit (goodsId) {
         this.$root.$navigate('edit', {
           goodsId,
           mode: 'edit'

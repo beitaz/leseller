@@ -35,15 +35,15 @@
       display: 'false'
     };
     methods = {
-      show() {
+      show () {
         this.display = 'true'
       },
-      categoriesChange(info) {
+      categoriesChange (info) {
         this.tab.categoryId = info.selectedId;
-        this.categoriesTitle = info.selectedId == '' ? this.props.categoriesTitle.default : info.selectedName;
+        this.categoriesTitle = info.selectedId === '' ? this.props.categoriesTitle.default : info.selectedName;
         this.change();
       },
-      tabChange() {
+      tabChange () {
         this.change();
       }
     };
@@ -51,14 +51,14 @@
       ZanTab: ZanTab,
       SliderSelector: SliderSelector
     };
-    change() {
+    change () {
       this.$emit('change', {
         selectedId: this.tab.selectedId,
         categoryId: this.tab.categoryId
       });
     }
     events = {};
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 

@@ -55,14 +55,14 @@
     };
     data = { ...this.def
     };
-    async onLoad() {
+    async onLoad () {
       this.count = await visitor.count();
       this.page = visitor.page();
       await this.next();
     };
-    params() {}
+    params () {}
     methods = {
-      async switchTab() {
+      async switchTab () {
         this.page = visitor.page();
         await this.next();
       }

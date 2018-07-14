@@ -5,7 +5,7 @@
       <image class="input_icon voice" src='/images/icons/voice.png' />
       <image class="input_icon face" src='/images/icons/face.png' />
       <image class="input_icon plus" src='/images/icons/service_plus.png' />
-      <view class="send{{readyToSend.length == 0 ? ' hidden' : ''}}" @tap="send">发送</view>
+      <view class="send{{readyToSend.length === 0 ? ' hidden' : ''}}" @tap="send">发送</view>
       <input @input="input" value="{{readyToSend}}" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input" />
     </view>
   </view>
@@ -19,25 +19,25 @@
       readyToSend: ''
     };
     methods = {
-      send() {
+      send () {
         if (this.readyToSend) {
           this.$emit('send', this.readyToSend);
         }
         this.clear();
       },
-      input(evt) {
+      input (evt) {
         this.readyToSend = evt.detail.value;
       },
-      focus() {
+      focus () {
         this.focusFlag = true;
         this.$invoke('../chartboard', 'fixPosition', this.focusFlag);
       },
-      blur() {
+      blur () {
         this.focusFlag = false;
         this.$invoke('../chartboard', 'fixPosition', this.focusFlag);
       }
     };
-    clear() {
+    clear () {
       this.readyToSend = '';
     }
   }

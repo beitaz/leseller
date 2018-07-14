@@ -54,10 +54,10 @@
 	  };
 	  data = {};
 	  methods = {
-	    category(present, index) {
+	    category (present, index) {
 	      this.$emit('category', present, index);
 	    },
-	    input(index, e) {
+	    input (index, e) {
 	      const fieldName = e.currentTarget.id;
 	      const fieldValue = e.detail.value;
 	      this.$emit('change', {
@@ -66,10 +66,10 @@
 	        fieldValue
 	      });
 	    },
-	    remove(index) {
+	    remove (index) {
 	      this.$emit('remove', index);
 	    },
-	    coupon(present, index) {
+	    coupon (present, index) {
 	      this.$emit('coupon', present, index);
 	    }
 	  };

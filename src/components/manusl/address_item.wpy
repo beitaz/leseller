@@ -21,8 +21,8 @@
       address: {}
     };
     methods = {
-      select(address) {
-        if (address != '') {
+      select (address) {
+        if (address !== '') {
           this.$emit('select', address);
         } else {
           Tips.alert('非配送区域');

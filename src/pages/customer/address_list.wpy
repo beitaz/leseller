@@ -18,7 +18,7 @@
     };
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       console.log(options);
       this.addressList = await customerInfo.addressList(options.customerId);
       this.loaded();

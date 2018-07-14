@@ -23,7 +23,7 @@
           <view class="item-header-box">
             <text class="lg mr20">{{index + 1}}</text>
             <image class="icon-xl" src="{{item.url}}" />
-            <text class="ml20" wx:if="{{index == 0}}">(封面)</text>
+            <text class="ml20" wx:if="{{index === 0}}">(封面)</text>
             <text class="muted ml20" wx:else>(细节)</text>
           </view>
           <!-- 操作区域 -->
@@ -68,7 +68,7 @@
     };
     methods = {
       // 上传照片
-      async photo() {
+      async photo () {
         const size = this.pictures.length;
         if (size >= 5) {
           await Tips.alert('最多选择五张图片');
@@ -89,27 +89,27 @@
         this.$apply();
       },
       // 打开管理面板
-      manage() {
+      manage () {
         this.isPanelDisplay = 'true';
       },
       // 向上移动
-      up(index) {
-        if (index == 0) {
+      up (index) {
+        if (index === 0) {
           return;
         }
         const target = index - 1;
         this.swap(index, target);
       },
       // 向下移动
-      down(index) {
-        if (index == this.pictures.length - 1) {
+      down (index) {
+        if (index === this.pictures.length - 1) {
           return;
         }
         const target = index + 1;
         this.swap(index, target);
       },
       // 删除图片
-      remove(index) {
+      remove (index) {
         this.pictures.splice(index, 1);
         if (this.pictures.length < 1) {
           this.isPanelDisplay = false;
@@ -117,7 +117,7 @@
       }
     };
     watch = {
-      isPanelDisplay(value) {
+      isPanelDisplay (value) {
         this.$emit('toggle', value);
       }
     };
@@ -125,14 +125,14 @@
       SliderPanel: SliderPanel
     };
     events = {};
-    swap(srcIndex, targetIndex) {
+    swap (srcIndex, targetIndex) {
       const pictures = this.pictures;
       const src = pictures[srcIndex];
       const target = pictures[targetIndex];
       pictures[targetIndex] = src;
       pictures[srcIndex] = target;
     }
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 

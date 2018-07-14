@@ -23,7 +23,7 @@
     data = {};
     methods = {};
     events = {};
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 

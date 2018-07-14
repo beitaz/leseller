@@ -20,10 +20,10 @@
     data = {
       shopImgeUrl: ''
     };
-    onLoad() {
+    onLoad () {
       this.shopImgeUrl = wepy.getStorageSync('shop_image');
     }
-    fixPosition(focus) {
+    fixPosition (focus) {
       this.focus = focus;
       this.$apply();
     }

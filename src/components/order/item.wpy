@@ -9,7 +9,7 @@
         </view>
         <view>
           <text class="sm primary">{{order.statusText}}</text>
-          <text class="muted danger"> {{order.paymentType == 0 ? '(线下支付)' : ''}}</text>
+          <text class="muted danger"> {{order.paymentType === 0 ? '(线下支付)' : ''}}</text>
         </view>
       </view>
       <view class="order-info-container row-between">
@@ -20,7 +20,7 @@
     <!--商品区域-->
     <view class="order-goods-list-container" @tap="detail({{order.orderId}})">
       <repeat for="{{order.orderGoodsInfos}}" key="goodsId" index="index" item="item">
-        <view class="{{!order.orderId || index == 0 || expand[order.orderId] ? '' : 'order-goods-fold'}}">
+        <view class="{{!order.orderId || index === 0 || expand[order.orderId] ? '' : 'order-goods-fold'}}">
           <OrderGoods :goods="item"></OrderGoods>
           <view class="hr" />
         </view>
@@ -40,9 +40,9 @@
     <!--操作栏/可以抽取为组件-->
     <view class="order-action-bar row-between" wx:if="{{action != 0}}">
       <view>
-        <view class="small label primary ml20" wx:if="{{order.orderType == 20}}">外卖</view>
-        <view class="small label primary ml20" wx:if="{{order.orderType == 30}}">堂食</view>
-        <view class="small label primary ml20" wx:if="{{order.orderType == 33}}">打包</view>
+        <view class="small label primary ml20" wx:if="{{order.orderType === 20}}">外卖</view>
+        <view class="small label primary ml20" wx:if="{{order.orderType === 30}}">堂食</view>
+        <view class="small label primary ml20" wx:if="{{order.orderType === 33}}">打包</view>
       </view>
       <view>
         <block wx:for="{{order.actions}}" wx:for-item="action" wx:key="index">
@@ -73,14 +73,14 @@
       expand: {},
       shopName: {}
     };
-    send({
+    send ({
       orderId
     }) {
       this.$root.$navigate('send', {
         orderId
       });
     }
-    remark({
+    remark ({
       orderId,
       sellerNote
     }) {
@@ -89,33 +89,33 @@
         sellerNote
       });
     }
-    close({
+    close ({
       orderId
     }) {
       this.$root.$navigate('close', {
         orderId
       });
     }
-    reprice({
+    reprice ({
       orderId
     }) {
       this.$root.$navigate('reprice', {
         orderId
       });
     }
-    receive({
+    receive ({
       orderId
     }) {
       this.$emit('receive', orderId);
     }
-    refund({
+    refund ({
       orderId
     }) {
       this.$root.$navigate('refund', {
         orderId
       });
     }
-    trace({
+    trace ({
       orderId
     }) {
       // TODO 尚未处理
@@ -123,7 +123,7 @@
         orderId
       });
     }
-    async take({
+    async take ({
       orderId
     }) {
       await Tips.confirm('确认接单？');
@@ -137,7 +137,7 @@
       Event.emit(Event.ORDER_LIST_UPDATE);
     }
     methods = {
-      action(funcName, order) {
+      action (funcName, order) {
         console.info('[action]' + funcName);
         if (this[funcName]) {
           const func = this[funcName].bind(this);
@@ -146,11 +146,11 @@
           Tips.error('未知错误');
         }
       },
-      expand(orderId) {
-        orderId = orderId == null ? 0 : orderId;
+      expand (orderId) {
+        orderId = orderId === null ? 0 : orderId;
         this.expand[orderId] = !this.expand[orderId];
       },
-      detail(orderId) {
+      detail (orderId) {
         this.$emit('tap', orderId);
       }
     };

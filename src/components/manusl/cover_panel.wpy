@@ -1,6 +1,6 @@
 <template>
   <!--遮罩层-->
-  <view class="cover-panel" wx:if="{{display == 'true'}}" @tap="tap" style="{{zIndex ? 'z-index:'+ zIndex : '' }}" />
+  <view class="cover-panel" wx:if="{{display === 'true'}}" @tap="tap" style="{{zIndex ? 'z-index:'+ zIndex : '' }}" />
 </template>
 
 <script>
@@ -11,7 +11,7 @@
       zIndex: {}
     };
     methods = {
-      tap() {
+      tap () {
         this.$emit('tap');
       }
     };

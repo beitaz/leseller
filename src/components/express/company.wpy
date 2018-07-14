@@ -29,15 +29,15 @@
       companies: [],
       input: ''
     };
-    async onLoad() {};
+    async onLoad () {};
     watch = {
-      input(value) {
+      input (value) {
         this.companies.forEach(company => {
-          company.display = value == null || value == '' ? true : company.name.indexOf(value) != -1;
+          company.display = value === null || value === '' ? true : company.name.indexOf(value) !== -1;
         });
         this.$apply();
       },
-      async display(value) {
+      async display (value) {
         if (value) {
           const companies = await express.company();
           companies.forEach(item => {
@@ -50,10 +50,10 @@
       }
     };
     methods = {
-      selected(company, event) {
+      selected (company, event) {
         this.$emit('selected', company);
       },
-      back() {
+      back () {
         this.$emit('back');
       }
     };

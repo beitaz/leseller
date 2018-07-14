@@ -17,8 +17,8 @@ export default class coupon extends base {
    * @param item
    * @private
    */
-  static _processCustomerCouponItem(item) {
-    if (item.coupon == null) {
+  static _processCustomerCouponItem (item) {
+    if (item.coupon === null) {
       return;
     }
     Object.assign(item, item.coupon);
@@ -55,7 +55,7 @@ export default class coupon extends base {
    * 优惠券使用情况分页方法
    */
   static pagePick (couponId, type) {
-    if (type == 'NEVER_USED') {
+    if (type === 'NEVER_USED') {
       const url = `${this.baseUrl}/coupons/${couponId}/used_info`;
       return new Page(url, this.processCouponNeverUsed.bind(this));
     } else {
@@ -111,7 +111,7 @@ export default class coupon extends base {
    * 数据处理
    */
   static processCouponItem (coupon) {
-    if (coupon == null) {
+    if (coupon === null) {
       return;
     }
     coupon.beginTime = this._convertTimestapeToDay(coupon.beginTime);
@@ -150,11 +150,11 @@ export default class coupon extends base {
    * 处理时间格式
    */
   static _convertTimestapeToDay (timestape) {
-    if (timestape == null) {
+    if (timestape === null) {
       return;
     }
     let temp = timestape;
-    if (timestape.indexOf(' ') != -1) {
+    if (timestape.indexOf(' ') !== -1) {
       temp = timestape.substring(0, timestape.indexOf(' '));
     }
     return temp.replace(/-/g, '.');

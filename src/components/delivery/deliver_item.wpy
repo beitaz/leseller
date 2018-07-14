@@ -23,13 +23,13 @@
       deliver: {}
     };
     methods = {
-      async delete(id) {
+      async delete (id) {
         await Tips.confirm('确认删除该配送员？');
         await delivery.removeDeliver(id);
         await Tips.success('删除成功');
         Event.emit(Event.DELIVER_LIST_UPDATE);
       },
-      edit(deliver) {
+      edit (deliver) {
         const param = {
           mode: 'edit',
           deliver: JSON.stringify(deliver)

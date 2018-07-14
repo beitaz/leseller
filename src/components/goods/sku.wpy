@@ -52,7 +52,7 @@
     };
     data = {};
     methods = {
-      input(index, e) {
+      input (index, e) {
         console.info(index, e);
         const fieldName = e.currentTarget.id;
         const fieldValue = e.detail.value;
@@ -62,12 +62,12 @@
           fieldValue
         });
       },
-      remove(index) {
+      remove (index) {
         this.$emit('remove', index);
       }
     };
     events = {};
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 

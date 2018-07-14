@@ -22,12 +22,12 @@
     };
     data = {};
     methods = {
-      tap(customer) {
+      tap (customer) {
         this.$emit('tap', customer);
       }
     };
     events = {};
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 

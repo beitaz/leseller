@@ -10,7 +10,7 @@
       </view>
     </view>
     <!--物流栏（电商）-->
-    <block wx:if="{{order.isExpress && order.orderType == 10}}">
+    <block wx:if="{{order.isExpress && order.orderType === 10}}">
       <view class="order-trace-bar row" @tap="trace({{order.orderId}})">
         <image class="icon" src="/images/icons/car.png" />
         <view class="info-box column">
@@ -21,7 +21,7 @@
       </view>
     </block>
     <!--物流栏（外卖）-->
-    <block wx:if="{{order.isExpress && order.orderType == 20}}">
+    <block wx:if="{{order.isExpress && order.orderType === 20}}">
       <view class="order-trace-bar row-between">
         <view class="row">
           <image class="icon" src="/images/icons/sender.png" />
@@ -35,10 +35,10 @@
     </block>
     <view wx:if="{{order.customerId != 0}}">
       <!--地址展现-->
-      <block wx:if="{{order.orderType == '20' || order.orderType == '10'}}">
+      <block wx:if="{{order.orderType === '20' || order.orderType === '10'}}">
         <Address :address.sync="address" />
       </block>
-      <block wx:if="{{order.orderType == '30' || order.orderType == '33'}}">
+      <block wx:if="{{order.orderType === '30' || order.orderType === '33'}}">
         <InShopStatus :order.sync="order" />
       </block>
     </view>
@@ -50,7 +50,7 @@
         <view class="weui-cell__bd">支付方式</view>
         <view class="weui-cell__ft">{{order.paymentText}}</view>
       </view>
-      <view class="weui-cell" wx:if="{{order.orderType == '20'}}">
+      <view class="weui-cell" wx:if="{{order.orderType === '20'}}">
         <view class="weui-cell__bd">配送方式</view>
         <view class="weui-cell__ft">{{order.deliveryText}}</view>
       </view>
@@ -118,7 +118,7 @@
     };
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       if (!auth.isLogin()) {
         this.$redirect('/pages/home/index');
         return;
@@ -131,30 +131,30 @@
         this.loaded();
       } catch (e) {
         Tips.loaded();
-        if (e.statusCode == '403') {
+        if (e.statusCode === '403') {
           await Tips.alert('请重新登录');
           this.$redirect('/pages/home/index');
-        } else if (e.serverCode == '20000') {
+        } else if (e.serverCode === '20000') {
           await Tips.alert('请切换为对应店铺');
           this.$redirect('/pages/home/shops');
         }
       }
     };
-    close({
+    close ({
       orderId
     }) {
       this.$root.$navigate('close', {
         orderId
       });
     }
-    send({
+    send ({
       orderId
     }) {
       this.$root.$navigate('send', {
         orderId
       });
     }
-    remark({
+    remark ({
       orderId,
       sellerNote
     }) {
@@ -163,28 +163,28 @@
         sellerNote
       });
     }
-    reprice({
+    reprice ({
       orderId
     }) {
       this.$root.$navigate('reprice', {
         orderId
       });
     }
-    refund({
+    refund ({
       orderId
     }) {
       this.$root.$navigate('refund', {
         orderId
       });
     }
-    phone({
+    phone ({
       receivePhone
     }) {
       wepy.makePhoneCall({
         phoneNumber: receivePhone
       });
     }
-    async take({
+    async take ({
       orderId
     }) {
       await Tips.confirm('确认接单？');
@@ -198,7 +198,7 @@
       wepy.navigateBack();
       Event.emit(Event.ORDER_LIST_UPDATE);
     }
-    async receive({
+    async receive ({
       orderId
     }) {
       await Tips.confirm('是否确认客户已收到货品？');
@@ -212,7 +212,7 @@
       Event.emit(Event.ORDER_LIST_UPDATE);
       wepy.navigateBack();
     }
-    async print({
+    async print ({
       orderId
     }) {
       await Tips.confirm('确认打印？');
@@ -224,7 +224,7 @@
         await Tips.success('操作失败');
       }
     }
-    trace({
+    trace ({
       orderId
     }) {
       // TODO 尚未处理
@@ -233,7 +233,7 @@
       });
     }
     methods = {
-      action(funcName, order) {
+      action (funcName, order) {
         console.info('[action]' + funcName);
         if (this[funcName]) {
           const func = this[funcName].bind(this);
@@ -242,14 +242,14 @@
           Tips.error('未知错误');
         }
       },
-      sender() {
+      sender () {
         wepy.makePhoneCall({
           phoneNumber: this.order.orderExpress.telPhone
         });
       }
     };
     computed = {
-      originPrice() {
+      originPrice () {
         if (this.order && this.order.orderPriceHistory) {
           const records = this.order.orderPriceHistory;
           const length = records.length;

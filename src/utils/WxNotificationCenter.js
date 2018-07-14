@@ -20,7 +20,7 @@ var __notices = [];
  * selector： 对应的通知方法，接受到通知后进行的动作
  * observer: 注册对象，指Page对象
  */
-function addNotification(name, selector, observer) {
+function addNotification (name, selector, observer) {
   if (name && selector) {
     if (!observer) {
       console.log("addNotification Warning: no observer will can't remove notice");
@@ -46,7 +46,7 @@ function addNotification(name, selector, observer) {
  * selector： 对应的通知方法，接受到通知后进行的动作
  * observer: 注册对象，指Page对象
  */
-function addOnceNotification(name, selector, observer) {
+function addOnceNotification (name, selector, observer) {
   if (__notices.length > 0) {
     for (var i = 0; i < __notices.length; i++) {
       var notice = __notices[i];
@@ -60,7 +60,7 @@ function addOnceNotification(name, selector, observer) {
   this.addNotification(name, selector, observer)
 }
 
-function addNotices(newNotice) {
+function addNotices (newNotice) {
     // if (__notices.length > 0) {
     //     for (var i = 0; i < __notices.length; i++) {
     //         var hisNotice = __notices[i];
@@ -91,7 +91,7 @@ function addNotices(newNotice) {
  * observer: 移除的通知所在的Page对象
  */
 
-function removeNotification(name, observer) {
+function removeNotification (name, observer) {
   console.log('removeNotification:' + name);
   for (var i = 0; i < __notices.length; i++) {
     var notice = __notices[i];
@@ -113,9 +113,9 @@ function removeNotification(name, observer) {
  * info: 携带的参数
  */
 
-function postNotificationName(name, info) {
+function postNotificationName (name, info) {
   console.log('postNotificationName:' + name);
-  if (__notices.length == 0) {
+  if (__notices.length === 0) {
     console.log("postNotificationName error: u hadn't add any notice.");
     return;
   }
@@ -129,7 +129,7 @@ function postNotificationName(name, info) {
 }
 
 // 用于对比两个对象是否相等
-function cmp(x, y) {
+function cmp (x, y) {
     // If both x and y are null or undefined and exactly the same
   if (x === y) {
     return true;

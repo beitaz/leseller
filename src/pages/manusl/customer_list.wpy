@@ -51,10 +51,10 @@
     };
     data = { ...this.def
     };
-    async onLoad() {
+    async onLoad () {
       await this.getRequest();
     };
-    params() {
+    params () {
       return {
         order_type: this.tab.selectedId,
         sort: this.tab.sord,
@@ -62,14 +62,14 @@
       };
     };
     methods = {
-      async switchTab() {
+      async switchTab () {
         await this.getRequest();
       },
-      toUserInfo(customerId) {
+      toUserInfo (customerId) {
         this.$root.$navigate('/pages/customer/info?customerId=' + customerId);
       }
     };
-    async getRequest() {
+    async getRequest () {
       this.page = await mausl.customersList(this.tab.selectedId);
       await this.next();
     };

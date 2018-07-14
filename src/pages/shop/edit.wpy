@@ -116,35 +116,35 @@
       versions: '',
       card: null
     };
-    async onLoad() {
+    async onLoad () {
       const [shops, categories, card] = await Promise.all([shop.info(), shop.getShopCategories(), vip.info()]);
       this.card = card;
       this.shop = shops;
-      this.shop.autoOrder = this.shop.autoOrder == 1;
-      this.shop.offPay = this.shop.offPay == 1;
-      this.shop.inShop = this.shop.inShop == 1;
-      this.shop.supportMember = this.shop.supportMember == 1;
+      this.shop.autoOrder = this.shop.autoOrder === 1;
+      this.shop.offPay = this.shop.offPay === 1;
+      this.shop.inShop = this.shop.inShop === 1;
+      this.shop.supportMember = this.shop.supportMember === 1;
       this.categories = categories;
       this.pictures = this.shop.images;
       this.limit = wepy.getStorageSync('limit');
       this.loaded();
     };
     methods = {
-      chooseLocation() {
+      chooseLocation () {
         wepy.chooseLocation({
           type: 'wgs84'
         }).then(res => {
           this.shop.latitude = res.latitude;
           this.shop.longitude = res.longitude;
           let location = res.location;
-          if (location == '' || location == undefined) {
+          if (location === '' || location === undefined) {
             location = '请选择店铺地址';
           }
           this.shop.location = location;
           this.$apply();
         });
       },
-      async save({
+      async save ({
         detail
       }) {
         // 覆盖对象
@@ -153,7 +153,7 @@
           this.tips('店铺地址不能为空');
           return;
         }
-        if (this.card == null && this.shop.supportMember == 1) {
+        if (this.card === null && this.shop.supportMember === 1) {
           this.tips('尚未配置会员卡');
           return;
         }
@@ -179,26 +179,26 @@
         await Tips.success('更新成功！');
         wepy.navigateBack();
       },
-      show() {
+      show () {
         this.display = 'true';
       },
-      change({
+      change ({
         selectedId,
         selectedName
       }) {
         this.shop.categoryName = selectedName;
       },
-      toggle(value) {
-        this.uploader = value == 'true';
+      toggle (value) {
+        this.uploader = value === 'true';
       },
-      async avatar() {
+      async avatar () {
         try {
           const param = {
             count: 1,
             sizeType: ['compressed']
           };
           const file = await WxUtils.chooseImage(param, 2);
-          if (file.length == 0) {
+          if (file.length === 0) {
             return;
           }
           Tips.loading('上传中');
@@ -213,16 +213,16 @@
     };
     events = {};
     computed = {
-      version() {
-        if (this.limit == null || this.limit.chargeVersion == null) {
+      version () {
+        if (this.limit === null || this.limit.chargeVersion === null) {
           return;
         }
         const version = this.limit.chargeVersion;
-        if (version == '1') {
+        if (version === '1') {
           this.versions = 'extension';
-        } else if (version == '2' || version == '3') {
+        } else if (version === '2' || version === '3') {
           this.versions = 'vip';
-        } else if (version == '4' || version == '5') {
+        } else if (version === '4' || version === '5') {
           this.versions = 'online';
         }
       }

@@ -26,11 +26,11 @@
       page: {},
       init: false
     };
-    async onLoad() {
+    async onLoad () {
       this.page = await comment.page();
       await this.next();
     }
-    params() {
+    params () {
       return {
         status: 'ALL'
       };

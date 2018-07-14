@@ -38,32 +38,32 @@
     };
     data = { ...this.def
     };
-    async onReady() {
+    async onReady () {
       wepy.setNavigationBarTitle({
         title: this.title
       })
     };
-    async onLoad({
+    async onLoad ({
       mode,
       categoryId
     }) {
       this.mode = mode;
-      if (mode == 'create') {
+      if (mode === 'create') {
         this.title = '新增分类';
         this.input.show = true;
-      } else if (mode == 'edit') {
+      } else if (mode === 'edit') {
         this.title = '修改分类';
         this.input = await goods.getInnerCategorieId(categoryId);
       }
       this.loaded();
     };
     methods = {
-      async submit() {
+      async submit () {
         if (!this.validate()) {
           return;
         }
         const name = this.input.name;
-        if (this.mode == 'create') {
+        if (this.mode === 'create') {
           await goods.addInnerCategories(name);
           await Tips.success('创建成功');
         } else {
@@ -74,7 +74,7 @@
         wepy.navigateBack();
       }
     };
-    validate() {
+    validate () {
       const rules = [{
         value: this.input.name,
         method: 'required',

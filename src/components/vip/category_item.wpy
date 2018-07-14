@@ -23,7 +23,7 @@
     data = { ...this.def
     };
     methods = {
-      checkboxChange() {
+      checkboxChange () {
         this.category.checked = !this.category.checked;
       }
     };

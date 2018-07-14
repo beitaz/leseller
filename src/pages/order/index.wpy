@@ -92,7 +92,7 @@
       status: '0',
       version: true
     };
-    async onLoad(options, {
+    async onLoad (options, {
       preload
     }) {
       if (!this.checkFunctionAuth('order')) {
@@ -113,41 +113,41 @@
       Event.listen(Event.ORDER_TAB_UPDATE, this.updateStatus.bind(this), this);
       Event.listen(Event.USER_LOGOUT, this.clear.bind(this), this);
     };
-    async onShow() {
+    async onShow () {
       if (!this.init) {
         this.page.reset();
         await this.next();
       }
     }
     // 获取分页参数
-    params() {
+    params () {
       return {
         status: this.status
       };
     }
     // 切换状态
-    updateStatus(status) {
+    updateStatus (status) {
       this.tab.selectedId = status;
       this.status = status;
       this.update();
     }
-    clear() {
+    clear () {
       this.page.clear();
       this.init = false;
     }
     methods = {
-      switchTap({
+      switchTap ({
         selectedId
       }) {
         this.status = selectedId;
         this.reload();
       },
-      detail(orderId) {
+      detail (orderId) {
         this.$navigate('detail', {
           orderId
         });
       },
-      async receive(orderId) {
+      async receive (orderId) {
         await Tips.confirm('是否确认客户已收到货品？');
         try {
           await order.confirmOrder(orderId);

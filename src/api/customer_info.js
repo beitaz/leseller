@@ -6,7 +6,7 @@ export default class customerInfo extends base {
    * 根据客户发放优惠券
    * @param params(couponId, cusomterId)
    */
-  static async sendCoupon(params) {
+  static async sendCoupon (params) {
     const url = `${this.baseUrl}/coupons/send`;
     return await this.post(url, params);
   }
@@ -16,11 +16,11 @@ export default class customerInfo extends base {
    * @param customerId
    * @returns {Promise.<TResult>}
    */
-  static async addressList(customerId) {
+  static async addressList (customerId) {
     const url = `${this.baseUrl}/customers/${customerId}/detail_info`;
     return this.get(url).then(data => {
       data.addressList.forEach(v => {
-        if (v.sex == '1') {
+        if (v.sex === '1') {
           v.name += ' 先生';
         } else {
           v.name += ' 女士';
@@ -34,7 +34,7 @@ export default class customerInfo extends base {
   /**
    * 获取客户详细信息
    */
-  static async detailInfo(customerId) {
+  static async detailInfo (customerId) {
     const url = `${this.baseUrl}/customers/${customerId}/detail_info`;
     return this.get(url).then(data => {
       if (data.message) {
@@ -57,7 +57,7 @@ export default class customerInfo extends base {
    * @returns {string}
    * @private
    */
-  static _dealDate(date) {
+  static _dealDate (date) {
     try {
       return date.substring(5, 10).replace('-', '/');
     } catch (e) {
@@ -71,10 +71,10 @@ export default class customerInfo extends base {
    * @returns {*}
    * @private
    */
-  static _dealAddres(addressList) {
+  static _dealAddres (addressList) {
     if (addressList && addressList.length > 0) {
       let address;
-      let arr = addressList.filter(v => v.isDefault == '1');
+      let arr = addressList.filter(v => v.isDefault === '1');
       if (arr.length > 0) {
         address = arr[0];
       } else {

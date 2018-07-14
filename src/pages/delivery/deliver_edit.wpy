@@ -51,18 +51,18 @@
     };
     data = { ...this.def
     };
-    async onLoad({
+    async onLoad ({
       deliver,
       mode
     }) {
       this.mode = mode;
-      if (mode == 'edit') {
+      if (mode === 'edit') {
         this.deliver = JSON.parse(deliver);
       }
       this.loaded();
     };
     methods = {
-      async submit({
+      async submit ({
         detail
       }) {
         // 覆盖对象
@@ -70,10 +70,10 @@
         if (!this.validate()) {
           return;
         }
-        if (this.mode == 'create') {
+        if (this.mode === 'create') {
           await delivery.createDeliver(this.deliver);
           await Tips.success('创建成功！');
-        } else if (this.mode == 'edit') {
+        } else if (this.mode === 'edit') {
           await delivery.updateDeliver(this.deliver);
           await Tips.success('编辑成功！');
         }
@@ -81,7 +81,7 @@
         wepy.navigateBack();
       }
     };
-    validate() {
+    validate () {
       const rules = [{
         value: this.deliver.name,
         method: 'required',

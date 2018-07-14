@@ -85,7 +85,7 @@
     };
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       const orderId = options.orderId;
       this.order = await order.detail(orderId);
       this.address = this.order.receiveAddress;
@@ -98,12 +98,12 @@
       Tips.loaded();
     };
     // 卸载清理
-    onUnload() {
+    onUnload () {
       Object.assign(this, this.def);
     }
     methods = {
       // 提交表单
-      async submit() {
+      async submit () {
         const orderId = this.order.orderId;
         let expressType, expressNo, telPhone, note;
         if (this.input.isMail) {
@@ -119,7 +119,7 @@
             return;
           }
         } else {
-          if (this.delivers.length > 0 && this.input.deliverIndex == null) {
+          if (this.delivers.length > 0 && this.input.deliverIndex === null) {
             this.tips('请选择配送员');
           }
           if (this.input.deliverIndex != null) {
@@ -142,15 +142,15 @@
         this.$switch('index');
       },
       // 进入选择物流页面
-      select() {
+      select () {
         this.selectDisplay = true;
       },
       // 物流页面返回
-      back() {
+      back () {
         this.selectDisplay = false;
       },
       // 物流选择完毕
-      selected(company) {
+      selected (company) {
         this.selectDisplay = false;
         this.company = company;
         this.input.mailNo = '';
@@ -158,7 +158,7 @@
     };
     watch = {
       // 无物清除信息
-      input(value) {
+      input (value) {
         if (!value.isMail) {
           this.company = {};
           value.mailNo = null;
@@ -167,10 +167,10 @@
     };
     computed = {
       // 计算主面板是否显示
-      panelDisplay() {
+      panelDisplay () {
         return this.init && !this.selectDisplay;
       },
-      seletedDeliver() {
+      seletedDeliver () {
         if (this.input.deliverIndex != null) {
           return this.delivers[this.input.deliverIndex].showText;
         } else {

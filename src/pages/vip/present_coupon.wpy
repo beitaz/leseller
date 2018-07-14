@@ -29,7 +29,7 @@
       couponText: '确认',
       index: null
     };
-    async onLoad(options, {
+    async onLoad (options, {
       preload
     }) {
       this.index = preload.data.index;
@@ -38,13 +38,13 @@
       this.next();
     };
     methods = {};
-    params() {
+    params () {
       return {
         status: 'USED'
       };
     }
     events = {
-      async select(coupon) {
+      async select (coupon) {
         const list = {
           id: coupon.id,
           price: coupon.price,

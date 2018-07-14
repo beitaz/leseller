@@ -1,5 +1,5 @@
 <template>
-  <view class="nav-box row-between {{last == 'true' ? 'nav-box-last' : ''}}">
+  <view class="nav-box row-between {{last === 'true' ? 'nav-box-last' : ''}}">
     <view class="header row">
       <view class="label primary small" wx:if="{{badegText}}">{{badegText}}</view>
       <text>{{title}}</text>
@@ -23,7 +23,7 @@
       last: 'false'
     };
     methods = {
-      goto() {
+      goto () {
         WxUtils.backOrNavigate(this.navUrl);
       }
     };

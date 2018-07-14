@@ -99,7 +99,7 @@
       bonus: {}
     };
     methods = {
-      async submit({
+      async submit ({
         detail
       }) {
         // 覆盖对象
@@ -113,17 +113,17 @@
         wepy.navigateBack();
       }
     };
-    async onLoad({
+    async onLoad ({
       bonus
     }) {
-      if (bonus != null && bonus != 'null') {
+      if (bonus !== null && bonus !== 'null') {
         this.bonus = JSON.parse(bonus);
-        this.input.isCost = this.bonus.isCost == 1;
+        this.input.isCost = this.bonus.isCost === 1;
       }
       this.loaded();
     };
-    validate() {
-      if (this.bonus.isCost == 1) {
+    validate () {
+      if (this.bonus.isCost === 1) {
         const rules = [{
           value: this.bonus.costBonusUnit,
           method: 'required',

@@ -93,7 +93,7 @@
     };
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       this.customer = JSON.parse(options.item);
       this.memberId = this.customer.memberId;
       this.customerId = this.customer.customerId;
@@ -102,11 +102,11 @@
       await this.next();
       Event.listen(Event.SHOP_CUSTOMER_UPDATE, this.updateMemberInfo.bind(this), this);
     }
-    async updateMemberInfo(params) {
+    async updateMemberInfo (params) {
       this.member = await member.Info(this.customer.memberNumber);
       this.$apply();
     }
-    params() {
+    params () {
       return {
         status: this.status,
         customer_id: this.customerId,
@@ -114,13 +114,13 @@
       }
     };
     methods = {
-      switchTap({
+      switchTap ({
         selectedId
       }) {
         this.status = selectedId;
         this.reload();
       },
-      moreVip() {
+      moreVip () {
         if (this.member) {
           const params = {
             customer: {

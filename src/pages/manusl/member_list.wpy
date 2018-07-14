@@ -35,7 +35,7 @@
     };
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       const {
         type,
         level
@@ -45,7 +45,7 @@
       await this.getRequest();
       Event.listen(Event.SHOP_CUSTOMER_UPDATE, this.update.bind(this), this);
     };
-    params() {
+    params () {
       if (this.level) {
         return {
           level: this.level
@@ -53,12 +53,12 @@
       }
     }
     methods = {
-      async switchTab() {
+      async switchTab () {
         await this.getRequest();
       },
-      toUserInfo(item) {
-        if (this.type == 'home') {
-          if (item.customerId != 0) {
+      toUserInfo (item) {
+        if (this.type === 'home') {
+          if (item.customerId !== 0) {
             this.$root.$navigate('/pages/customer/info?customerId=' + item.customerId);
           } else {
             this.$root.$navigate('/pages/customer/member_info?item=' + JSON.stringify(item));
@@ -68,13 +68,13 @@
           wepy.navigateBack();
         }
       },
-      add() {
+      add () {
         if (this.checkFunctionAuth('add')) {
           this.$root.$navigate('/pages/vip/registe_member');
         }
       }
     };
-    async getRequest() {
+    async getRequest () {
       this.page = await mausl.membersList(this.selectedId);
       await this.next();
     };

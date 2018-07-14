@@ -88,7 +88,7 @@
       memberId: 0,
       customerId: 0
     };
-    async onLoad(options) {
+    async onLoad (options) {
       const {
         customerId,
         memberId
@@ -101,32 +101,32 @@
       // 事件监听
       Event.listen(Event.USER_LOGOUT, this.clear.bind(this), this);
     };
-    async onShow() {
+    async onShow () {
       if (!this.init) {
         this.page.reset();
         await this.next();
       }
     }
     // 获取分页参数
-    params() {
+    params () {
       return {
         status: this.status,
         customer_id: this.customerId,
         member_id: this.memberId
       };
     }
-    clear() {
+    clear () {
       this.page.clear();
       this.init = false;
     }
     methods = {
-      switchTap({
+      switchTap ({
         selectedId
       }) {
         this.status = selectedId;
         this.reload();
       },
-      detail(orderId) {
+      detail (orderId) {
         this.$navigate('../order/detail', {
           orderId
         });

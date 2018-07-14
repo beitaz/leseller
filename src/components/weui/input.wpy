@@ -4,7 +4,7 @@
       <view class="weui-label">{{title}}</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" id="{{fieldName}}" @input="input" value="{{input[fieldName]}}" disabled="{{fieldName=='fromLimit1' || fieldName=='fromLimit2'}}" type="{{type}}" placeholder="{{placeholder}}" />
+      <input class="weui-input" id="{{fieldName}}" @input="input" value="{{input[fieldName]}}" disabled="{{fieldName==='fromLimit1' || fieldName==='fromLimit2'}}" type="{{type}}" placeholder="{{placeholder}}" />
     </view>
     <view class="weui-cell__ft">
     </view>
@@ -31,20 +31,20 @@
         default: 1
       }
     };
-    onLoad() {
-      if (this.placeholder == null && this.title != null) {
+    onLoad () {
+      if (this.placeholder === null && this.title !== null) {
         this.placeholder = `请输入${this.title}`;
       }
-      if (this.fieldName == null) {
+      if (this.fieldName === null) {
         const name = this.$name;
         const index = name.indexOf('_');
-        if (index != -1) {
+        if (index !== -1) {
           this.fieldName = name.substring(index + 1, name.length);
         }
       }
     }
     methods = {
-      input(e) {
+      input (e) {
         const value = e.detail.value;
         const id = e.target.id;
         this.input[this.fieldName] = value;

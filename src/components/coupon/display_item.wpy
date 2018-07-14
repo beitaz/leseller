@@ -1,17 +1,17 @@
 <template>
-  <view class="coupon-box row-center  {{coupon.status == 'USED' ? 'coupon-item-disable' : '' }}">
+  <view class="coupon-box row-center  {{coupon.status === 'USED' ? 'coupon-item-disable' : '' }}">
     <!--左侧区域-->
-    <view class="main-box column-center" wx:if="{{coupon.type == 'CASH'}}">
+    <view class="main-box column-center" wx:if="{{coupon.type === 'CASH'}}">
       <view>
         <text class="xl">￥</text>
         <text class="price">{{coupon.price}}</text>
       </view>
-      <text class="mt10" wx:if="{{coupon.limitPrice == 0}}">无门槛</text>
+      <text class="mt10" wx:if="{{coupon.limitPrice === 0}}">无门槛</text>
       <text class="mt10" wx:else>满{{coupon.limitPrice}}元可用</text>
     </view>
-    <view class="main-box column-center" wx:if="{{coupon.type == 'EXCHANGE'}}">
+    <view class="main-box column-center" wx:if="{{coupon.type === 'EXCHANGE'}}">
       <text class="exchange">兑换券</text>
-      <text class="mt10" wx:if="{{coupon.limitPrice == 0}}">无门槛</text>
+      <text class="mt10" wx:if="{{coupon.limitPrice === 0}}">无门槛</text>
       <text class="mt10" wx:else>满{{coupon.limitPrice}}元可用</text>
     </view>
     <!--右侧区域-->
@@ -25,7 +25,7 @@
         <text class="muted xs">有效期：{{coupon.beginTime}}-{{coupon.dueTime}}</text>
       </view>
     </view>
-    <image class="coupon-used-icon" wx:if="{{coupon.status == 'USED'}}" src="/images/icons/coupon_check.png" />
+    <image class="coupon-used-icon" wx:if="{{coupon.status === 'USED'}}" src="/images/icons/coupon_check.png" />
   </view>
 </template>
 
@@ -36,7 +36,7 @@
       coupon: {}
     };
     data = {};
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 

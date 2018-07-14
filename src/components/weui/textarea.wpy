@@ -26,7 +26,7 @@
       }
     }
     methods = {
-      input(e) {
+      input (e) {
         const fieldName = e.currentTarget.id;
         const fieldValue = e.detail.value;
         this.length[fieldName] = fieldValue.length;

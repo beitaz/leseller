@@ -1,12 +1,12 @@
 <template>
   <view class="zan-tab">
     <view class="zan-tab__bd {{fixed ? 'zan-tab__bd--fixed' : ''}}">
-      <view wx:for="{{tab.list}}" wx:key="id" class="zan-tab__item {{tab.selectedId == item.id ? 'zan-tab__item--selected' : ''}}" data-component-id="{{componentId}}" data-item-id="{{item.id}}" @tap="handleZanTabChange">
+      <view wx:for="{{tab.list}}" wx:key="id" class="zan-tab__item {{tab.selectedId === item.id ? 'zan-tab__item--selected' : ''}}" data-component-id="{{componentId}}" data-item-id="{{item.id}}" @tap="handleZanTabChange">
         <view class="zan-tab__title">
           <text>{{item.title}}</text>
         </view>
       </view>
-      <view class="zan-tab__expand zan-tab__item {{tab.selectedId == 'EXPAND' ? 'zan-tab__item--selected' : ''}}" data-component-id="EXPAND" data-item-id="EXPAND" @tap="handleZanTabChange">
+      <view class="zan-tab__expand zan-tab__item {{tab.selectedId === 'EXPAND' ? 'zan-tab__item--selected' : ''}}" data-component-id="EXPAND" data-item-id="EXPAND" @tap="handleZanTabChange">
         <view class="zan-tab__title">
           <view class="row">
             <image class="icon" src="/images/icons/category.png" />
@@ -38,11 +38,11 @@
       /**
        * 事件处理函数
        */
-      async handleZanTabChange(e) {
+      async handleZanTabChange (e) {
         const dataset = e.currentTarget.dataset;
         const componentId = dataset.componentId;
         const selectedId = dataset.itemId;
-        if (selectedId == 'EXPAND') {
+        if (selectedId === 'EXPAND') {
           const actions = this.tab.expand.map(v => v.title);
           const {
             index,
@@ -68,8 +68,8 @@
       }
     };
     computed = {
-      expandText() {
-        if (this.tab.selectedId == 'EXPAND') {
+      expandText () {
+        if (this.tab.selectedId === 'EXPAND') {
           return this.expandText;
         } else {
           return this.tab.expandDefaultText;

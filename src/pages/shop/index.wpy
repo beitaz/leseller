@@ -47,11 +47,11 @@
       versionText: '',
       limitUrl: ''
     };
-    async onLoad() {
+    async onLoad () {
       await this.load();
       Event.listen(Event.SHOP_INFO_UPDATE, this.load.bind(this), this);
     };
-    async load() {
+    async load () {
       this.shop = await shop.info();
       this.shopName = this.shop.name;
       this.status = await shop.getStatus();
@@ -64,7 +64,7 @@
       this.loaded();
     };
     methods = {
-      async shops() {
+      async shops () {
         await Tips.confirm('是否确认切换店铺？');
         await auth.removeConfig('shop_id');
         Cache.remove('SHOP_INFO');
@@ -72,7 +72,7 @@
         this.$redirect('../home/shops');
         Event.emit(Event.USER_LOGOUT);
       },
-      async logout() {
+      async logout () {
         await Tips.confirm('是否确认退出登录？');
         await auth.removeConfig('shop_id');
         await auth.removeConfig('login_code');

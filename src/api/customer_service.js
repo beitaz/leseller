@@ -5,7 +5,7 @@ export default class customerService extends base {
   /**
    * 聊天记录
    * */
-  static async chatHistory(openId) {
+  static async chatHistory (openId) {
     const url = `${this.baseUrl}/kefu/chat_history?open_id=${openId}`;
     const data = await this.get(url);
     return this.processChatHistoryTransformation(data);
@@ -14,7 +14,7 @@ export default class customerService extends base {
   /**
    * 客服列表
    * */
-  static async chatList() {
+  static async chatList () {
     const url = `${this.baseUrl}/kefu/chat_list`;
     return new Page(url, this.processChatInfoTransformation.bind(this));
   }
@@ -22,7 +22,7 @@ export default class customerService extends base {
   /**
    * 聊天信息处理
    * */
-  static processChatInfoTransformation(chatInfo) {
+  static processChatInfoTransformation (chatInfo) {
     const params = {};
     if (chatInfo.mpMsg.msgTime != null) {
       params.msgTime = chatInfo.mpMsg.msgTime.substring(10, 16);
@@ -44,7 +44,7 @@ export default class customerService extends base {
     params = chatHistory;
     chatHistory.forEach((item, index) => {
       params[index].content = item.content;
-      if (item.msgSource == 1) {
+      if (item.msgSource === 1) {
         params[index].from = 'me';
       } else {
         params[index].from = 'orther'

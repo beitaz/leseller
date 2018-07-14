@@ -60,18 +60,18 @@
     };
     data = { ...this.def
     };
-    async onLoad(couponId) {
+    async onLoad (couponId) {
       this.couponId = couponId;
       this.page = customer.page(this.tab.selectedId);
       await this.next();
     };
-    params() {
+    params () {
       return {
         sort: this.tab.sord
       };
     }
     methods = {
-      async select(customer) {
+      async select (customer) {
         const param = {
           couponId: this.couponId.couponId,
           customerId: customer.id
@@ -82,7 +82,7 @@
         Event.emit(Event.COUPON_USER_UPDATE);
         wepy.navigateBack();
       },
-      async switchTab() {
+      async switchTab () {
         this.page = customer.page(this.tab.selectedId);
         await this.next();
       }

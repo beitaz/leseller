@@ -23,20 +23,20 @@
       title: {},
       fieldName: {}
     }
-    onLoad() {
-      if (this.fieldName == null) {
+    onLoad () {
+      if (this.fieldName === null) {
         const name = this.$name;
         const index = name.indexOf('_');
-        if (index != -1) {
+        if (index !== -1) {
           this.fieldName = name.substring(index + 1, name.length);
         }
       }
-      if (this.switchFlag == '0') {
+      if (this.switchFlag === '0') {
         this.switchFlag = false;
       }
     }
     methods = {
-      input(e) {
+      input (e) {
         const fieldName = e.currentTarget.id;
         this.input[fieldName] = e.detail.value;
       }

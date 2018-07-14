@@ -204,18 +204,18 @@ const statusDict = (type, status, index) => {
 };
 const commonStatus = (status, index) => {
   const statusDict = COMMON_STATUS_DICT[status];
-  if (statusDict == null) {
+  if (statusDict === null) {
     return;
   }
   return statusDict[index];
 };
 const uniqueStatus = (type, status, index) => {
   const typeDict = UNIQUE_STATUS_DICT[type];
-  if (typeDict == null) {
+  if (typeDict === null) {
     return;
   }
   const statusDict = typeDict[status];
-  if (statusDict == null) {
+  if (statusDict === null) {
     return;
   }
   return statusDict[index];
@@ -262,19 +262,19 @@ const statusActions = (type, payment, status) => {
 /**
  * 是否为商城订单
  */
-const isMallOrder = type => type == TYPE.MALL;
+const isMallOrder = type => type === TYPE.MALL;
 /**
  * 是否为餐饮订单
  */
-const isFoodOrder = type => type == TYPE.FORHERE || type == TYPE.PACK || type == TYPE.TAKEAWAY;
+const isFoodOrder = type => type === TYPE.FORHERE || type === TYPE.PACK || type === TYPE.TAKEAWAY;
 /**
  * 是否是需要配送的订单
  */
-const isDeliveryOrder = type => type == TYPE.TAKEAWAY || type == TYPE.MALL;
+const isDeliveryOrder = type => type === TYPE.TAKEAWAY || type === TYPE.MALL;
 /**
  * 是否为堂食订单
  */
-const isInShopOrder = type => type == TYPE.FORHERE || type == TYPE.PACK;
+const isInShopOrder = type => type === TYPE.FORHERE || type === TYPE.PACK;
 
 /**
  * 导出的方法

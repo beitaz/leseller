@@ -9,7 +9,7 @@
       baseUrl: 'https://www.easy-mock.com/mock/5aa15ee0f6ed4a592fb5d6ec/leshare',
       version: 'v3.0.0'
     };
-    constructor() {
+    constructor () {
       super();
       // 注册中间件
       this.use('requestfix');
@@ -17,7 +17,7 @@
       // 添加全局拦截器设置 request 请求头
       this.intercept('request', {
         // 发出请求时的回调函数
-        config(p) {
+        config (p) {
           // p.timestamp = +new Date(); // 对所有 request 请求中的 OBJECT 参数对象统一附加时间戳属性
           p.header = this.createAuthHeader(); // 对所有 request 请求中的 OBJECT 参数对象统一附加 login_code 和 shop_id
           return p; // 必须返回 OBJECT 参数对象，否则无法发送请求到服务端
@@ -25,12 +25,12 @@
       });
       // 添加全局拦截器设置文件上传的请求头
       this.intercept('uploadFile', {
-        config(p) {
+        config (p) {
           p.header = this.createAuthHeader();
           return p;
         },
         // 请求成功后的回调函数,可以在这里对收到的响应数据对象进行加工处理
-        success(p) {
+        success (p) {
           return p.data;
         }
       });
@@ -38,7 +38,7 @@
     /**
      * 构造权限头部 (用户已登录,则将登录状态 login_code 添加到请求头中,且添加 shop_id 商店编号)
      */
-    createAuthHeader() {
+    createAuthHeader () {
       let loginCode = wepy.$instance.globalData.auth.login_code;
       let shopId = wepy.$instance.globalData.auth.shop_id;
       let header = {};
@@ -46,7 +46,7 @@
       if (shopId) header['shop_id'] = shopId;
       return header;
     }
-    onLaunch() {
+    onLaunch () {
       // 同步开放平台 EXT 数据
       let ext = wepy.getExtConfigSync();
       console.info('初始化扩展数据', ext);
@@ -135,7 +135,8 @@
       window: {
         backgroundTextStyle: 'dark',
         backgroundColor: '#F5F5F5',
-        navigationBarBackgroundColor: '#1296db'
+        navigationBarBackgroundColor: '#1296db',
+        navigationBarTitleText: '后台管理'
       },
       tabBar: {
         color: '#666666',
@@ -143,22 +144,22 @@
         borderStyle: 'white',
         backgroundColor: '#FAFAFA',
         list: [{
+          text: '工作台',
           iconPath: 'images/tab/manage.png',
           selectedIconPath: 'images/tab/manage-active.png',
-          pagePath: 'pages/home/home',
-          text: '工作台'
+          pagePath: 'pages/home/home'
         },
         {
+          text: '订单',
           iconPath: 'images/tab/order.png',
           selectedIconPath: 'images/tab/order-active.png',
-          pagePath: 'pages/order/index',
-          text: '订单'
+          pagePath: 'pages/order/index'
         },
         {
+          text: '店铺',
           iconPath: 'images/tab/user.png',
           selectedIconPath: 'images/tab/user-active.png',
-          pagePath: 'pages/shop/index',
-          text: '店铺'
+          pagePath: 'pages/shop/index'
         }
         ]
       }

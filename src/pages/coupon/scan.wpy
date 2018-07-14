@@ -39,23 +39,23 @@
     }
     data = { ...this.def
     };
-    async onLoad({
+    async onLoad ({
       scan
     }) {
-      if (scan == null && scan == '') {
+      if (scan === null && scan === '') {
         this.message = '扫描失败，没有检测到二维码';
         this.loaded();
         return;
       }
       const info = scan.split('#');
-      if (info == null && info.length != 2) {
+      if (info === null && info.length !== 2) {
         this.message = '扫描失败，请扫描优惠券二维码';
         this.loaded();
         return;
       }
       const useId = info[1];
       const couponId = info[0];
-      if (useId == null && couponId == null) {
+      if (useId === null && couponId === null) {
         this.message = '扫描失败，请扫描优惠券二维码';
         this.loaded();
         return;
@@ -63,12 +63,12 @@
       this.id = useId;
       try {
         this.coupon = await coupon.info(info[0]);
-        if (this.coupon == null) {
+        if (this.coupon === null) {
           this.message = '该优惠券不存在或已删除';
           this.loaded();
           return;
         }
-        if (this.coupon.supportType == 1) {
+        if (this.coupon.supportType === 1) {
           this.message = '该优惠券只能在线下单使用';
           this.loaded();
           return;
@@ -80,7 +80,7 @@
       this.loaded();
     };
     methods = {
-      async submit() {
+      async submit () {
         try {
           await coupon.use(this.id);
           this.coupon.status = 'USED';

@@ -1,10 +1,10 @@
 <template>
   <view class="inshop-box row-between">
-    <view class="row" wx:if="{{order.orderType == '30'}}">
+    <view class="row" wx:if="{{order.orderType === '30'}}">
       <image class="icon" src="/images/icons/inshop.png" />
       <text>到店堂食</text>
     </view>
-    <view class="row" wx:if="{{order.orderType == '33'}}">
+    <view class="row" wx:if="{{order.orderType === '33'}}">
       <image class="icon" src="/images/icons/package.png" />
       <text>打包带走</text>
     </view>

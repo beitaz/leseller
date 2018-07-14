@@ -47,21 +47,21 @@
     }
     data = { ...this.def
     };
-    async onLoad() {
+    async onLoad () {
       this.page = notice.page();
       await this.next();
       Event.listen(Event.NOTICE_LIST_UPDATE, this.update.bind(this), this);
     };
-    params() {
+    params () {
       return {
         status: this.tab.selectedId
       };
     }
     methods = {
-      switchTab() {
+      switchTab () {
         this.reload();
       },
-      add() {
+      add () {
         this.$navigate('edit?mode=create');
       }
     }

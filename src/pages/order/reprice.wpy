@@ -78,7 +78,7 @@
     };
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       const orderId = options.orderId;
       const data = await order.detail(orderId);
       this.order = data;
@@ -90,11 +90,11 @@
       Tips.loaded();
     };
     // 卸载清理
-    onUnload() {
+    onUnload () {
       Object.assign(this, this.def);
     }
     computed = {
-      modifyFinal() {
+      modifyFinal () {
         const finalPrice = Lang.sum([this.input.modifyPrice, this.input.modifyPost, -this.input.modifyCoupon]);
         if (isNaN(finalPrice)) {
           return '请输入有效数字';
@@ -106,12 +106,12 @@
           return finalPrice;
         }
       },
-      isValid() {
+      isValid () {
         return Lang.isNumber(this.modifyFinal);
       }
     };
     methods = {
-      async submit() {
+      async submit () {
         try {
           if (!this.isValid) {
             this.tips('请正确填写修改价格');

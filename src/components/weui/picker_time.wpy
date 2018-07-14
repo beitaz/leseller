@@ -23,16 +23,16 @@
     };
     data = {};
     methods = {
-      input(e) {
+      input (e) {
         this.input[this.fieldName] = e.detail.value;
       }
     };
     events = {};
-    onLoad(e) {
-      if (this.fieldName == null) {
+    onLoad (e) {
+      if (this.fieldName === null) {
         const name = this.$name;
         const index = name.indexOf('_');
-        if (index != -1) {
+        if (index !== -1) {
           this.fieldName = name.substring(index + 1, name.length);
         }
       }

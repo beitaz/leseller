@@ -33,25 +33,25 @@
     };
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       this.customerId = options.customerId;
       this.page = coupon.page();
       this.next();
     };
     methods = {};
-    params() {
+    params () {
       return {
         status: 'USED'
       };
     }
     events = {
-      async select(coupon) {
+      async select (coupon) {
         const params = {
           customerId: this.customerId,
           couponId: coupon.id
         };
         const data = await customerInfo.sendCoupon(params);
-        if (data.result == 'SUCCESS') {
+        if (data.result === 'SUCCESS') {
           await Tips.success('发放成功');
           Event.emit(Event.CUSOMTER_COUPON_UPDATE);
         } else {

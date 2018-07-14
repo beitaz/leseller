@@ -127,8 +127,8 @@ export default class mausl extends base {
   /**
    * 处理折扣价格
    */
-  static _processGoodsDiscount(goods, discount) {
-    const isDiscount = discount != null ? discount.categories.some(cid => cid == goods.innerCid) : false;
+  static _processGoodsDiscount (goods, discount) {
+    const isDiscount = discount != null ? discount.categories.some(cid => cid === goods.innerCid) : false;
     if (!isDiscount) {
       return;
     }
@@ -141,7 +141,7 @@ export default class mausl extends base {
         const detail = item.goodsSkuDetailBase;
         const price = detail.price;
         // 最低的价格作为原价
-        if (item.originalPrice == null || price < item.originalPrice) {
+        if (item.originalPrice === null || price < item.originalPrice) {
           item.originalPrice = price;
         }
         // 设置原价和当前价格
@@ -165,7 +165,7 @@ export default class mausl extends base {
   static _processGoodsPostFeeText (detail) {
     const fee = detail.postFee;
     let feeText = '';
-    if (!fee || fee == 0) {
+    if (!fee || fee === 0) {
       feeText = '配送：免运费';
     } else {
       feeText = `同城配送：￥${fee} (支持自提)`;
@@ -250,7 +250,7 @@ export default class mausl extends base {
     }
 
     // 销售价处理
-    if (originalPrice == null || originalPrice == 0) {
+    if (originalPrice === null || originalPrice === 0) {
       item.originalPrice = sellPrice;
     }
 
@@ -275,9 +275,9 @@ export default class mausl extends base {
   static _processGoodsPreview (item) {
     const images = item.images;
     // 图片处理
-    if (images == null || images.length < 1) {
+    if (images === null || images.length < 1) {
       item.imageUrl = '/images/goods/broken.png';
-    } else if (images[0].url == null) {
+    } else if (images[0].url === null) {
       item.imageUrl = '/images/goods/broken.png';
     } else {
       item.imageUrl = images[0].url + '/medium';
@@ -331,7 +331,7 @@ export default class mausl extends base {
       orderGoodsInfos: orderGoodsInfos,
       shopName: this.shopName
     };
-    if (param.orderType == '30') {
+    if (param.orderType === '30') {
       trade.arriveTime = '立即出餐';
     }
     return trade;
@@ -339,7 +339,7 @@ export default class mausl extends base {
   /**
    * 上报FORM
    */
-  static reportFormId(id, delay = 3000) {
+  static reportFormId (id, delay = 3000) {
     try {
       const url = `${this.baseUrl}/visit_shops/form_id`;
       const param = [{

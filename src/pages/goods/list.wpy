@@ -66,7 +66,7 @@
     };
     data = { ...this.def
     };
-    async onLoad() {
+    async onLoad () {
       this.page = goods.list(this);
       this.goods = this.page.list;
       await this.updateCategories();
@@ -76,14 +76,14 @@
       this.loaded();
     };
     // 获取分页参数
-    params() {
+    params () {
       return {
         goods_status: this.tab.selectedId,
         category_id: this.categories.selectedId
       };
     }
     // 更新分类
-    async updateCategories() {
+    async updateCategories () {
       // 加载商品分类
       this.categories = await mausl.categories();
       if (this.categories && this.categories.list && this.categories.list.length > 0) {
@@ -93,22 +93,22 @@
     }
     methods = {
       // 点击分类
-      switchTab(selectedId) {
+      switchTab (selectedId) {
         this.tab.categoryId = selectedId;
         this.reload();
       },
-      add() {
+      add () {
         this.$navigate(`edit?mode=create&categoryId=${this.categories.selectedId}`);
       },
-      change() {
+      change () {
         this.reload();
       }
     };
     computed = {
-      selectedCategoryName() {
+      selectedCategoryName () {
         if (this.init && this.categories && this.categories.list && this.categories.list.length > 0) {
           const selectedId = this.categories.selectedId;
-          const selectedCategory = this.categories.list.find(item => item.id == selectedId);
+          const selectedCategory = this.categories.list.find(item => item.id === selectedId);
           return selectedCategory ? selectedCategory.title : null;
         }
       }

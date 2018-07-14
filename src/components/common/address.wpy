@@ -30,7 +30,7 @@
       address: {}
     };
     methods = {
-      phone() {
+      phone () {
         wepy.makePhoneCall({
           phoneNumber: this.address.phone
         });

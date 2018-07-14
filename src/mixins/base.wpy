@@ -2,29 +2,30 @@
   import wepy from 'wepy';
   import Tips from '../utils/Tips';
   export default class base extends wepy.mixin {
-    loaded() {
+    loaded () {
       this.init = true;
       this.$apply();
       Tips.loaded();
     }
-    // 卸载清理
-    onUnload() {
+    // 卸载清理(还原数据为初始值)
+    onUnload () {
       Object.assign(this, this.def);
     }
+    // 检查访问权限
     checkFunctionAuth (funName) {
       this.limit = wepy.getStorageSync('limit');
-      // 默认开放功能
-      if (this.limit == null || this.limit.versionConfig == null) {
+      // 默认开放所有功能
+      if (this.limit === null || this.limit.versionConfig === null) {
         return true;
       }
-      if (!this.limit.versionConfig.every(item => item != funName)) {
+      if (!this.limit.versionConfig.every(item => item !== funName)) {
         Tips.alert('尚未开放');
         return false;
       }
       return true;
     }
     methods = {
-      nopen() {
+      nopen () {
         Tips.alert('尚未开放');
       }
     }

@@ -11,7 +11,7 @@
       timeoutId: null
     };
     methods = {
-      show(message) {
+      show (message) {
         this.display = true;
         this.message = message;
         if (this.timeoutId) {

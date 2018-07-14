@@ -5,19 +5,19 @@ export default class order extends base {
   /**
    * 查询快递公司列表
    */
-  static async company() {
+  static async company () {
     const url = `${this.baseUrl}/express/company`;
     return await this.get(url);
   }
   /**
    * 构造当前物流状态
    */
-  static createCurrentTrace(express) {
-    if (express == null) {
+  static createCurrentTrace (express) {
+    if (express === null) {
       return;
     }
     const steps = express.expressBases;
-    if (steps == null || steps.length < 1) {
+    if (steps === null || steps.length < 1) {
       return { text: '尚未查询到物流信息' };
     }
     const currentStep = steps[0];
@@ -30,7 +30,7 @@ export default class order extends base {
   /**
    * 查询订单当前的物流状态
    */
-  static queryCurrentTrace(orderId) {
+  static queryCurrentTrace (orderId) {
     return this._queryExpressInfo(orderId).then(express => {
       return this.createCurrentTrace(express);
     });
@@ -39,8 +39,8 @@ export default class order extends base {
   /**
    * 构造订单跟踪李彪
    */
-  static createTrace(express) {
-    if (express == null) {
+  static createTrace (express) {
+    if (express === null) {
       return;
     }
     const info = this._createExpressInfo(express);
@@ -54,7 +54,7 @@ export default class order extends base {
   /**
    * 查询订单跟踪列表
    */
-  static queryTrace(orderId) {
+  static queryTrace (orderId) {
     return this._queryExpressInfo(orderId).then(data => this.createTrace(data));
   }
 
@@ -62,7 +62,7 @@ export default class order extends base {
   /**
    * 创建物流页面展现的基本信息
    */
-  static createExpressOrderPreview(order) {
+  static createExpressOrderPreview (order) {
     const imageUrl = order.orderGoodsInfos[0].imageUrl;
     const goodsCount = order.orderGoodsInfos.length;
     return {
@@ -77,7 +77,7 @@ export default class order extends base {
    * 查询物流信息
    */
 
-  static _queryExpressInfo(orderId) {
+  static _queryExpressInfo (orderId) {
     const url = `${this.baseUrl}/express`;
     const param = { order_id: orderId };
     return this.get(url, param);
@@ -86,7 +86,7 @@ export default class order extends base {
   /**
    * 提取步骤信息
    */
-  static _createTraceSteps(data) {
+  static _createTraceSteps (data) {
     if (!data.expressBases) {
       return null;
     }
@@ -105,7 +105,7 @@ export default class order extends base {
   /**
    *  处理每个步骤
    */
-  static _processTraceStep(item) {
+  static _processTraceStep (item) {
     return {
       text: item.status,
       timestape: item.time,
@@ -117,8 +117,8 @@ export default class order extends base {
   /**
    * 提取物流基本信息
    */
-  static _createExpressInfo(data) {
-    if (data.status == null) {
+  static _createExpressInfo (data) {
+    if (data.status === null) {
       data.status = '待揽收';
     }
     return {

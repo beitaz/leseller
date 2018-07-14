@@ -7,7 +7,7 @@
           <image class="icon" src="/images/icons/shop-gray.png" />
           <text class="sm ml10">{{shop.name}}</text>
         </view>
-        <text class="sm primary" wx:if="{{order.statusText}}">{{order.statusText}}{{order.paymentType == 0 ? '(线下支付)' : ''}}</text>
+        <text class="sm primary" wx:if="{{order.statusText}}">{{order.statusText}}{{order.paymentType === 0 ? '(线下支付)' : ''}}</text>
       </view>
       <view class="order-info-container row-between">
         <text>{{order.orderTime}}</text>
@@ -17,7 +17,7 @@
     <!--商品区域-->
     <view class="order-goods-list-container" @tap="detail({{order.orderId}})">
       <repeat for="{{order.orderGoodsInfos}}" key="goodsId" index="index" item="item">
-        <view class="{{!order.orderId || index == 0 || expand[order.orderId] ? '' : 'order-goods-fold'}}">
+        <view class="{{!order.orderId || index === 0 || expand[order.orderId] ? '' : 'order-goods-fold'}}">
           <OrderGoods :goods="item"></OrderGoods>
           <view class="hr" />
         </view>
@@ -38,8 +38,8 @@
     <!--操作栏-->
     <view class="order-action-bar row-between" wx:if="{{order.actions.length > 0}}">
       <view>
-        <view class="small label primary ml20" wx:if="{{order.orderType == 30}}">堂食</view>
-        <view class="small label primary ml20" wx:if="{{order.orderType == 33}}">打包</view>
+        <view class="small label primary ml20" wx:if="{{order.orderType === 30}}">堂食</view>
+        <view class="small label primary ml20" wx:if="{{order.orderType === 33}}">打包</view>
       </view>
       <view>
         <block wx:for="{{order.actions}}" wx:for-item="action" wx:key="index">
@@ -72,13 +72,13 @@
       expand: {},
       shopName: {}
     };
-    onLoad() {
+    onLoad () {
       //      this.shopName = wepy.$instance.globalData.shopName;
     }
     /**
      * 关闭订单
      */
-    async close({
+    async close ({
       orderId
     }) {
       await Tips.confirm('确定关闭该订单？');
@@ -94,7 +94,7 @@
     /**
      * 订单支付
      */
-    async pay({
+    async pay ({
       orderId
     }) {
       try {
@@ -111,7 +111,7 @@
     /**
      * 订单收货
      */
-    async receive({
+    async receive ({
       orderId
     }) {
       await Tips.confirm('是否已收到外卖？');
@@ -127,7 +127,7 @@
     /**
      * 再来一单
      */
-    async again(order) {
+    async again (order) {
       Event.emit(Event.CART_LIST_RESET, order.orderGoodsInfos);
       // 预加载/处理首页没打开的情况
       this.$root.$preload('cart', order.orderGoodsInfos);
@@ -137,7 +137,7 @@
     /**
      * 评价订单
      */
-    comment(order) {
+    comment (order) {
       const scores = order.orderGoodsInfos.map(item => {
         return {
           goodsId: item.goodsId,
@@ -153,7 +153,7 @@
       this.$root.$navigate(`/pages/goods/comment_edit?orderId=${order.orderId}`);
     }
     methods = {
-      action(funcName, order) {
+      action (funcName, order) {
         console.info('[action]' + funcName);
         if (this[funcName]) {
           const func = this[funcName].bind(this);
@@ -165,15 +165,15 @@
       /**
        * 商品展开收缩
        */
-      expand(orderId) {
-        orderId = orderId == null ? 0 : orderId;
+      expand (orderId) {
+        orderId = orderId === null ? 0 : orderId;
         this.expand[orderId] = !this.expand[orderId];
       },
       /**
        * 订单详情
        */
-      detail(orderId) {
-        if (this.action == 0) {
+      detail (orderId) {
+        if (this.action === 0) {
           return;
         }
         this.$root.$navigate(`/pages/order/detail?orderId=${orderId}`);

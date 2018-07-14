@@ -27,27 +27,27 @@
       Sku: Sku
     };
     methods = {
-      add() {
+      add () {
         this.skuList.push({});
       },
-      remove(index) {
+      remove (index) {
         this.skuList.splice(index, 1);
       },
-      change(info) {
+      change (info) {
         this.skuList[info.index][info.fieldName] = info.fieldValue;
       }
     };
     watch = {
-      skuList() {
+      skuList () {
         this.resetSkuEditable();
         this.$apply();
       }
     };
-    resetSkuEditable() {
+    resetSkuEditable () {
       this.skuEditable = this.skuList.length > 1;
     }
     events = {};
-    onLoad() {
+    onLoad () {
       this.resetSkuEditable();
     }
   }

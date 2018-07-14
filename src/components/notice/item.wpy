@@ -1,7 +1,7 @@
 <template>
   <view class="notice-box column">
     <view class="row">
-      <view class="small label primary mr10" wx:if="{{notice.isHome == 1}}">首页</view>
+      <view class="small label primary mr10" wx:if="{{notice.isHome === 1}}">首页</view>
       <text class="notice-content">{{notice.content}}</text>
     </view>
     <view class="btn-box row-end">
@@ -21,13 +21,13 @@
       notice: {}
     };
     methods = {
-      async delete(noticeId) {
+      async delete (noticeId) {
         await Tips.confirm('确认删除该公告？');
         await notice.remove(noticeId);
         await Tips.success('删除成功');
         Event.emit(Event.NOTICE_LIST_UPDATE);
       },
-      edit(noticeId) {
+      edit (noticeId) {
         const param = {
           mode: 'edit',
           noticeId

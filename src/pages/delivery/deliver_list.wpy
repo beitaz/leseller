@@ -27,21 +27,21 @@
     }
     data = { ...this.def
     };
-    async onLoad() {
+    async onLoad () {
       await this.doLoad();
       Event.listen(Event.DELIVER_LIST_UPDATE, this.doLoad.bind(this), this);
     };
-    async doLoad() {
+    async doLoad () {
       this.list = await delivery.listDeliver();
       this.empty = this.list.length < 1;
       this.loaded();
     }
-    async onPullDownRefresh() {
+    async onPullDownRefresh () {
       await this.doLoad();
       wepy.stopPullDownRefresh();
     }
     methods = {
-      add() {
+      add () {
         this.$navigate('deliver_edit?mode=create');
       }
     };

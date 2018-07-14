@@ -1,5 +1,5 @@
 <template>
-  <view class="weui-footer {{buttom == 'true' ? 'weui-footer_fixed-bottom' : 'mt20'}} ">
+  <view class="weui-footer {{buttom === 'true' ? 'weui-footer_fixed-bottom' : 'mt20'}} ">
     <view class="weui-footer__links">
       <navigator url="/pages/shop/contact" class="weui-footer__link">乐享启创提供技术支持</navigator>
     </view>
@@ -18,7 +18,7 @@
     data = {
       version: null
     };
-    onLoad() {
+    onLoad () {
       this.version = wepy.$instance.globalData.version;
     }
   }

@@ -47,10 +47,10 @@
     };
     data = {};
     methods = {
-      category(discount, index) {
+      category (discount, index) {
         this.$emit('category', discount, index);
       },
-      input(index, e) {
+      input (index, e) {
         const fieldName = e.currentTarget.id;
         const fieldValue = e.detail.value;
         this.$emit('change', {
@@ -59,7 +59,7 @@
           fieldValue
         });
       },
-      remove(index) {
+      remove (index) {
         this.$emit('remove', index);
       }
     };

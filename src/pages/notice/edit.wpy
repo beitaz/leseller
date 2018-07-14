@@ -47,30 +47,30 @@
     }
     data = { ...this.def
     };
-    async onLoad({
+    async onLoad ({
       mode,
       noticeId
     }) {
       this.mode = mode;
-      if (mode == 'create') {
+      if (mode === 'create') {
         this.input.show = true;
         this.input.isHome = false;
-      } else if (mode == 'edit') {
+      } else if (mode === 'edit') {
         this.input = await notice.info(noticeId);
-        this.input.show = this.input.isShow == 1;
-        this.input.isHome = this.input.isHome == 1;
+        this.input.show = this.input.isShow === 1;
+        this.input.isHome = this.input.isHome === 1;
       }
       this.loaded();
     };
     methods = {
-      async submit() {
+      async submit () {
         if (!this.validate()) {
           return;
         }
         const data = this.input;
         data.isShow = data.show ? 1 : 2;
         data.isHome = data.isHome ? 1 : 0;
-        if (this.mode == 'create') {
+        if (this.mode === 'create') {
           await notice.create(data);
           await Tips.success('创建成功');
         } else {
@@ -81,7 +81,7 @@
         wepy.navigateBack();
       }
     };
-    validate() {
+    validate () {
       const rules = [{
         value: this.input.content,
         method: 'required',

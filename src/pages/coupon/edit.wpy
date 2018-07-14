@@ -19,18 +19,18 @@
             </view>
             <view class="weui-cell__bd">
               <view @tap="actionType" id="couponType">
-                <view class="weui-input {{mode == 'edit' ? 'muted' : ''}}">
+                <view class="weui-input {{mode === 'edit' ? 'muted' : ''}}">
                   {{computedType}}
                 </view>
               </view>
             </view>
           </view>
-          <view class="weui-cell weui-cell_input" wx:if="{{input.type == 'CASH'}}">
+          <view class="weui-cell weui-cell_input" wx:if="{{input.type === 'CASH'}}">
             <view class="weui-cell__hd">
               <view class="weui-label">面值</view>
             </view>
             <view class="weui-cell__bd">
-              <input class="weui-input {{mode == 'edit' ? 'muted' : ''}}" name="price" value="{{coupon.price}}" type="digit" placeholder="请输入卡券抵扣金额" disabled="{{mode == 'edit'}}" />
+              <input class="weui-input {{mode === 'edit' ? 'muted' : ''}}" name="price" value="{{coupon.price}}" type="digit" placeholder="请输入卡券抵扣金额" disabled="{{mode === 'edit'}}" />
             </view>
           </view>
           <view class="weui-cell weui-cell_input">
@@ -38,7 +38,7 @@
               <view class="weui-label">订单金额</view>
             </view>
             <view class="weui-cell__bd">
-              <input class="weui-input {{mode == 'edit' ? 'muted' : ''}}" name="limitPrice" value="{{coupon.limitPrice}}" type="digit" placeholder="请输入最低消费金额" disabled="{{mode == 'edit'}}" />
+              <input class="weui-input {{mode === 'edit' ? 'muted' : ''}}" name="limitPrice" value="{{coupon.limitPrice}}" type="digit" placeholder="请输入最低消费金额" disabled="{{mode === 'edit'}}" />
             </view>
           </view>
           <view class="weui-cell weui-cell_input">
@@ -46,7 +46,7 @@
               <view class="weui-label">限领张数</view>
             </view>
             <view class="weui-cell__bd">
-              <input class="weui-input {{mode == 'edit' ? 'muted' : ''}}" name="perLimit" value="{{coupon.perLimit}}" type="number" placeholder="请输入每人最多领几张" disabled="{{mode == 'edit'}}" />
+              <input class="weui-input {{mode === 'edit' ? 'muted' : ''}}" name="perLimit" value="{{coupon.perLimit}}" type="number" placeholder="请输入每人最多领几张" disabled="{{mode === 'edit'}}" />
             </view>
           </view>
           <view class="weui-cell weui-cell_input">
@@ -62,8 +62,8 @@
               <view class="weui-label">生效时间</view>
             </view>
             <view class="weui-cell__bd">
-              <picker mode="date" id="beginTime" @change="input" value="{{input.beginTime}}" disabled="{{mode == 'edit'}}">
-                <view class="weui-input {{mode == 'edit' ? 'muted' : ''}}">
+              <picker mode="date" id="beginTime" @change="input" value="{{input.beginTime}}" disabled="{{mode === 'edit'}}">
+                <view class="weui-input {{mode === 'edit' ? 'muted' : ''}}">
                   {{input.beginTime ? input.beginTime : '请选择卡券生效时间'}}
                 </view>
               </picker>
@@ -74,8 +74,8 @@
               <view class="weui-label">过期时间</view>
             </view>
             <view class="weui-cell__bd">
-              <picker mode="date" id="dueTime" @change="input" value="{{input.dueTime}}" disabled="{{mode == 'edit'}}">
-                <view class="weui-input {{mode == 'edit' ? 'muted' : ''}}">
+              <picker mode="date" id="dueTime" @change="input" value="{{input.dueTime}}" disabled="{{mode === 'edit'}}">
+                <view class="weui-input {{mode === 'edit' ? 'muted' : ''}}">
                   {{input.dueTime ? input.dueTime : '请选择卡券过期时间'}}
                 </view>
               </picker>
@@ -120,7 +120,7 @@
               <switch checked="{{input.isPresent}}" id="isPresent" @change="input" />
             </view>
           </view>
-          <view class="weui-cell weui-cell_input" wx:if="{{input.isPresent == 1}}">
+          <view class="weui-cell weui-cell_input" wx:if="{{input.isPresent === 1}}">
             <view class="weui-cell__hd">
               <view class="weui-label">赠送条件</view>
             </view>
@@ -134,7 +134,7 @@
           <view class="weui-cell weui-cell_input weui-cell_switch">
             <view class="weui-cell__bd">立即赠送</view>
             <view class="weui-cell__ft">
-              <switch checked="{{input.sendNow}}" id="sendNow" @change="input" wx:if="{{mode == 'create'}}" />
+              <switch checked="{{input.sendNow}}" id="sendNow" @change="input" wx:if="{{mode === 'create'}}" />
               <view class="weui-input" wx:else>{{input.sendNow ? '已投放' : '未投放'}}</view>
             </view>
           </view>
@@ -179,22 +179,22 @@
     };
     data = { ...this.def
     };
-    async onLoad({
+    async onLoad ({
       couponId,
       mode
     }) {
       this.limit = await shop.limit();
       this.couponId = couponId;
       this.mode = mode;
-      if (mode == 'edit') {
+      if (mode === 'edit') {
         this.coupon = await coupon.info(couponId);
         this.input = this.coupon;
         // 调整枚举值
-        this.input.isPresent = this.input.isPresent == 1;
-        this.input.isSelfUse = this.input.isSelfUse == 1;
-        this.input.isShow = this.input.isShow == 1;
-        this.input.isShowHome = this.input.isShowHome == 1;
-        this.input.sendNow = this.input.sendNow == 1;
+        this.input.isPresent = this.input.isPresent === 1;
+        this.input.isSelfUse = this.input.isSelfUse === 1;
+        this.input.isShow = this.input.isShow === 1;
+        this.input.isShowHome = this.input.isShowHome === 1;
+        this.input.sendNow = this.input.sendNow === 1;
       } else {
         this.coupon.perLimit = 1;
         this.input.supportType = 0;
@@ -202,7 +202,7 @@
         this.input.type = 'CASH';
         const myDate = new Date();
         this.input.beginTime = `${myDate.getFullYear()}-${myDate.getMonth() + 1}-${myDate.getDate()}`;
-        if (myDate.getMonth() == 11) {
+        if (myDate.getMonth() === 11) {
           this.input.dueTime = `${myDate.getFullYear() + 1}-01-${myDate.getDate()}`;
         } else {
           this.input.dueTime = `${myDate.getFullYear()}-${myDate.getMonth() + 2}-${myDate.getDate()}`;
@@ -211,18 +211,18 @@
       this.loaded();
     }
     methods = {
-      async action() {
-        if (this.mode == 'create' && this.input.couponType == 1) {
+      async action () {
+        if (this.mode === 'create' && this.input.couponType === 1) {
           const result = await Tips.action('通用', '线上', '线下');
           this.input.supportType = result.index;
           this.$apply();
         }
       },
-      async actionType() {
-        if (this.mode == 'create') {
+      async actionType () {
+        if (this.mode === 'create') {
           const result = await Tips.action('兑换券', '现金券');
           this.input.couponType = result.index;
-          if (this.input.couponType == 0) {
+          if (this.input.couponType === 0) {
             this.input.type = 'EXCHANGE';
             this.input.supportType = 2;
           } else {
@@ -231,18 +231,18 @@
           this.$apply();
         }
       },
-      async submit({
+      async submit ({
         detail
       }) {
         // 覆盖对象
         Object.assign(this.coupon, detail.value);
-        if (this.input.type == 'EXCHANGE') {
+        if (this.input.type === 'EXCHANGE') {
           this.coupon.price = 0;
         }
         if (!this.validate()) {
           return;
         }
-        if (this.mode == 'create') {
+        if (this.mode === 'create') {
           const param = {
             name: this.coupon.name,
             price: this.coupon.price,
@@ -263,7 +263,7 @@
           };
           await coupon.create(param);
           await Tips.success('创建成功！');
-        } else if (this.mode == 'edit') {
+        } else if (this.mode === 'edit') {
           const param = {
             name: this.coupon.name,
             stock: this.coupon.stock,
@@ -279,52 +279,52 @@
         Event.emit(Event.COUPON_LIST_UPDATE);
         wepy.navigateBack();
       },
-      async remove() {
+      async remove () {
         await Tips.confirm('确认删除该优惠券？');
         await coupon.remove(this.couponId);
         await Tips.success('删除成功');
         Event.emit(Event.COUPON_LIST_UPDATE);
         wepy.navigateBack();
       },
-      isShowHome(e) {
-        if (this.input.isShow == false) {
+      isShowHome (e) {
+        if (this.input.isShow === false) {
           this.input.isShowHome = false
         }
       }
     };
     computed = {
-      computedType() {
-        if (this.input.type == null) {
+      computedType () {
+        if (this.input.type === null) {
           return '请选择优惠券类型';
-        } else if (this.input.type == 'EXCHANGE') {
+        } else if (this.input.type === 'EXCHANGE') {
           return '兑换券';
         } else {
           return '现金券';
         }
       },
-      support() {
-        if (this.input.supportType == null) {
+      support () {
+        if (this.input.supportType === null) {
           return '请选择使用场景';
-        } else if (this.input.supportType == 0) {
+        } else if (this.input.supportType === 0) {
           return '通用';
-        } else if (this.input.supportType == 1) {
+        } else if (this.input.supportType === 1) {
           return '线上';
         } else {
           return '线下';
         }
       },
-      notice() {
-        if (this.limit != null && this.limit.couponLimit != -1) {
+      notice () {
+        if (this.limit !== null && this.limit.couponLimit !== -1) {
           return `1.\t已创建的卡券只能编辑名称及投放总量\n2.\t您的会员卡余量为${this.limit.couponLimit}张`;
         } else {
           return `1.\t已创建的卡券只能编辑名称及投放总量`;
         }
       },
-      supplyStyle() {
-        return this.mode == 'edit' || this.input.couponType == 0;
+      supplyStyle () {
+        return this.mode === 'edit' || this.input.couponType === 0;
       }
     };
-    validate() {
+    validate () {
       const rules = [{
         value: this.coupon.name,
         method: 'required',
@@ -464,15 +464,15 @@
         message: '赠送条件必须为整数'
       }
       ];
-      if (this.input.isPresent == 1 && this.coupon.presentFee == null) {
+      if (this.input.isPresent === 1 && this.coupon.presentFee === null) {
         this.tips('赠送条件必须填写');
         return false;
       }
       return this.check(rules);
     }
     watch = {
-      input(newValue, oldValue) {
-        if (newValue.isPresent == true && (oldValue.isPresent == false || oldValue.isPresent == 0)) {
+      input (newValue, oldValue) {
+        if (newValue.isPresent === true && (oldValue.isPresent === false || oldValue.isPresent === 0)) {
           this.coupon.presentFee = null;
         }
       }

@@ -45,7 +45,7 @@ export default class Member extends base {
   /**
    * 历史积分信息
    */
-  static async bonusPage(customerId) {
+  static async bonusPage (customerId) {
     const url = `${this.baseUrl}/members/bonus_detail?by=create_time&sort=desc&customer_id=${customerId}`;
     return new Page(url, this.processBonusTransformation.bind(this));
   }
@@ -66,7 +66,7 @@ export default class Member extends base {
   /**
    * 卖家为用户开通会员卡
    */
-  static async registe(param) {
+  static async registe (param) {
     const url = `${this.baseUrl}/members`;
     return this.post(url, param);
   }

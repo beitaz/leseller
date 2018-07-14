@@ -6,14 +6,14 @@ export default class customer extends base {
   /**
    * 分页方法
    */
-  static page(type) {
-    if (type == 'PRICE') {
+  static page (type) {
+    if (type === 'PRICE') {
       const url = `${this.baseUrl}/count/customer/price`;
       return new Page(url, this._processPriceCount.bind(this));
-    } else if (type == 'TIME') {
+    } else if (type === 'TIME') {
       const url = `${this.baseUrl}/count/customer/time`;
       return new Page(url, this._processTimeCount.bind(this));
-    } else if (type == 'COUNT') {
+    } else if (type === 'COUNT') {
       const url = `${this.baseUrl}/count/customer/times`;
       return new Page(url, this._processTimesCount.bind(this));
     }
@@ -22,7 +22,7 @@ export default class customer extends base {
   /**
    * 数据处理
    */
-  static _processPriceCount(item) {
+  static _processPriceCount (item) {
     return {
       id: item.customer.id,
       name: item.customer.nickName,
@@ -31,7 +31,7 @@ export default class customer extends base {
       value: '￥' + item.totalPrice.toFixed(2)
     };
   }
-  static _processTimeCount(item) {
+  static _processTimeCount (item) {
     return {
       id: item.customer.id,
       name: item.customer.nickName,
@@ -40,7 +40,7 @@ export default class customer extends base {
       value: item.time.substring(0, 10)
     };
   }
-  static _processTimesCount(item) {
+  static _processTimesCount (item) {
     return {
       id: item.customer.id,
       name: item.customer.nickName,

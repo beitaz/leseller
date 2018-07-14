@@ -44,7 +44,7 @@
       reasons: order.closeReacon,
       init: false
     };
-    async onLoad(options) {
+    async onLoad (options) {
       const orderId = options.orderId;
       this.order = await order.detail(orderId);
       this.input.reasonIndex = 0;
@@ -54,7 +54,7 @@
     };
     methods = {
       // 确认提交
-      async submit() {
+      async submit () {
         try {
           const orderId = this.order.orderId;
           await Tips.confirm('您确认要关闭该订单？');
@@ -74,7 +74,7 @@
     };
     computed = {
       // 已选择的文字
-      seletedReason() {
+      seletedReason () {
         return this.reasons[this.input.reasonIndex];
       }
     };

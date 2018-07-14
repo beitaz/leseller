@@ -40,22 +40,22 @@
     };
     data = { ...this.def
     };
-    async onLoad() {
+    async onLoad () {
       this.input = await shop.getStatus();
       const {
         beginTime,
         endTime
       } = this.input;
-      if (beginTime == null || beginTime == '') {
+      if (beginTime === null || beginTime === '') {
         this.input.beginTime = '00:00';
       }
-      if (endTime == null || endTime == '') {
+      if (endTime === null || endTime === '') {
         this.input.endTime = '23:59';
       }
       this.loaded();
     };
     methods = {
-      async submit() {
+      async submit () {
         if (!this.validate()) {
           return;
         }
@@ -75,8 +75,8 @@
         wepy.navigateBack();
       }
     };
-    getShopPeriod() {};
-    validate() {
+    getShopPeriod () {};
+    validate () {
       const rules = [{
         value: this.input.beginTime,
         method: 'required',

@@ -1,7 +1,7 @@
 <template>
   <scroll-view class="side-tab" scroll-y>
     <block wx:for="{{tab.list}}" wx:key="id">
-      <view class="tab-item {{item.id == tab.selectedId ? 'tab-item-seleted' : ''}}" @tap="switchTab({{item.id}})">
+      <view class="tab-item {{item.id === tab.selectedId ? 'tab-item-seleted' : ''}}" @tap="switchTab({{item.id}})">
         <text class="inline">{{item.title}}</text>
         <view class="weui-badge tab-num" wx:if="{{item.count > 0}}">{{item.count}}</view>
       </view>
@@ -23,13 +23,13 @@
     };
     data = {};
     methods = {
-      switchTab(selectedId) {
+      switchTab (selectedId) {
         this.tab.selectedId = selectedId;
         this.$emit('change', selectedId);
       }
     };
     events = {};
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 

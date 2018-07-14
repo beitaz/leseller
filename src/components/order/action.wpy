@@ -11,12 +11,12 @@
       order: {}
     };
     methods = {
-      tap() {
+      tap () {
         console.info(this);
       }
     };
     events = {};
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 

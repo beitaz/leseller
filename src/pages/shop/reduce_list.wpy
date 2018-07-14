@@ -27,21 +27,21 @@
     }
     data = { ...this.def
     };
-    async onLoad() {
+    async onLoad () {
       await this.doLoad();
       Event.listen(Event.REDUCE_LIST_UPDATE, this.doLoad.bind(this), this);
     };
-    async doLoad() {
+    async doLoad () {
       this.list = await shop.listReduce();
       this.empty = this.list.length < 1;
       this.loaded();
     }
-    async onPullDownRefresh() {
+    async onPullDownRefresh () {
       await this.doLoad();
       wepy.stopPullDownRefresh();
     }
     methods = {
-      add() {
+      add () {
         this.$navigate('reduce_edit?mode=create');
       }
     };

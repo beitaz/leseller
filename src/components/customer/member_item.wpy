@@ -25,7 +25,7 @@
       customer: {}
     };
     methods = {
-      phone() {
+      phone () {
         if (this.customer.phone) {
           wepy.makePhoneCall({
             phoneNumber: this.customer.phone

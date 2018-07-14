@@ -39,7 +39,7 @@
               <view class="weui-label">生日</view>
             </view>
             <view class="weui-cell__bd">
-              <picker mode="date" id="birthday" @change="input" value="{{input.birthday}}" disabled="{{mode == 'edit'}}">
+              <picker mode="date" id="birthday" @change="input" value="{{input.birthday}}" disabled="{{mode === 'edit'}}">
                 <view class="weui-input muted">
                   {{input.birthday ? input.birthday : '请选择生日'}}
                 </view>
@@ -81,11 +81,11 @@
     };
     data = { ...this.def
     };
-    onLoad(option) {
+    onLoad (option) {
       this.loaded();
     };
     methods = {
-      async submit({
+      async submit ({
         detail
       }) {
         // 覆盖对象
@@ -116,7 +116,7 @@
       navigationBarTitleText: '注册会员'
     };
     mixins = [base, input];
-    validate() {
+    validate () {
       const rules = [{
         value: this.registeInfo.remarkName,
         method: 'required',

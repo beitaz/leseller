@@ -33,14 +33,14 @@
       seletedValue: ''
     };
     computed = {
-      seletedKey() {
+      seletedKey () {
         const value = this.input[this.fieldName];
-        const seletedItem = this.range.find(item => item[this.rangeValue] == value);
+        const seletedItem = this.range.find(item => item[this.rangeValue] === value);
         return seletedItem ? seletedItem[this.rangeKey] : '请选择';
       }
     };
     methods = {
-      input(e) {
+      input (e) {
         const seletdItem = this.range[e.detail.value];
         this.input[this.fieldName] = seletdItem[this.rangeValue];
         this.$emit('input', seletdItem);

@@ -9,7 +9,7 @@ export default class Cache {
   /**
    * 获取店铺信息（缓存）
    */
-  static async shop() {
+  static async shop () {
     const KEY = 'SHOP_INFO';
     if (this.isExpired(KEY)) {
       const info = await shop.info();
@@ -20,7 +20,7 @@ export default class Cache {
   /**
    * 获取状态缓存
    */
-  static async status() {
+  static async status () {
     const KEY = 'SHOP_STATUS';
     if (this.isExpired(KEY)) {
       const info = await shop.getStatus();
@@ -31,7 +31,7 @@ export default class Cache {
   /**
    * 获取公告信息
    */
-  static async notices() {
+  static async notices () {
     const KEY = 'SHOP_NOTICES';
     if (this.isExpired(KEY)) {
       const info = await shop.notices();
@@ -42,7 +42,7 @@ export default class Cache {
   /**
    * 获取店铺分类
    */
-  static async categories() {
+  static async categories () {
     const KEY = 'GOODS_CATEGORIES';
     if (this.isExpired(KEY)) {
       const info = await mausl.categories();
@@ -53,9 +53,9 @@ export default class Cache {
   /**
    * 判断是否过期
    */
-  static isExpired(key, minute = 5) {
+  static isExpired (key, minute = 5) {
     const value = this.cache.get(key);
-    if (value == null) {
+    if (value === null) {
       this.log(`[cache]${key} not exists`);
       return true;
     }
@@ -72,19 +72,19 @@ export default class Cache {
   /**
    * 折扣信息
    */
-  static async discount(reload = false, memberNumber) {
+  static async discount (reload = false, memberNumber) {
     const KEY = 'VIP_DISCOUNT';
     if (reload || this.isExpired(KEY)) {
       const { member, card } = await this.vip(false, memberNumber);
-      if (member == null || card == null) {
+      if (member === null || card === null) {
         return null;
       }
-      if (card.supplyDiscount != 1) {
+      if (card.supplyDiscount !== 1) {
         return null;
       }
       const { level } = member;
       const { levelName, discount } = member.discountRule;
-      const rule = card.discountRules.find(item => item.level == level);
+      const rule = card.discountRules.find(item => item.level === level);
       const categories = rule.discountCategoryLists.map(item => item.categoryId);
       this.set(KEY, {
         level: levelName,
@@ -97,7 +97,7 @@ export default class Cache {
   /**
    *  会员卡信息
    */
-  static async vip(reload = false, memberNumber) {
+  static async vip (reload = false, memberNumber) {
     const KEY = 'VIP_INFO';
     if (reload || this.isExpired(KEY)) {
       const card = await members.cardInfo();
@@ -111,8 +111,8 @@ export default class Cache {
   /**
    * 删除缓存对象
    */
-  static remove(key) {
-    if (key == null) {
+  static remove (key) {
+    if (key === null) {
       return;
     }
     this.cache.delete(key);
@@ -121,14 +121,14 @@ export default class Cache {
   /**
    * 设置缓存
    */
-  static set(key, value) {
-    if (key == null) {
+  static set (key, value) {
+    if (key === null) {
       return;
     }
     value._lastupdate = new Date().getTime();
     this.cache.set(key, value);
   }
-  static log(text) {
+  static log (text) {
     if (this._debug) {
       console.info(text);
     }

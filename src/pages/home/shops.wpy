@@ -37,18 +37,18 @@
     };
     data = { ...this.def
     };
-    async onLoad() {
+    async onLoad () {
       this.shops = await shop.list();
       this.loaded();
     };
     methods = {
       // 进入店铺
-      async enter(shopId) {
+      async enter (shopId) {
         await auth.setConfig('shop_id', shopId)
         this.$switch('home');
       },
       // 重新登录
-      async back() {
+      async back () {
         Tips.loading();
         await auth.removeConfig('login_code');
         this.$redirect('index');

@@ -2,7 +2,7 @@
   <block>
     <CoverPanel :display.sync="display" zIndex="1000000" />
     <!--弹出窗口-->
-    <view class="wrap" wx:if="{{display == 'true'}}">
+    <view class="wrap" wx:if="{{display === 'true'}}">
       <view class="modal-panel column">
         <!--标题区域-->
         <view class="sku-title column-center">
@@ -17,7 +17,7 @@
           </view>
           <view class="sku-item-box row">
             <block wx:for-item="skuValue" wx:for="{{sku}}" wx:key="index">
-              <view class="sku-item label {{selected == skuValue.sku ? 'primary' : ''}} {{skuValue.max ? 'disabled' : ''}}" @tap="select({{skuValue}})">
+              <view class="sku-item label {{selected === skuValue.sku ? 'primary' : ''}} {{skuValue.max ? 'disabled' : ''}}" @tap="select({{skuValue}})">
                 {{skuValue.sku}}
               </view>
             </block>
@@ -57,10 +57,10 @@
       originalPrice: null
     };
     methods = {
-      close() {
+      close () {
         this.display = 'false';
       },
-      select(sku) {
+      select (sku) {
         const skuValue = sku.sku;
         if (sku.max) {
           return;
@@ -71,8 +71,8 @@
         this.originalPrice = skuData.detail.originalPrice;
         this.$apply();
       },
-      confirm() {
-        if (this.selected == null) {
+      confirm () {
+        if (this.selected === null) {
           Tips.alert('请选择');
           return;
         }
@@ -88,17 +88,17 @@
       }
     };
     computed = {
-      sku() {
+      sku () {
         if (this.goods && this.goods.id) {
           skuData = new Sku(this.goods);
           const stocks = skuData.skuStocks;
           stocks.forEach(stock => {
-            if (stock.stock == 0) {
+            if (stock.stock === 0) {
               stock.max = true;
               return;
             }
-            const cart = this.carts.find(item => item.goodsId == this.goods.id && item.goodsSku == stock.sku);
-            if (cart == null) {
+            const cart = this.carts.find(item => item.goodsId === this.goods.id && item.goodsSku === stock.sku);
+            if (cart === null) {
               stock.max = false;
             } else {
               stock.max = cart.goodsNum >= stock.stock;

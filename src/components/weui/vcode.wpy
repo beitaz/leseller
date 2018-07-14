@@ -16,15 +16,15 @@
       timeoutId: null
     };
     computed = {
-      isWaiting() {
+      isWaiting () {
         return this.waitSecond > 0;
       },
-      btnText() {
+      btnText () {
         return this.isWaiting > 0 ? `请等待${this.waitSecond}秒` : '获取验证码';
       }
     };
     methods = {
-      cd(second) {
+      cd (second) {
         if (this.isWaiting) {
           return;
         }
@@ -40,7 +40,7 @@
       /**
        * 传递点击事件
        */
-      onCodeTap() {
+      onCodeTap () {
         if (this.isWaiting) {
           return;
         }

@@ -21,14 +21,14 @@
     };
     data = {};
     methods = {
-      pick(coupon, {
+      pick (coupon, {
         detail
       }) {
         this.$emit('pick', coupon, detail.formId);
       }
     };
     events = {};
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 

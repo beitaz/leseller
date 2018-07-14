@@ -56,13 +56,13 @@
     };
     data = { ...this.def
     };
-    async onLoad() {
+    async onLoad () {
       try {
         const loginCode = auth.getConfig('login_code');
         console.debug(`login_code: ${loginCode}`);
         if (loginCode != null) {
           const result = await auth.check(loginCode);
-          if (result == 'SUCCESS') {
+          if (result === 'SUCCESS') {
             const shopId = auth.getConfig('shop_id');
             console.debug(`shop_id: ${shopId}`);
             if (shopId != null) {
@@ -82,7 +82,7 @@
       }
     }
     methods = {
-      async confirm({
+      async confirm ({
         detail
       }) {
         // 覆盖对象
@@ -95,7 +95,7 @@
           try {
             loginCode = await auth.login(this.input.phone, this.loginMassage.code);
           } catch (err) {
-            if (err.serverCode == 10501) {
+            if (err.serverCode === 10501) {
               loginCode = err.serverData.login_code;
               Tips.loaded();
               await Tips.modal('您尚未注册，将进入示例店铺');
@@ -113,7 +113,7 @@
           this.loaded();
         }
       },
-      async code() {
+      async code () {
         if (!this.isPhoneValid(this.input.phone)) {
           return;
         }
@@ -123,7 +123,7 @@
           this.$invoke('VCode', 'cd', 60);
           Tips.success('验证码已发送');
         } catch (err) {
-          if (err.serverCode == 10005) {
+          if (err.serverCode === 10005) {
             console.debug('请求验证码太频繁');
             this.$invoke('VCode', 'cd', 60);
           }
@@ -133,7 +133,7 @@
         }
       }
     };
-    onShareAppMessage() {
+    onShareAppMessage () {
       const title = '乐享商家助手';
       const url = '/pages/home/index';
       return Tips.share(title, url, title);
@@ -141,7 +141,7 @@
     /**
      * 校验表单提交
      */
-    isValid(phone) {
+    isValid (phone) {
       if (!this.isPhoneValid(phone)) {
         return false;
       }
@@ -154,7 +154,7 @@
     /**
      * 校验电话号码
      */
-    isPhoneValid(phone) {
+    isPhoneValid (phone) {
       if (this.isEmpty(phone)) {
         this.tips('请输入手机号码');
         return false;

@@ -15,7 +15,7 @@
       index: {}
     };
     methods = {
-      minus(index, id) {
+      minus (index, id) {
         if (this.item.stepper <= 0) {
           return;
         }
@@ -27,7 +27,7 @@
           stepper
         });
       },
-      plus(index, id) {
+      plus (index, id) {
         if (this.item.stepper >= 10000) {
           return;
         }

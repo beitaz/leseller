@@ -3,7 +3,7 @@
     <view class="zan-panel">
       <view class="zan-btns">
         <button class="zan-btn zan-btn--fill" form-type="submit">{{submitText}}</button>
-        <button class="zan-btn" @tap="remove" wx:if="{{mode == 'edit'}}">删除</button>
+        <button class="zan-btn" @tap="remove" wx:if="{{mode === 'edit'}}">删除</button>
       </view>
     </view>
   </view>
@@ -19,10 +19,10 @@
       }
     };
     methods = {
-      submit() {
+      submit () {
         this.$emit('submit');
       },
-      remove() {
+      remove () {
         this.$emit('remove');
       }
     };

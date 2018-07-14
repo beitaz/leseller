@@ -4,8 +4,8 @@
       <view class="details-box">
         <view class="item-box" wx:for="{{details}}" wx:index="index" wx:key="index">
           <view class="content-box column-center">
-            <textarea wx:if="{{item.type == 1}}" class="weui-textarea" auto-height value="{{item.content}}" @input="input({{index}})" placeholder="请输入详情描述" style="min-height: 4.3em" maxlength="200" />
-            <image wx:if="{{item.type == 2}}" src="{{item.content}}" mode="aspectFit" />
+            <textarea wx:if="{{item.type === 1}}" class="weui-textarea" auto-height value="{{item.content}}" @input="input({{index}})" placeholder="请输入详情描述" style="min-height: 4.3em" maxlength="200" />
+            <image wx:if="{{item.type === 2}}" src="{{item.content}}" mode="aspectFit" />
           </view>
           <view class="btn-box row-end">
             <view class="item-btn" @tap="remove({{index}})">× 删除</view>
@@ -39,38 +39,38 @@
     }
     data = { ...this.def
     };
-    onLoad(options) {
+    onLoad (options) {
       const param = options.details;
       this.details = JSON.parse(param);
       this.isEmpty = this.details.length < 1;
       this.loaded();
     };
     methods = {
-      input(index, e) {
+      input (index, e) {
         this.details[index].content = e.detail.value;
       },
       // 向上移动
-      up(index) {
-        if (index == 0) {
+      up (index) {
+        if (index === 0) {
           return;
         }
         const target = index - 1;
         this.swap(index, target);
       },
       // 向下移动
-      down(index) {
-        if (index == this.details.length - 1) {
+      down (index) {
+        if (index === this.details.length - 1) {
           return;
         }
         const target = index + 1;
         this.swap(index, target);
       },
       // 删除图片
-      remove(index) {
+      remove (index) {
         this.details.splice(index, 1);
       },
       // 添加项目
-      async add() {
+      async add () {
         const menu = ['文字描述', '图片描述'];
         Tips.actionWithFunc(menu, () => {
           this.details.push({
@@ -95,7 +95,7 @@
         });
       },
       // 提交信息
-      async submit() {
+      async submit () {
         const data = [];
         for (let index in this.details) {
           Tips.loading();
@@ -103,7 +103,7 @@
           const item = this.details[index];
           item.sequence = index;
           // 图片上传
-          if (item.type == 2 && item.temp) {
+          if (item.type === 2 && item.temp) {
             const result = await goods.image(item.content);
             console.info(result);
             const {
@@ -117,7 +117,7 @@
         wepy.navigateBack();
       }
     };
-    swap(srcIndex, targetIndex) {
+    swap (srcIndex, targetIndex) {
       const details = this.details;
       const src = details[srcIndex];
       const target = details[targetIndex];
@@ -130,7 +130,7 @@
     };
     mixins = [base];
     watch = {
-      details() {
+      details () {
         this.isEmpty = this.details.length < 1;
       }
     }

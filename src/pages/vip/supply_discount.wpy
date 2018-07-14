@@ -36,10 +36,10 @@
     };
     data = { ...this.def
     };
-    async onLoad({
+    async onLoad ({
       discount
     }) {
-      if (discount != null && discount != 'null') {
+      if (discount !== null && discount !== 'null') {
         this.discounts = JSON.parse(discount);
         const discounts = [];
         this.discounts.forEach(item => {
@@ -50,7 +50,7 @@
         });
         this.discounts = discounts;
       }
-      if (this.discounts.length == 0) {
+      if (this.discounts.length === 0) {
         this.discounts[0] = {
           upgradeFee: 0,
           discountCategoryLists: []
@@ -59,7 +59,7 @@
       Event.listen(Event.VIP_CATEGORY_UPDATA, this.categoryUpdate.bind(this), this);
       this.loaded();
     };
-    categoryUpdate({
+    categoryUpdate ({
       list,
       index
     }) {
@@ -68,7 +68,7 @@
       }
     };
     methods = {
-      async submit() {
+      async submit () {
         if (!this.validate()) {
           return;
         }
@@ -78,7 +78,7 @@
           };
           data.discount *= 100;
           data.level = index + 1;
-          if (index == 0) {
+          if (index === 0) {
             data.upgradeFee = 0;
           }
           discounts.push(data);
@@ -87,7 +87,7 @@
         Event.emit(Event.SHOP_DISCOUNT_UPDATE, discounts);
         wepy.navigateBack();
       },
-      async category({
+      async category ({
         discountCategoryLists
       }, index) {
         this.$preload('data', {
@@ -96,19 +96,19 @@
         });
         this.$navigate('discount_category');
       },
-      add() {
+      add () {
         this.discounts.push({
           discountCategoryLists: []
         });
       },
-      remove(index) {
+      remove (index) {
         this.discounts.splice(index, 1);
       },
-      change(info) {
+      change (info) {
         this.discounts[info.index][info.fieldName] = info.fieldValue;
       }
     };
-    validate() {
+    validate () {
       const levelName = this.discounts.map(item => item.levelName);
       const discount = this.discounts.map(item => item.discount);
       const upgradeFee = this.discounts.map(item => item.upgradeFee);

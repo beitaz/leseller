@@ -30,7 +30,7 @@
     };
     data = { ...this.def
     };
-    onLoad(options) {
+    onLoad (options) {
       this.orderId = options.orderId;
       const sellerNote = options.sellerNote;
       if (!this.isEmpty(sellerNote)) {
@@ -39,12 +39,12 @@
       this.init = true;
     };
     // 卸载清理
-    onUnload() {
+    onUnload () {
       Object.assign(this, this.def);
     }
     methods = {
       // 提交表单
-      async submit() {
+      async submit () {
         const sellerNote = this.input.sellerNote;
         if (this.isEmpty(sellerNote)) {
           this.tips('请填写订单备注');

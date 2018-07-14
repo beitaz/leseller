@@ -1,9 +1,9 @@
 <template>
   <block>
     <!--遮罩层-->
-    <view class="slider-panel-cover" wx:if="{{display == 'true'}}" @tap="close"></view>
+    <view class="slider-panel-cover" wx:if="{{display === 'true'}}" @tap="close"></view>
     <!--滑动面板-->
-    <view class="slider-panel-box {{display == 'true' ? 'slider-panel-show' : '' }} " style="min-height: {{minHeight}}">
+    <view class="slider-panel-box {{display === 'true' ? 'slider-panel-show' : '' }} " style="min-height: {{minHeight}}">
       <!--面板标题-->
       <view class="header-box">
         <!--标题槽位-->
@@ -20,7 +20,7 @@
         <slot name="content"></slot>
       </scroll-view>
       <!-- 按钮区域 -->
-      <view class="btn-box row-center" wx:if="{{btn == 'true'}}">
+      <view class="btn-box row-center" wx:if="{{btn === 'true'}}">
         <view class="btn-back column-center" @tap="close"><text>取消</text></view>
         <view class="btn-primary column-center ml20"><text>确定</text></view>
       </view>
@@ -48,12 +48,12 @@
     };
     data = {};
     methods = {
-      close() {
+      close () {
         this.display = 'false';
       }
     };
     events = {};
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 

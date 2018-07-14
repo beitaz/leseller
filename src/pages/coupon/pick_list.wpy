@@ -50,22 +50,22 @@
     data = { ...this.def
     };
     methods = {
-      switchTab({
+      switchTab ({
         selectedId
       }) {
         this.page = coupon.pagePick(this.couponId, selectedId);
         this.reload();
       },
-      add() {
+      add () {
         this.$navigate('customer_list?couponId=' + this.couponId);
       }
     };
-    params() {
+    params () {
       return {
         status: this.tab.selectedId
       };
     }
-    async onLoad({
+    async onLoad ({
       couponId,
       mode
     }) {

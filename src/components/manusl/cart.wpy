@@ -74,15 +74,15 @@
     data = {
       isCartDisplay: 'false'
     };
-    async onLoad() {};
+    async onLoad () {};
     methods = {
-      plus(cart) {
+      plus (cart) {
         this.updateNum('plus', cart);
       },
-      minus(cart) {
+      minus (cart) {
         this.updateNum('minus', cart);
       },
-      cart() {
+      cart () {
         if (!this.status.open) {
           Tips.modal(this.status.closeTips);
         } else if (this.totalCount < 1) {
@@ -91,10 +91,10 @@
           this.isCartDisplay = 'true';
         }
       },
-      clear() {
+      clear () {
         this.$emit('clear');
       },
-      buy({
+      buy ({
         detail
       }) {
         if (!this.status.open) {
@@ -108,7 +108,7 @@
         }
       }
     };
-    updateNum(event, cart) {
+    updateNum (event, cart) {
       const param = {
         goodsId: cart.goodsId,
         goodsSku: cart.goodsSku
@@ -116,21 +116,21 @@
       this.$emit(event, param);
     }
     computed = {
-      totalPrice() {
+      totalPrice () {
         let sum = 0;
         this.carts.forEach(item => {
           sum += item.goodsPrice * item.goodsNum
         });
         return sum.toFixed(2);
       },
-      totalCount() {
+      totalCount () {
         let count = 0;
         this.carts.forEach(item => {
           count += item.goodsNum
         });
         return count;
       },
-      buyText() {
+      buyText () {
         if (!this.status.open) {
           this.buyStatus = 0;
           return '休息中';

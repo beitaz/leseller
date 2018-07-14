@@ -14,7 +14,7 @@ export default class comment extends base {
   /**
    * 创建
    */
-  static async create(comments) {
+  static async create (comments) {
     const url = `${this.baseUrl}/comments`;
     return await this.post(url, comments);
   }
@@ -22,7 +22,7 @@ export default class comment extends base {
   /**
    * 评价统计
    */
-  static async count(goodsId) {
+  static async count (goodsId) {
     const url = `${this.baseUrl}/comments/count?goods_id=${goodsId}`;
     return await this.get(url);
   }
@@ -30,7 +30,7 @@ export default class comment extends base {
   /**
    * 处理评价列表数据
    */
-  static _processGoodsComment(data) {
+  static _processGoodsComment (data) {
     const comment = {};
     comment.createTime = data.createTime.substring(0, 10);
     comment.createTime_comment = data.createTime.substring(0, 16);

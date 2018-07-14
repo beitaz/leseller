@@ -33,13 +33,13 @@
     }
     data = { ...this.def
     };
-    async onLoad() {
+    async onLoad () {
       this.page = delivery.page();
       await this.next();
       Event.listen(Event.DELIVERY_LIST_UPDATE, this.update.bind(this), this);
     };
     methods = {
-      add() {
+      add () {
         const param = {
           mode: 'create'
         }

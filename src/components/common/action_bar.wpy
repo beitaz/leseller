@@ -1,7 +1,7 @@
 <template>
   <block>
     <view class="action-bar-placeholder"></view>
-    <view class="action-bar row-center fixed-bottom" wx:if="{{noCancel == 0}}">
+    <view class="action-bar row-center fixed-bottom" wx:if="{{noCancel === 0}}">
       <view class="action secondary-action row-center" @tap="back">
         <text>{{cancelText}}</text>
       </view>
@@ -36,10 +36,10 @@
       }
     };
     methods = {
-      tap() {
+      tap () {
         this.$emit('tap');
       },
-      back() {
+      back () {
         wepy.navigateBack();
       }
     }

@@ -36,7 +36,7 @@
     };
     data = { ...this.def
     };
-    async onLoad({
+    async onLoad ({
       goodsId
     }) {
       this.goodsId = goodsId;
@@ -60,14 +60,14 @@
       this.page = comment.page();
       await this.next();
     };
-    params() {
+    params () {
       return {
         status: this.tab.selectedId,
         goods_id: this.goodsId
       };
     }
     methods = {
-      switchTab() {
+      switchTab () {
         this.reload();
       }
     };

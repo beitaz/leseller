@@ -20,7 +20,7 @@
         </view>
       </view>
       <view class="steps-box panel">
-        <view class="steps-empty row-center" wx:if="{{steps==null || steps.length == 0}}">
+        <view class="steps-empty row-center" wx:if="{{steps===null || steps.length === 0}}">
           <text class="muted lg">快件揽收中，请耐心等待</text>
         </view>
         <ZanStep :steps.sync="steps" />
@@ -48,7 +48,7 @@
     }
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       const orderId = options.orderId;
       try {
         const data = await order.detail(orderId);

@@ -26,7 +26,7 @@
     };
     data = { ...this.def
     };
-    async onLoad(option) {
+    async onLoad (option) {
       this.shopId = wepy.getStorageSync('shop_id');
       const param = JSON.parse(option.param);
       this.openId = param.id;
@@ -35,19 +35,19 @@
       this.initSocket();
       await this.initLoad();
     }
-    async initLoad() {
+    async initLoad () {
       this.chatHistory = await customerService.chatHistory(this.openId);
       this.loaded();
     }
-    onShow() {
+    onShow () {
       wepy.setNavigationBarTitle({
         title: this.nickName
       });
     }
-    onUnload() {
+    onUnload () {
       wepy.closeSocket();
     }
-    initSocket() {
+    initSocket () {
       // 链接地址
       const url = `wss://wx.leshare.shop/leshare-kefu?shop_id=${this.shopId}&open_id=${this.openId}`;
       wepy.connectSocket({
@@ -77,7 +77,7 @@
       });
     }
     // 发送信息
-    sendSocketMessage(msg) {
+    sendSocketMessage (msg) {
       if (this.socketOpen) {
         wepy.sendSocketMessage({
           data: msg
@@ -87,7 +87,7 @@
       }
     }
     methods = {
-      async send(info) {
+      async send (info) {
         this.chatHistory.push({
           content: info,
           avaterUrl: '',

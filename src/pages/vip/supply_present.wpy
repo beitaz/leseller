@@ -35,10 +35,10 @@
       init: false,
       presents: [{}]
     };
-    async onLoad({
+    async onLoad ({
       present
     }) {
-      if (present != null && present != 'null') {
+      if (present !== null && present !== 'null') {
         this.presents = JSON.parse(present);
         const promises = this.presents.map(item => coupon.info(item.presentCouponId));
         const coupons = await Promise.all(promises);
@@ -46,7 +46,7 @@
           item.coupon = coupons[index];
         });
       }
-      if (this.presents.length == 0) {
+      if (this.presents.length === 0) {
         this.presents[0] = {
           categoryList: []
         };
@@ -55,25 +55,25 @@
       Event.listen(Event.CUSOMTER_COUPON_UPDATE, this.couponUpdate.bind(this), this);
       this.loaded();
     };
-    categoryUpdate({
+    categoryUpdate ({
       list,
       index
     }) {
-      if (list != null && index != null) {
+      if (list !== null && index !== null) {
         this.presents[index].categoryList = list;
       }
     };
-    couponUpdate({
+    couponUpdate ({
       coupon,
       index
     }) {
-      if (coupon != null && index != null) {
+      if (coupon !== null && index !== null) {
         this.presents[index].coupon = coupon;
       }
       this.presents[index].presentCouponId = coupon.id;
     };
     methods = {
-      async submit() {
+      async submit () {
         if (!this.validate()) {
           return;
         }
@@ -81,7 +81,7 @@
         Event.emit(Event.SHOP_PRESENT_UPDATE, this.presents);
         wepy.navigateBack();
       },
-      async category({
+      async category ({
         categoryList
       }, index) {
         this.$preload('data', {
@@ -90,18 +90,18 @@
         });
         this.$navigate('present_category');
       },
-      add() {
+      add () {
         this.presents.push({
           categoryList: []
         });
       },
-      remove(index) {
+      remove (index) {
         this.presents.splice(index, 1);
       },
-      change(info) {
+      change (info) {
         this.presents[info.index][info.fieldName] = info.fieldValue;
       },
-      coupon({
+      coupon ({
         coupon
       }, index) {
         this.$preload('data', {
@@ -111,7 +111,7 @@
         this.$navigate('present_coupon');
       }
     };
-    validate() {
+    validate () {
       const ruleName = this.presents.map(item => item.ruleName);
       const limitCount = this.presents.map(item => item.limitCount);
       const unit = this.presents.map(item => item.unit);

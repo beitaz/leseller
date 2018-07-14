@@ -57,15 +57,15 @@ export default class Event {
   static MEMBER_INFO_UPDATE = 'MEMBER_INFO_UPDATE';
   // 聊天列表更新
   static CHAT_LIST_UPDATE = 'CHAT_LIST_UPDATE';
-  static listen(eventName, callback, observer) {
+  static listen (eventName, callback, observer) {
     WxNotificationCenter.addNotification(eventName, callback, observer);
   }
 
-  static emit(eventName, params) {
+  static emit (eventName, params) {
     WxNotificationCenter.postNotificationName(eventName, params);
   }
 
-  static remove(eventName, observer) {
+  static remove (eventName, observer) {
     WxNotificationCenter.removeNotification(eventName, observer);
   }
 }

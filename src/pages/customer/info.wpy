@@ -34,9 +34,9 @@
           <text class="muted">当前积分 : {{member.bonus}}</text>
           <image class="more-image" src="/images/icons/more-gray.png" />
         </view>
-        <text class="muted" wx:if="{{member == null}}">暂未注册</text>
+        <text class="muted" wx:if="{{member === null}}">暂未注册</text>
       </view>
-      <view class="row vip-column" @tap="moreVip" wx:if="{{member == null}}">
+      <view class="row vip-column" @tap="moreVip" wx:if="{{member === null}}">
         <image class="card-image" src="/images/icons/vip_card.png" />
         <text class="muted ml20">暂未注册</text>
       </view>
@@ -67,20 +67,20 @@
     </view>
     <!--列表区域-->
     <view>
-      <view class="zan-btns" wx:if="{{tab.selectedId == 'COUPON'}}">
+      <view class="zan-btns" wx:if="{{tab.selectedId === 'COUPON'}}">
         <button class="zan-btn zan-btn--fill" @tap="send">发放优惠券</button>
       </view>
       <repeat for="{{page.list}}" key="index" index="index" item="item">
-        <block wx:if="{{tab.selectedId == 'HIS_ORDER'}}">
+        <block wx:if="{{tab.selectedId === 'HIS_ORDER'}}">
           <OrderItem :order.sync="item" @tap.user="detail" action="0"></OrderItem>
         </block>
-        <block wx:elif="{{tab.selectedId == 'OFTEN_GOODS'}}">
+        <block wx:elif="{{tab.selectedId === 'OFTEN_GOODS'}}">
           <OftenGoods :goods="item"></OftenGoods>
         </block>
-        <block wx:elif="{{tab.selectedId == 'COUPON'}}">
+        <block wx:elif="{{tab.selectedId === 'COUPON'}}">
           <CouponItem selectAction="0" :coupon.sync="item"></CouponItem>
         </block>
-        <block wx:elif="{{tab.selectedId == 'HIS_BONUS'}}">
+        <block wx:elif="{{tab.selectedId === 'HIS_BONUS'}}">
           <BonusItem :bonusInfo.sync="item"></BonusItem>
         </block>
       </repeat>
@@ -147,7 +147,7 @@
     };
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       this.customerId = options.customerId;
       this.member = await member.customerInfo(this.customerId);
       if (this.member) {
@@ -160,17 +160,17 @@
       Event.listen(Event.CUSOMTER_COUPON_UPDATE, this.updateInfo.bind(this), this);
       Event.listen(Event.SHOP_CUSTOMER_UPDATE, this.updateMemberInfo.bind(this), this);
     };
-    updateInfo() {
+    updateInfo () {
       this.update();
       this.customer.countCustomerInfo.totalCouponCount++;
       this.$apply();
     }
-    async updateMemberInfo(params) {
+    async updateMemberInfo (params) {
       this.member = await member.customerInfo(this.customerId);
       this.$apply();
     }
     methods = {
-      moreVip() {
+      moreVip () {
         if (this.member) {
           const params = {
             customer: this.customer,
@@ -182,13 +182,13 @@
           Tips.alert('该用户还未注册本店会员！')
         }
       },
-      send() {
+      send () {
         const customerId = this.customerId;
         this.$navigate('./coupon_send', {
           customerId
         });
       },
-      phone() {
+      phone () {
         if (this.customer.address) {
           wepy.makePhoneCall({
             phoneNumber: this.customer.address.phone
@@ -197,7 +197,7 @@
           Tips.alert('该用户没有电话');
         }
       },
-      addressList(customerId) {
+      addressList (customerId) {
         if (!this.customer.addressList) {
           Tips.alert('该用户没有地址');
           return;
@@ -206,31 +206,31 @@
           customerId
         });
       },
-      detail(orderId) {
+      detail (orderId) {
         this.$navigate('../order/detail', {
           orderId
         });
       }
     };
     // 获取分页参数
-    params() {
+    params () {
       return {
         customer_id: this.customerId,
         member_id: this.memberId
       };
     }
     events = {
-      async change() {
+      async change () {
         this.page.clear();
         this.$apply();
-        if (this.tab.selectedId == 'HIS_ORDER') {
+        if (this.tab.selectedId === 'HIS_ORDER') {
           this.page = order.hisPage();
-        } else if (this.tab.selectedId == 'OFTEN_GOODS') {
+        } else if (this.tab.selectedId === 'OFTEN_GOODS') {
           this.page = await goods.oftenGoodsPage(this.customerId);
-        } else if (this.tab.selectedId == 'COUPON') {
+        } else if (this.tab.selectedId === 'COUPON') {
           this.page = await coupon.cutomerCouponPage(this.customerId);
-        } else if (this.tab.selectedId == 'HIS_BONUS') {
-          if (this.memberId == 0) {
+        } else if (this.tab.selectedId === 'HIS_BONUS') {
+          if (this.memberId === 0) {
             Tips.error('该用户不是会员');
             return
           }

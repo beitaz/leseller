@@ -29,11 +29,11 @@
         list: []
       }
     };
-    async updateCustomerService() {
+    async updateCustomerService () {
       this.page = await customerService.chatList();
       await this.next();
     }
-    async onShow() {
+    async onShow () {
       await this.updateCustomerService();
     }
     mixins = [base, pagination];

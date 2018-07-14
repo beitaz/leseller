@@ -22,13 +22,13 @@
       reduce: {}
     };
     methods = {
-      async delete(id) {
+      async delete (id) {
         await Tips.confirm('确认删除该优惠？');
         await shop.removeReduce(id);
         await Tips.success('删除成功');
         Event.emit(Event.REDUCE_LIST_UPDATE);
       },
-      edit(reduce) {
+      edit (reduce) {
         const param = {
           mode: 'edit',
           reduce: JSON.stringify(reduce)

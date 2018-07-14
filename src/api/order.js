@@ -9,7 +9,7 @@ export default class order extends base {
   /**
    * 分页方法
    */
-  static hisPage() {
+  static hisPage () {
     const url = `${this.baseUrl}/customers/order_list`;
     return new Page(url, this._processOrderListItem.bind(this));
   }
@@ -17,7 +17,7 @@ export default class order extends base {
   /**
    * 分页方法
    */
-  static page() {
+  static page () {
     const url = `${this.baseUrl}/orders`;
     return new Page(url, this._processOrderListItem.bind(this));
   }
@@ -25,7 +25,7 @@ export default class order extends base {
   /**
    * 订单详情
    */
-  static async detail(orderId) {
+  static async detail (orderId) {
     const url = `${this.baseUrl}/orders/${orderId}`;
     const data = await this.get(url);
     return this._processOrderDetail(data);
@@ -34,7 +34,7 @@ export default class order extends base {
   /**
    * 物流发货
    */
-  static async send(orderId, param) {
+  static async send (orderId, param) {
     const url = `${this.baseUrl}/orders/${orderId}/send`;
     return await this.put(url, param);
   }
@@ -42,7 +42,7 @@ export default class order extends base {
   /**
    * 订单备注
    */
-  static async note(orderId, sellerNote) {
+  static async note (orderId, sellerNote) {
     const url = `${this.baseUrl}/orders/${orderId}/note`;
     const param = {sellerNote};
     return await this.put(url, param);
@@ -51,7 +51,7 @@ export default class order extends base {
   /**
    * 订单打印
    */
-  static async print(orderId) {
+  static async print (orderId) {
     const url = `${this.baseUrl}/orders/${orderId}/print`;
     return await this.put(url);
   }
@@ -59,7 +59,7 @@ export default class order extends base {
   /**
    * 关闭订单
    */
-  static async close(orderId, note) {
+  static async close (orderId, note) {
     const url = `${this.baseUrl}/orders/${orderId}/status/close`;
     const param = {orderId, note};
     return await this.put(url, param);
@@ -82,7 +82,7 @@ export default class order extends base {
   /**
    * 订单改价
    */
-  static async reprice(orderId, param) {
+  static async reprice (orderId, param) {
     const url = `${this.baseUrl}/orders/${orderId}/modify_money`;
     return await this.put(url, param);
   }
@@ -90,7 +90,7 @@ export default class order extends base {
   /**
    * 同意退款
    */
-  static async agreeRefund(orderId) {
+  static async agreeRefund (orderId) {
     const url = `${this.baseUrl}/orders/${orderId}/refund_money`;
     const param = {
       isAgree: 1
@@ -101,7 +101,7 @@ export default class order extends base {
   /**
    * 拒绝退款
    */
-  static async rejectRefund(orderId, note) {
+  static async rejectRefund (orderId, note) {
     const url = `${this.baseUrl}/orders/${orderId}/refund_money`;
     const param = {
       isAgree: 2,
@@ -116,7 +116,7 @@ export default class order extends base {
    * 根据退款时间生成退款步骤
    */
 
-  static createOrderRefundSetps(refund) {
+  static createOrderRefundSetps (refund) {
     let steps = [];
 
     // 提交申请
@@ -130,7 +130,7 @@ export default class order extends base {
     const sellerTime = refund.sellerDealtime;
     if (sellerTime) {
       // 卖家同意
-      if (refund.isAgree == 1) {
+      if (refund.isAgree === 1) {
         steps.push(this._createRefundSetp('您已同意退款', sellerTime));
         steps.push(this._createRefundSetp('款项已原路退回买家', sellerTime));
       } else {
@@ -143,7 +143,7 @@ export default class order extends base {
     const finishTime = refund.finishTime;
     if (finishTime) {
       // 卖家同意
-      if (refund.is_agree == 1) {
+      if (refund.is_agree === 1) {
         steps.push(this._createRefundSetp('订单退款成功', finishTime));
       } else {
         // 卖家不同意
@@ -167,7 +167,7 @@ export default class order extends base {
     return steps;
   }
 
-  static _createRefundSetp(text, time) {
+  static _createRefundSetp (text, time) {
     return {
       text: text,
       timestape: time,
@@ -181,7 +181,7 @@ export default class order extends base {
   /**
    * 处理订单列表数据
    */
-  static _processOrderListItem(order) {
+  static _processOrderListItem (order) {
     // 处理动作
     this._processOrderAction(order);
     this._processOrderStatusDesc(order);
@@ -199,7 +199,7 @@ export default class order extends base {
   /**
    * 处理订单详情
    */
-  static _processOrderDetail(detail) {
+  static _processOrderDetail (detail) {
     // 支付方式
     detail.shopName = this.shopName;
     // 处理订单支付方式
@@ -225,9 +225,9 @@ export default class order extends base {
     return detail;
   }
 
-  static _processOfflinePayment(order) {
+  static _processOfflinePayment (order) {
     const orderType = order.orderType;
-    if (orderType != TYPE.OFFLINE) return;
+    if (orderType !== TYPE.OFFLINE) return;
     order.orderGoodsInfos = [{
       imageUrl: 'http://img.leshare.shop/shop/other/wechat_pay.png',
       goodsName: `微信支付 ${order.finalPrice}元`,
@@ -240,7 +240,7 @@ export default class order extends base {
   /**
    * 处理订单动作
    */
-  static _processOrderAction(order, inner = false) {
+  static _processOrderAction (order, inner = false) {
     const basic = [ACTION.REMARK];
     if (inner) {
       basic.push(ACTION.PRINT);
@@ -248,7 +248,7 @@ export default class order extends base {
     const {orderType, paymentType, status} = order;
     const actions = utils.statusActions(orderType, paymentType, status);
     if (actions) {
-      const display = inner ? actions.filter(v => v.inner != true) : actions;
+      const display = inner ? actions.filter(v => v.inner !== true) : actions;
       order.actions = basic.concat(display);
     } else {
       order.actions = basic;
@@ -258,7 +258,7 @@ export default class order extends base {
   /**
    * 处理地址信息
    */
-  static _processOrderAddress(detail) {
+  static _processOrderAddress (detail) {
     detail.receiveAddress = {
       fullAddress: detail.address,
       name: detail.receiveName,
@@ -281,7 +281,7 @@ export default class order extends base {
     order.statusText = utils.statusName(orderType, status);
     order.statusDesc = utils.statusDesc(order, status);
     // 订单关闭增加关闭原因
-    if (order.status == 7 && order.orderCloseNote) {
+    if (order.status === 7 && order.orderCloseNote) {
       const reason = order.orderCloseNote;
       order.statusDesc = `订单已关闭，关闭原因：${reason.note}`;
     }
@@ -296,7 +296,7 @@ export default class order extends base {
   /**
    * 处理订单状态
    */
-  static _processOrderPrice(order) {
+  static _processOrderPrice (order) {
     order.postFee = this._fixedPrice(order.postFee);
     order.dealPrice = this._fixedPrice(order.dealPrice);
     order.finalPrice = this._fixedPrice(order.finalPrice);
@@ -307,9 +307,9 @@ export default class order extends base {
   /**
    * 处理商品物流信息
    */
-  static _processOrderTrace(order) {
+  static _processOrderTrace (order) {
     const express = order.orderExpress;
-    if (express == null) {
+    if (express === null) {
       // 没有物流信息，不做处理
       return;
     }
@@ -322,9 +322,9 @@ export default class order extends base {
   /**
    * 处理订单的退货信息
    */
-  static _processOrderRefund(order) {
+  static _processOrderRefund (order) {
     const refunds = order.orderRefunds;
-    if (refunds == null || refunds.length < 1) {
+    if (refunds === null || refunds.length < 1) {
       // 订单没有退款信息，不做处理
       return;
     }
@@ -341,8 +341,8 @@ export default class order extends base {
   /**
    * 处理订单商品信息
    */
-  static _processOrderGoods(goods) {
-    if (goods == null || goods.length < 1) {
+  static _processOrderGoods (goods) {
+    if (goods === null || goods.length < 1) {
       return;
     }
     goods.forEach(item => {
@@ -356,15 +356,15 @@ export default class order extends base {
   /**
    * 处理SKU的默认值
    */
-  static _processOrderSku(goodsSku) {
+  static _processOrderSku (goodsSku) {
     let skuText = '';
-    if (goodsSku && goodsSku != '') {
+    if (goodsSku && goodsSku !== '') {
       skuText = goodsSku.replace(/:/g, ',');
     }
     return skuText;
   }
-  static _fixedPrice(price) {
-    if (price == null || isNaN(Number(price))) {
+  static _fixedPrice (price) {
+    if (price === null || isNaN(Number(price))) {
       return null;
     }
     return price.toFixed(2);

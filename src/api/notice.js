@@ -13,7 +13,7 @@ export default class notice extends base {
   /**
    * 创建公告
    */
-  static async create(notice) {
+  static async create (notice) {
     const url = `${this.baseUrl}/notices`;
     return await this.post(url, notice);
   }
@@ -21,7 +21,7 @@ export default class notice extends base {
   /**
    * 删除公告
    */
-  static async remove(noticeId) {
+  static async remove (noticeId) {
     const url = `${this.baseUrl}/notices/${noticeId}`;
     return await this.delete(url);
   }
@@ -29,7 +29,7 @@ export default class notice extends base {
   /**
    * 编辑公告
    */
-  static async update(noticeId, notice) {
+  static async update (noticeId, notice) {
     const url = `${this.baseUrl}/notices/${noticeId}`;
     return await this.put(url, notice);
   }
@@ -37,7 +37,7 @@ export default class notice extends base {
   /**
    * 单条信息
    */
-  static async info(noticeId) {
+  static async info (noticeId) {
     const url = `${this.baseUrl}/notices/${noticeId}`;
     return await this.get(url);
   }

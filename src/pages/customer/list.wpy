@@ -58,23 +58,23 @@
     };
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       this.type = options.type;
       this.page = customer.page(this.tab.selectedId);
       await this.next();
     };
-    params() {
+    params () {
       return {
         sort: this.tab.sord
       };
     }
     methods = {
-      async switchTab() {
+      async switchTab () {
         this.page = customer.page(this.tab.selectedId);
         await this.next();
       },
-      info(customerId) {
-        if (this.type == 'manusl') {
+      info (customerId) {
+        if (this.type === 'manusl') {
           Event.emit(Event.MANUSL_USER_UPDATE, customerId);
           wepy.navigateBack();
         } else {

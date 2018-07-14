@@ -11,7 +11,7 @@
       </view>
     </view>
     <text class="muted notice-box" wx:if="{{limit.memberLimit >= 0}}">提示：您当前的会员余量为<text class="{{limit.memberLimit < 10 ? 'danger' : 'muted'}}">{{limit.memberLimit}}</text>个</text>
-    <view class="weui-cells weui-cells-form" wx:if="{{card && card.supplyDiscount == 1}}">
+    <view class="weui-cells weui-cells-form" wx:if="{{card && card.supplyDiscount === 1}}">
       <repeat for="{{discountRules}}" key="index" index="index" item="item">
         <!-- 等级 -->
         <view class="weui-cell weui-cell_access" @tap="screen(1,{{item.level}})">
@@ -40,7 +40,7 @@
     };
     data = { ...this.def
     };
-    async onLoad(option) {
+    async onLoad (option) {
       await this.loadLimit();
       this.type = option.type;
       this.card = await member.cardInfo();
@@ -50,16 +50,16 @@
       Event.listen(Event.SHOP_CUSTOMER_UPDATE, this.loadLimit.bind(this), this);
       this.loaded();
     };
-    async loadLimit() {
+    async loadLimit () {
       this.limit = await shop.limit();
     }
     methods = {
-      screen(showCondition, level) {
+      screen (showCondition, level) {
         const params = {
           type: this.type,
           level: level
         };
-        if (showCondition == 0) {
+        if (showCondition === 0) {
           this.$root.$navigate('/pages/manusl/customer_list');
         } else {
           this.$root.$navigate('/pages/manusl/member_list?params=' + JSON.stringify(params));

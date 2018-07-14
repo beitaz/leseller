@@ -23,7 +23,7 @@
       chats: {}
     };
     methods = {
-      select(id, avatarUrl, nickName) {
+      select (id, avatarUrl, nickName) {
         const params = {
           id: id,
           avatarUrl: avatarUrl,

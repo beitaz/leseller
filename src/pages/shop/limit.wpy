@@ -49,7 +49,7 @@
       init: false,
       limit: {}
     };
-    async onLoad(options) {
+    async onLoad (options) {
       this.limit = JSON.parse(options.param);
       this.loaded();
     };

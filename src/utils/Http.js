@@ -23,7 +23,7 @@ export default class http {
   /**
    * 判断请求是否成功
    */
-  static isSuccess(res) {
+  static isSuccess (res) {
     const wxCode = res.statusCode;
     // 微信请求错误
     if (wxCode !== 200) {
@@ -36,7 +36,7 @@ export default class http {
   /**
    * 异常
    */
-  static requestException(res) {
+  static requestException (res) {
     const error = {};
     error.statusCode = res.statusCode;
     const wxData = res.data;

@@ -84,9 +84,9 @@ export default class shop extends base {
     const data = await this.get(url);
     // 文本转换
     data.statusText = this._processStatusText(data);
-    data.status = data.status == 'NORMAL';
+    data.status = data.status === 'NORMAL';
     // 是否全天
-    data.day = data.beginTime == '00:00' && data.endTime == '23:59';
+    data.day = data.beginTime === '00:00' && data.endTime === '23:59';
     return data;
   }
 
@@ -101,9 +101,9 @@ export default class shop extends base {
   static _processStatusText (data) {
     const status = data.status;
     const isOpen = data.open;
-    if (status == 'NORMAL') {
+    if (status === 'NORMAL') {
       return isOpen ? '营业中' : '营业中(已打烊)';
-    } else if (status == 'CLOSE') {
+    } else if (status === 'CLOSE') {
       return '歇业中';
     }
   }
@@ -142,7 +142,7 @@ export default class shop extends base {
   /**
    * 版本
    */
-  static _processVersionText(data) {
+  static _processVersionText (data) {
     if (data) {
       data.versionText = this.autoVersion[data.chargeVersion];
       data.versionConfig = this.autoCofig[data.chargeVersion];

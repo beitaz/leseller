@@ -72,7 +72,7 @@
     }
     data = { ...this.def
     };
-    async onLoad(options) {
+    async onLoad (options) {
       try {
         const orderId = options.orderId;
         const data = await order.detail(orderId);
@@ -87,7 +87,7 @@
     };
     methods = {
       // 提交
-      async submit() {
+      async submit () {
         const isAgree = this.input.isOk;
         const orderId = this.refund.orderId;
         try {

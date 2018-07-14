@@ -34,7 +34,7 @@
               <text>{{goods.num}}</text>
             </view>
           </block>
-          <image class="plus" src="/images/icons/plus-gray.png" wx:if="{{goods.goodsStocks[0].stock == 0 || goods.num >= goods.goodsStocks[0].stock}}" />
+          <image class="plus" src="/images/icons/plus-gray.png" wx:if="{{goods.goodsStocks[0].stock === 0 || goods.num >= goods.goodsStocks[0].stock}}" />
           <image class="plus" src="/images/icons/plus.png" @tap.stop="plus({{goods}})" wx:else/>
         </view>
       </view>
@@ -50,23 +50,23 @@
     };
     components = {};
     methods = {
-      plus(goods) {
+      plus (goods) {
         this.updateNum('plus', goods);
       },
-      minus(goods) {
+      minus (goods) {
         this.updateNum('minus', goods);
       },
-      preview(goods) {
+      preview (goods) {
         const urls = goods.images.map(item => item.url);
         wepy.previewImage({
           urls: urls
         });
       },
-      detail(goods) {
+      detail (goods) {
         this.$emit('detail', goods);
       }
     };
-    updateNum(event, goods) {
+    updateNum (event, goods) {
       const param = {
         goodsId: goods.id,
         sku: goods.sku
@@ -74,7 +74,7 @@
       this.$emit(event, param);
     }
     events = {};
-    onLoad() {}
+    onLoad () {}
   }
 </script>
 
